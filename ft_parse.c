@@ -175,7 +175,7 @@ int ft_init_floor_ceiling(t_ptr *ptr, char *str)
 
 void    ft_init_map2d(t_ptr *ptr, char *str)
 {
-    
+    printf("%s", str);
 }
 
 void    ft_init(t_ptr *ptr, int fd)

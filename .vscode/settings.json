@@ -1,0 +1,17 @@
+{
+    "files.exclude": {
+        "**/.git": true,
+        "**/.svn": true,
+        "**/.hg": true,
+        "**/CVS": true,
+        "**/.DS_Store": true,
+        "**/Thumbs.db": true
+    },
+    "hide-files.files": [],
+    "files.associations": {
+        "cmath": "c",
+        "stdio.h": "c",
+        "charconv": "c",
+        "cub3d.h": "c"
+    }
+}

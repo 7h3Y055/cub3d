@@ -1,16 +1,35 @@
-NO ./textures/NO.xpm
-EA ./textures/EA.xpm
+C   0, 0 , 1  
+      NO./textures/NO.xpm   
+EA     ./textures/EA.xpm
+
+      
 SO ./textures/SO.xpm
+ 
+     
 WE ./textures/WE.xpm
-C 0,0,0
+
+
 F 44,110,73
-111111111
-100000001111
-111111111111
 
 
 
-111111111111
-1000000000001
-100000001111
-111111111
+    11            
+   1001           
+  100001         
+   1001
+    11             
+                
+                
+
+
+
+
+
+
+
+
+
+
+
+
+

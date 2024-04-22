@@ -39,39 +39,11 @@ char *get_texture_path(char *str)
     while (ft_isspace(str[i]))
         i++;
     if (str[i])
-    {
-        ft_error("Error1\n", 1);
-        return (NULL);
-    }
-    path = ft_strndup(&str[tmp_i], i - tmp_i);
+        exit(ft_error("Error1\n", 1));
+    path = ft_strndup(&str[tmp_i], i - tmp_i - 1);
     return (path);
 }
 
-int    ft_init_texture(t_ptr *ptr, char *str)
-{
-    int i;
-
-    i = 0;
-    while (ft_isspace(str[i]))
-        i++;
-    if (!ptr->parse.no && ft_strncmp(&str[i], "NO", 2) == 0)
-        ptr->parse.no = get_texture_path(str);
-    else if (!ptr->parse.so && ft_strncmp(&str[i], "SO", 2) == 0)
-        ptr->parse.so = get_texture_path(str);
-    else if (!ptr->parse.we && ft_strncmp(&str[i], "WE", 2) == 0)
-        ptr->parse.we = get_texture_path(str);
-    else if (!ptr->parse.ee && ft_strncmp(&str[i], "EA", 2) == 0)
-        ptr->parse.ee = get_texture_path(str);
-    else if (!str[i])
-        return (0);
-    else
-    {
-        printf("{{%s}}\n", &str[i]);
-        free(str);
-        exit(ft_error("Error2\n", 1));
-    }
-    return (1);
-}
 
 int skip_comma(char *str, int i)
 {
@@ -145,25 +117,41 @@ int *get_color(char *str)
     }
     return (color);
 }
-
-int ft_init_floor_ceiling(t_ptr *ptr, char *str)
+int ft_just_whitespaces(char *str, int i)
+{
+    while (str[i] && ft_isspace(str[i]))
+        i++;
+    if (!str[i])
+        return (1);
+    return (0);
+}
+int    ft_init_texture(t_ptr *ptr, char *str)
 {
     int i;
 
     i = 0;
     while (ft_isspace(str[i]))
         i++;
-    if (!ptr->parse.floor && ft_strncmp(&str[i], "F", 1) == 0)
+    if (!ptr->parse.no && ft_strncmp(&str[i], "NO", 2) == 0)
+        ptr->parse.no = get_texture_path(str);
+    else if (!ptr->parse.so && ft_strncmp(&str[i], "SO", 2) == 0)
+        ptr->parse.so = get_texture_path(str);
+    else if (!ptr->parse.we && ft_strncmp(&str[i], "WE", 2) == 0)
+        ptr->parse.we = get_texture_path(str);
+    else if (!ptr->parse.ee && ft_strncmp(&str[i], "EA", 2) == 0)
+        ptr->parse.ee = get_texture_path(str);
+    else if (!ptr->parse.floor && ft_strncmp(&str[i], "F", 1) == 0)
         ptr->parse.floor = get_color(str);
     else if (!ptr->parse.ceiling && ft_strncmp(&str[i], "C", 1) == 0)
         ptr->parse.ceiling = get_color(str);
-    else if (!str[i])
+    else if (ft_just_whitespaces(str, i))
         return (0);
-    else
+    else if (str[i] && str[i] != '\n')
     {
-        free(str);
-        exit(ft_error("Error6\n", 1));
+        printf("%s\n", &str[i]);
+        exit(ft_error("Error2\n", 1));
     }
+    
     return (1);
 }
 
@@ -174,26 +162,18 @@ void    allocate_memory_for_map2d(t_ptr *ptr, char *str)
 
     y = 0;
     x = 0;
-    ptr->map2d = ft_calloc(sizeof(char *), ptr->parse.y);
+    ptr->map2d = ft_calloc(sizeof(char *), (ptr->parse.y + 1));
     if (!ptr->map2d)
         exit(ft_error("malloc error\n", 1));
     while (y < ptr->parse.y)
     {
-        ptr->map2d[y] = ft_calloc(sizeof(char) , ptr->parse.x);
+        ptr->map2d[y] = ft_calloc(sizeof(char) , (ptr->parse.x + 1));
         if (!ptr->map2d[y])
             exit(ft_error("malloc error\n", 1));
         y++;
     }
 }
 
-int ft_just_whitespaces(char *str, int i)
-{
-    while (str[i] && ft_isspace(str[i]))
-        i++;
-    if (!str[i])
-        return (1);
-    return (0);
-}
 
 void    ft_init_map2d(t_ptr *ptr, char *str)
 {
@@ -205,8 +185,6 @@ void    ft_init_map2d(t_ptr *ptr, char *str)
     y = 0;
     x = 0;
     allocate_memory_for_map2d(ptr, str);
-    while (str[i] && ft_isspace(str[i]))
-        i++;
     while (str[i] && !ft_just_whitespaces(str, i))
     {
         if (str[i] == '\n')
@@ -237,25 +215,27 @@ char    *ft_read_map(t_ptr *ptr, int fd)
         line = get_next_line(fd);
         if (!line)
             break;
-        if (ptr->parse.x < ft_strlen(line))
-            ptr->parse.x = ft_strlen(line);
-        tmp = ft_strjoin(buffer, line);
-        free(buffer);
-        buffer = tmp;
-        free(line);
-        ptr->parse.y++;
+        if (!ft_just_whitespaces(line, 0))
+        {
+            if (ptr->parse.x < ft_strlen(line))
+                ptr->parse.x = ft_strlen(line);
+            tmp = ft_strjoin(buffer, line);
+            free(buffer);
+            buffer = tmp;
+            free(line);
+            ptr->parse.y++;
+        }
     }
-    ptr->parse.y += 1;
     return (buffer);
 }
 
 void    ft_init(t_ptr *ptr, int fd)
 {
     char *line;
-    int n;
+    int  n;
 
     n = 0;
-    while (n != 4)
+    while (n < 6)
     {
         line = get_next_line(fd);
         if (!line)
@@ -263,17 +243,26 @@ void    ft_init(t_ptr *ptr, int fd)
         n += ft_init_texture(ptr, line);
         free(line);
     }
-    n = 0;
-    while (n != 2)
-    {
-        line = get_next_line(fd);
-        if (!line)
-            break ;
-        n += ft_init_floor_ceiling(ptr, line);
-        free(line);
-    }
     line = ft_read_map(ptr, fd);
     ft_init_map2d(ptr, line);
+}
+
+void    check_valide_map(t_ptr *ptr)
+{
+    int y;
+    int x;
+
+    y = 0;
+    while (y < ptr->parse.y)
+    {
+        x = 0;
+        while (x < ptr->parse.x)
+        {
+            x++;
+        }
+        y++;
+    }
+
 }
 
 void ft_parse(t_ptr *ptr, int argc, char const **argv)
@@ -285,4 +274,5 @@ void ft_parse(t_ptr *ptr, int argc, char const **argv)
     check_extention(argv);
     fd = ft_open(argv[1]);
     ft_init(ptr, fd);
+    check_valide_map(ptr);
 }

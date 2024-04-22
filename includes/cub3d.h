@@ -21,7 +21,6 @@ typedef struct s_parse
     int *floor;
     int *ceiling;
 
-    int **map2d;
     int x;
     int y;
 } t_parse;
@@ -30,6 +29,7 @@ typedef struct s_parse
 typedef struct s_ptr
 {
     t_parse parse;
+    char **map2d;
 
 } t_ptr;
 

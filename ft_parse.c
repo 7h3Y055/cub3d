@@ -40,7 +40,7 @@ char *get_texture_path(char *str)
         i++;
     if (str[i])
     {
-        ft_error("Error\n", 1);
+        ft_error("Error1\n", 1);
         return (NULL);
     }
     path = ft_strndup(&str[tmp_i], i - tmp_i);
@@ -65,18 +65,13 @@ int    ft_init_texture(t_ptr *ptr, char *str)
     else if (!str[i])
         return (0);
     else
-        exit(ft_error("Error\n", 1));
+    {
+        printf("{{%s}}\n", &str[i]);
+        free(str);
+        exit(ft_error("Error2\n", 1));
+    }
     return (1);
 }
-
-// int check_valide_color_2(char *str)
-// {
-//     int i;
-
-//     i = 0;
-//     printf("%s", str);
-//     return 0;
-// }
 
 int skip_comma(char *str, int i)
 {
@@ -137,10 +132,6 @@ int *get_color(char *str)
         exit(ft_error("Error4\n", 1));
     tmp = ft_strrchr(str, ',');
     tmp[ft_strlen(tmp) - 1] = 0;
-
-
-
-
     color[2] = ft_atoi(&tmp[1]);
     *tmp = 0;
     tmp = ft_strrchr(str, ',');
@@ -169,13 +160,93 @@ int ft_init_floor_ceiling(t_ptr *ptr, char *str)
     else if (!str[i])
         return (0);
     else
-        exit(ft_error("Error\n", 1));
+    {
+        free(str);
+        exit(ft_error("Error6\n", 1));
+    }
     return (1);
+}
+
+void    allocate_memory_for_map2d(t_ptr *ptr, char *str)
+{
+    int y;
+    int x;
+
+    y = 0;
+    x = 0;
+    ptr->map2d = ft_calloc(sizeof(char *), ptr->parse.y);
+    if (!ptr->map2d)
+        exit(ft_error("malloc error\n", 1));
+    while (y < ptr->parse.y)
+    {
+        ptr->map2d[y] = ft_calloc(sizeof(char) , ptr->parse.x);
+        if (!ptr->map2d[y])
+            exit(ft_error("malloc error\n", 1));
+        y++;
+    }
+}
+
+int ft_just_whitespaces(char *str, int i)
+{
+    while (str[i] && ft_isspace(str[i]))
+        i++;
+    if (!str[i])
+        return (1);
+    return (0);
 }
 
 void    ft_init_map2d(t_ptr *ptr, char *str)
 {
-    printf("%s", str);
+    int i;
+    int y;
+    int x;
+
+    i = 0;
+    y = 0;
+    x = 0;
+    allocate_memory_for_map2d(ptr, str);
+    while (str[i] && ft_isspace(str[i]))
+        i++;
+    while (str[i] && !ft_just_whitespaces(str, i))
+    {
+        if (str[i] == '\n')
+        {
+            x = 0;
+            y++;
+        }
+        else
+            ptr->map2d[y][x++] = str[i];
+        i++;
+    }
+    if (i > 1 && str[i - 1] == '\n')
+        ptr->map2d[y] = NULL;
+    ptr->map2d[y + 1] = NULL;
+}
+
+char    *ft_read_map(t_ptr *ptr, int fd)
+{
+    char *buffer;
+    char *line;
+    char *tmp;
+
+    ptr->parse.y = 0;
+    ptr->parse.x = 0;
+    buffer = ft_calloc(1, 1);
+    while (1)
+    {
+        line = get_next_line(fd);
+        if (!line)
+            break;
+        if (ptr->parse.x < ft_strlen(line))
+            ptr->parse.x = ft_strlen(line);
+        tmp = ft_strjoin(buffer, line);
+        free(buffer);
+        buffer = tmp;
+        free(line);
+        ptr->parse.y++;
+    }
+    ptr->parse.y += 1;
+    return (buffer);
 }
 
 void    ft_init(t_ptr *ptr, int fd)
@@ -190,6 +261,7 @@ void    ft_init(t_ptr *ptr, int fd)
         if (!line)
             break ;
         n += ft_init_texture(ptr, line);
+        free(line);
     }
     n = 0;
     while (n != 2)
@@ -198,14 +270,10 @@ void    ft_init(t_ptr *ptr, int fd)
         if (!line)
             break ;
         n += ft_init_floor_ceiling(ptr, line);
+        free(line);
     }
-    while (1)
-    {
-        line = get_next_line(fd);
-        if (!line)
-            break ;
-        ft_init_map2d(ptr, line);
-    }
+    line = ft_read_map(ptr, fd);
+    ft_init_map2d(ptr, line);
 }
 
 void ft_parse(t_ptr *ptr, int argc, char const **argv)

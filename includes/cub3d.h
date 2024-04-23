@@ -35,6 +35,6 @@ typedef struct s_ptr
 
 
 void ft_parse(t_ptr *ptr, int argc, char const **argv);
-int ft_error(char *str, int n);
+int ft_error(t_ptr *ptr, char *str, int n);
 
 #endif

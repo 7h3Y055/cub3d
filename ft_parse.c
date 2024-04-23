@@ -1,27 +1,27 @@
 #include "cub3d.h"
 
-void    check_extention(char const **argv)
+void    check_extention(t_ptr *ptr, char const **argv)
 {
     if ((!ft_strchr(argv[1], '.') || ft_strrchr(argv[1], '.') == argv[1])\
      || ft_strcmp(ft_strrchr(argv[1], '.'), ".cub") != 0)
-        exit(ft_error("file name is not .cub extention!\n", 1));
+        exit(ft_error(ptr, "file name is not .cub extention!\n", 1));
 }
 
-int    ft_open(char const *path)
+int    ft_open(t_ptr *ptr, char const *path)
 {
     int fd;
 
     fd = open(path, O_RDONLY);
     if (fd == -1)
     {
-        ft_error("", 0);
+        ft_error(ptr, "", 0);
         perror(path);
         exit(1);
     }
     return (fd);
 }
 
-char *get_texture_path(char *str)
+char *get_texture_path(t_ptr *ptr, char *str)
 {
     int i;
     int tmp_i;
@@ -39,7 +39,7 @@ char *get_texture_path(char *str)
     while (ft_isspace(str[i]))
         i++;
     if (str[i])
-        exit(ft_error("Error1\n", 1));
+        exit(ft_error(ptr, "Error1\n", 1));
     path = ft_strndup(&str[tmp_i], i - tmp_i - 1);
     return (path);
 }
@@ -56,7 +56,7 @@ int skip_comma(char *str, int i)
     return (i);
 }
 
-int skip_digit(char *str, int i)
+int skip_digit(t_ptr *ptr, char *str, int i)
 {
     while (ft_isspace(str[i]))
         i++;
@@ -66,28 +66,28 @@ int skip_digit(char *str, int i)
             i++;
     }
     else
-        exit(ft_error("Error3\n", 1));
+        exit(ft_error(ptr, "Error3\n", 1));
     while (ft_isspace(str[i]))
         i++;
     return (i);
 }
 
-int check_valide_color(char *str)
+int check_valide_color(t_ptr *ptr, char *str)
 {
     int i;
 
     i = 0;
-    i = skip_digit(str, i);
+    i = skip_digit(ptr, str, i);
     i = skip_comma(str, i);
-    i = skip_digit(str, i);
+    i = skip_digit(ptr, str, i);
     i = skip_comma(str, i);
-    i = skip_digit(str, i);
+    i = skip_digit(ptr, str, i);
     if (str[i])
         return (1);
     return (0);
 }
 
-int *get_color(char *str)
+int *get_color(t_ptr *ptr, char *str)
 {
     int i;
     char *tmp;
@@ -100,8 +100,8 @@ int *get_color(char *str)
     i += 1;
     while (ft_isspace(str[i]))
         i++;
-    if (check_valide_color(&str[i]))
-        exit(ft_error("Error4\n", 1));
+    if (check_valide_color(ptr, &str[i]))
+        exit(ft_error(ptr, "Error4\n", 1));
     tmp = ft_strrchr(str, ',');
     tmp[ft_strlen(tmp) - 1] = 0;
     color[2] = ft_atoi(&tmp[1]);
@@ -113,7 +113,7 @@ int *get_color(char *str)
     if (color[0] > 255 || color[1] > 255 || color[2] > 255)
     {
         free(color);
-        exit(ft_error("Error5\n", 1));
+        exit(ft_error(ptr, "Error5\n", 1));
     }
     return (color);
 }
@@ -133,43 +133,37 @@ int    ft_init_texture(t_ptr *ptr, char *str)
     while (ft_isspace(str[i]))
         i++;
     if (!ptr->parse.no && ft_strncmp(&str[i], "NO", 2) == 0)
-        ptr->parse.no = get_texture_path(str);
+        ptr->parse.no = get_texture_path(ptr, str);
     else if (!ptr->parse.so && ft_strncmp(&str[i], "SO", 2) == 0)
-        ptr->parse.so = get_texture_path(str);
+        ptr->parse.so = get_texture_path(ptr, str);
     else if (!ptr->parse.we && ft_strncmp(&str[i], "WE", 2) == 0)
-        ptr->parse.we = get_texture_path(str);
+        ptr->parse.we = get_texture_path(ptr, str);
     else if (!ptr->parse.ee && ft_strncmp(&str[i], "EA", 2) == 0)
-        ptr->parse.ee = get_texture_path(str);
+        ptr->parse.ee = get_texture_path(ptr, str);
     else if (!ptr->parse.floor && ft_strncmp(&str[i], "F", 1) == 0)
-        ptr->parse.floor = get_color(str);
+        ptr->parse.floor = get_color(ptr, str);
     else if (!ptr->parse.ceiling && ft_strncmp(&str[i], "C", 1) == 0)
-        ptr->parse.ceiling = get_color(str);
+        ptr->parse.ceiling = get_color(ptr, str);
     else if (ft_just_whitespaces(str, i))
         return (0);
     else if (str[i] && str[i] != '\n')
-    {
-        printf("%s\n", &str[i]);
-        exit(ft_error("Error2\n", 1));
-    }
-    
+        exit(ft_error(ptr, "Error2\n", 1));
     return (1);
 }
 
-void    allocate_memory_for_map2d(t_ptr *ptr, char *str)
+void    allocate_memory_for_map2d(t_ptr *ptr)
 {
     int y;
-    int x;
 
     y = 0;
-    x = 0;
     ptr->map2d = ft_calloc(sizeof(char *), (ptr->parse.y + 1));
     if (!ptr->map2d)
-        exit(ft_error("malloc error\n", 1));
+        exit(ft_error(ptr, "malloc error\n", 1));
     while (y < ptr->parse.y)
     {
         ptr->map2d[y] = ft_calloc(sizeof(char) , (ptr->parse.x + 1));
         if (!ptr->map2d[y])
-            exit(ft_error("malloc error\n", 1));
+            exit(ft_error(ptr, "malloc error\n", 1));
         y++;
     }
 }
@@ -184,7 +178,7 @@ void    ft_init_map2d(t_ptr *ptr, char *str)
     i = 0;
     y = 0;
     x = 0;
-    allocate_memory_for_map2d(ptr, str);
+    allocate_memory_for_map2d(ptr);
     while (str[i] && !ft_just_whitespaces(str, i))
     {
         if (str[i] == '\n')
@@ -217,8 +211,8 @@ char    *ft_read_map(t_ptr *ptr, int fd)
             break;
         if (!ft_just_whitespaces(line, 0))
         {
-            if (ptr->parse.x < ft_strlen(line))
-                ptr->parse.x = ft_strlen(line);
+            if (ptr->parse.x < (int)ft_strlen(line))
+                ptr->parse.x = (int)ft_strlen(line);
             tmp = ft_strjoin(buffer, line);
             free(buffer);
             buffer = tmp;
@@ -247,22 +241,44 @@ void    ft_init(t_ptr *ptr, int fd)
     ft_init_map2d(ptr, line);
 }
 
+int check_valid_map(t_ptr *ptr, int y, int x)
+{
+   if (!ptr->map2d[y + 1] || (ptr->map2d[y + 1][x] == '\0' || ptr->map2d[y + 1][x] == ' '))
+        return (1);
+   else if (!ptr->map2d[y - 1] || (ptr->map2d[y - 1][x] == '\0' || ptr->map2d[y - 1][x] == ' '))
+        return (2);
+   else if (ptr->map2d[y][x + 1] == '\0' || ptr->map2d[y][x + 1] == ' ')
+        return (3);
+   else if (ptr->map2d[y][x - 1] == '\0' || ptr->map2d[y][x - 1] == ' ')
+        return (4);
+    return (0);
+}
+
 void    check_valide_map(t_ptr *ptr)
 {
     int y;
     int x;
+    int n;
 
     y = 0;
+    n = 0;
     while (y < ptr->parse.y)
     {
         x = 0;
         while (x < ptr->parse.x)
         {
+            if (ptr->map2d[y][x] == '0' && check_valid_map(ptr, y, x))
+                exit(ft_error(ptr, "Invalid map: map is not closed by wall (1)\n", check_valid_map(ptr, y, x)));
+            else if (ptr->map2d[y][x] == 'N')
+                n++;
+            else if (ptr->map2d[y][x] && ptr->map2d[y][x] != '0' && ptr->map2d[y][x] != '1' && ptr->map2d[y][x] != ' ')
+                exit(ft_error(ptr, "Invalid map: contain invalid character!\n", check_valid_map(ptr, y, x)));
             x++;
         }
         y++;
     }
-
+    if (n == 0 || n > 1)
+        exit(ft_error(ptr, "Invalid map: less or more than one player starting point (N)\n", 1));
 }
 
 void ft_parse(t_ptr *ptr, int argc, char const **argv)
@@ -270,9 +286,9 @@ void ft_parse(t_ptr *ptr, int argc, char const **argv)
     int fd;
 
     if (argc != 2)
-        exit(ft_error("need one parameter have path of map\n", 1));
-    check_extention(argv);
-    fd = ft_open(argv[1]);
+        exit(ft_error(ptr, "need one parameter have path of map\n", 1));
+    check_extention(ptr, argv);
+    fd = ft_open(ptr, argv[1]);
     ft_init(ptr, fd);
     check_valide_map(ptr);
 }

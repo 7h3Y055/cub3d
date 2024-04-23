@@ -1,10 +1,10 @@
-      NO ./textures/NO.xpm
+NO ./textures/NO.xpm
 EA ./textures/EA.xpm
-		C 0,0,0
-        SO ./textures/SO.xpm
-	WE ./textures/WE.xpm
+SO ./textures/SO.xpm
+WE ./textures/WE.xpm
 
 
+C 0,0,0
 F 44, 110,73
       
 

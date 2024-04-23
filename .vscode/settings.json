@@ -12,6 +12,7 @@
         "cmath": "c",
         "stdio.h": "c",
         "charconv": "c",
-        "cub3d.h": "c"
+        "cub3d.h": "c",
+        "keysym.h": "c"
     }
 }

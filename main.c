@@ -4,15 +4,16 @@ int main(int argc, char const **argv)
 {
     t_ptr ptr;
 
-
     ft_parse(&ptr, argc, argv);
 
     printf("valid map\n");
 
+    test(&ptr);
+
     // printf("no: %s\n", ptr.parse.no);
     // printf("so: %s\n", ptr.parse.so);
     // printf("wo: %s\n", ptr.parse.we);
-    // printf("eo: %s\n", ptr.parse.ee);
+    // printf("ea: %s\n", ptr.parse.ea);
     // printf("\n");
 
     // printf("floor array: ");

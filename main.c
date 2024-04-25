@@ -3,12 +3,14 @@
 int main(int argc, char const **argv)
 {
     t_ptr ptr;
+    int i;
+    int j;
 
     ft_parse(&ptr, argc, argv);
 
     printf("valid map\n");
 
-    test(&ptr);
+    
 
     // printf("no: %s\n", ptr.parse.no);
     // printf("so: %s\n", ptr.parse.so);
@@ -31,8 +33,41 @@ int main(int argc, char const **argv)
     // printf("y:%d\n", ptr.parse.y);
     // printf("x:%d\n", ptr.parse.x);
     // printf("\n");
-    // for (int i = 0; ptr.map2d[i]; i++) {
-    //     printf("%s\n", ptr.map2d[i]);
+
+    // i = 0;
+    // while (ptr.map2d[i])
+    // {
+    //     j = 0;
+    //     while (ptr.map2d[i][j])
+    //     {
+    //         printf("%c", ptr.map2d[i][j]);
+    //         j++;
+    //     }
+    //     printf("\n");
+    //     i++;
+    // }
+
+    // printf("\n");
+
+    // printf("player position:\n");
+    // printf("y:%d\n", ptr.player.y);
+    // printf("x:%d\n", ptr.player.x);
+    // printf("A:%f\n", ptr.player.angle);
+    // printf("map2d_scaled:\n");
+    // printf("y:%d\n", ptr.parse.y * SCALE);
+    // printf("x:%d\n", ptr.parse.x * SCALE);
+    // printf("\n");
+    // i = 0;
+    // while (i < ptr.parse.y * SCALE)
+    // {
+    //     j = 0;
+    //     while (j < ptr.parse.x * SCALE)
+    //     {
+    //         printf("%c", ptr.map2d_scaled[i][j]);
+    //         j++;
+    //     }
+    //     printf("\n");
+    //     i++;
     // }
 
 }

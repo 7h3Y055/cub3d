@@ -119,6 +119,8 @@ int *get_color(t_ptr *ptr, char *str)
 }
 int ft_just_whitespaces(char *str, int i)
 {
+    if (!str[i])
+        return (1);
     while (str[i] && ft_isspace(str[i]))
         i++;
     if (!str[i])
@@ -147,10 +149,7 @@ int    ft_init_texture(t_ptr *ptr, char *str)
     else if (ft_just_whitespaces(str, i))
         return (0);
     else if (str[i] && str[i] != '\n')
-    {
-        printf("[%s]\n", &str[i]);
         exit(ft_error(ptr, "Error2\n", 1));
-    }
     return (1);
 }
 
@@ -173,31 +172,58 @@ char    **allocate_memory_for_map2d(t_ptr *ptr, int y, int x)
     return (map2d);
 }
 
+void    ft_init_player_position(t_ptr *ptr, int y, int x,  char c)
+{
+    ptr->player.y = y * SCALE + SCALE / 2;
+    ptr->player.x = x * SCALE + SCALE / 2;
+
+    if (c == 'N')
+        ptr->player.angle = 0;
+    else if (c == 'E')
+        ptr->player.angle = 1.5707963268;
+    else if (c == 'S')
+        ptr->player.angle = 3.1415926536;
+    else if (c == 'W')
+        ptr->player.angle = 4.7123889804;
+}
 
 void    ft_init_map2d(t_ptr *ptr, char *str)
 {
     int i;
     int y;
     int x;
+    int n;
 
+    n = 0;
     i = 0;
     y = 0;
     x = 0;
-    ptr->parse.map2d = allocate_memory_for_map2d(ptr, ptr->parse.y, ptr->parse.x);
-    while (str[i] && !ft_just_whitespaces(str, i))
+    ptr->map2d = allocate_memory_for_map2d(ptr, ptr->parse.y + 2, ptr->parse.x + 1);
+    while (ptr->map2d[y])
     {
-        if (str[i] == '\n')
+        if (!str[i] || str[i] == '\n')
         {
+            while (x < ptr->parse.x - 1)
+                ptr->map2d[y][x++] = ' ';
             x = 0;
             y++;
+            if (!str[i])
+                break;
         }
+        else if (str[i] != 'N' && str[i] != 'S' && str[i] != 'W' && str[i] != 'E')
+            ptr->map2d[y][x++] = str[i];
         else
-            ptr->parse.map2d[y][x++] = str[i];
+        {
+            n++;
+            ft_init_player_position(ptr, y, x, str[i]);
+            ptr->map2d[y][x++] = '0';
+        }
         i++;
     }
-    if (i > 1 && str[i - 1] == '\n')
-        ptr->parse.map2d[y] = NULL;
-    ptr->parse.map2d[y + 1] = NULL;
+    if (n == 0 || n > 1)
+        exit(ft_error(ptr, "Invalid map: less or more than one player starting point (N or E or S or W)\n", 1));
+    y = 0;
+    ptr->map2d[ptr->parse.y] = NULL;
 }
 
 char    *ft_read_map(t_ptr *ptr, int fd)
@@ -216,8 +242,8 @@ char    *ft_read_map(t_ptr *ptr, int fd)
             break;
         if (!ft_just_whitespaces(line, 0))
         {
-            if (ptr->parse.x < (int)ft_strlen(line))
-                ptr->parse.x = (int)ft_strlen(line);
+            if (ptr->parse.x < (int)ft_strlen(line) - 1)
+                ptr->parse.x = (int)ft_strlen(line) - 1;
             tmp = ft_strjoin(buffer, line);
             free(buffer);
             buffer = tmp;
@@ -248,13 +274,13 @@ void    ft_init(t_ptr *ptr, int fd)
 
 int check_valid_map(t_ptr *ptr, int y, int x)
 {
-   if (!ptr->parse.map2d[y + 1] || (ptr->parse.map2d[y + 1][x] == '\0' || ptr->parse.map2d[y + 1][x] == ' '))
+   if (!ptr->map2d[y + 1] || (ptr->map2d[y + 1][x] == '\0' || ptr->map2d[y + 1][x] == ' '))
         return (1);
-   else if (!ptr->parse.map2d[y - 1] || (ptr->parse.map2d[y - 1][x] == '\0' || ptr->parse.map2d[y - 1][x] == ' '))
+   else if (!ptr->map2d[y - 1] || (ptr->map2d[y - 1][x] == '\0' || ptr->map2d[y - 1][x] == ' '))
         return (2);
-   else if (ptr->parse.map2d[y][x + 1] == '\0' || ptr->parse.map2d[y][x + 1] == ' ')
+   else if (ptr->map2d[y][x + 1] == '\0' || ptr->map2d[y][x + 1] == ' ')
         return (3);
-   else if (ptr->parse.map2d[y][x - 1] == '\0' || ptr->parse.map2d[y][x - 1] == ' ')
+   else if (ptr->map2d[y][x - 1] == '\0' || ptr->map2d[y][x - 1] == ' ')
         return (4);
     return (0);
 }
@@ -263,27 +289,89 @@ void    check_valide_map(t_ptr *ptr)
 {
     int y;
     int x;
-    int n;
+    // int n;
 
     y = 0;
-    n = 0;
+    // n = 0;
     while (y < ptr->parse.y)
     {
         x = 0;
         while (x < ptr->parse.x)
         {
-            if (ptr->parse.map2d[y][x] == '0' && check_valid_map(ptr, y, x))
+            if (ptr->map2d[y][x] == '0' && check_valid_map(ptr, y, x))
                 exit(ft_error(ptr, "Invalid map: map is not closed by wall (1)\n", check_valid_map(ptr, y, x)));
-            else if (ptr->parse.map2d[y][x] == 'N')
-                n++;
-            else if (ptr->parse.map2d[y][x] && ptr->parse.map2d[y][x] != '0' && ptr->parse.map2d[y][x] != '1' && ptr->parse.map2d[y][x] != ' ')
+            // else if (ptr->map2d[y][x] == 'N')
+                // n++;
+            else if (ptr->map2d[y][x] && ptr->map2d[y][x] != '0' && ptr->map2d[y][x] != '1' && ptr->map2d[y][x] != ' ')
                 exit(ft_error(ptr, "Invalid map: contain invalid character!\n", check_valid_map(ptr, y, x)));
             x++;
         }
         y++;
     }
-    if (n == 0 || n > 1)
-        exit(ft_error(ptr, "Invalid map: less or more than one player starting point (N)\n", 1));
+    // if (n == 0 || n > 1)
+    //     exit(ft_error(ptr, "Invalid map: less or more than one player starting point (N)\n", 1));
+}
+
+
+int ft_close(int flag, void *a)
+{
+    exit(0);
+}
+
+void ft_init_scaled_character(t_ptr *ptr, int i, int j, char c)
+{
+    int y;
+    int y_tmp;
+    int x;
+    int x_tmp;
+
+
+    y = 0;
+    while (y < SCALE)
+    {
+        x = 0;
+        while (x < SCALE)
+        {
+            ptr->map2d_scaled[SCALE * i + y][SCALE * j + x] = ptr->map2d[i][j];
+            x++;
+        }
+        y++;
+    }
+}
+
+void    create_scaled_map(t_ptr *ptr)
+{
+    int i;
+    int j;
+    ptr->map2d_scaled = allocate_memory_for_map2d(ptr, ptr->parse.y * SCALE, ptr->parse.x * SCALE);
+    
+    i = 0;
+    while (i < ptr->parse.y)
+    {
+        j = 0;
+        while (j < ptr->parse.x)
+        {
+            ft_init_scaled_character(ptr, i, j, ptr->map2d[i][j]);
+            j++;
+        }
+        i++;
+    }
+    
+}
+
+void    test(t_ptr *ptr)
+{
+    // ptr->win.mlx = mlx_init();
+    // ptr->win.win = mlx_new_window(ptr->win.mlx, 1280,720, "test");
+
+    // ft_init_scaled_map(ptr);
+    
+	// mlx_key_hook(ptr->win.win, ft_close, &ptr);
+    // mlx_loop(ptr->win.mlx);
+
+    // mlx_destroy_window(ptr->win.mlx, ptr->win.win);
+    // mlx_destroy_display(ptr->win.mlx);
+    // free(ptr->win.mlx);
 }
 
 void ft_parse(t_ptr *ptr, int argc, char const **argv)
@@ -297,4 +385,5 @@ void ft_parse(t_ptr *ptr, int argc, char const **argv)
     fd = ft_open(ptr, argv[1]);
     ft_init(ptr, fd);
     check_valide_map(ptr);
+    create_scaled_map(ptr);
 }

@@ -13,6 +13,7 @@
         "stdio.h": "c",
         "charconv": "c",
         "cub3d.h": "c",
-        "keysym.h": "c"
+        "keysym.h": "c",
+        "unistd.h": "c"
     }
 }

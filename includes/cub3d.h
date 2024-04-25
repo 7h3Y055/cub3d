@@ -13,7 +13,8 @@
 #include "get_next_line.h"
 
 
-#define SCALE 100
+#define RAD 6.2831853072
+#define SCALE 15
 
 
 typedef struct s_parse
@@ -28,7 +29,6 @@ typedef struct s_parse
 
     int x;
     int y;
-    char **map2d;
 } t_parse;
 
 typedef struct s_win
@@ -37,19 +37,29 @@ typedef struct s_win
     void *win;
 } t_win;
 
+typedef struct s_player
+{
+    size_t y;
+    size_t x;
+
+    double angle;
+} t_player;
+
 
 typedef struct s_ptr
 {
     t_parse parse;
     t_win   win;
+    t_player player;
 
     char **map2d;
+    char **map2d_scaled;
 } t_ptr;
 
 
 void ft_parse(t_ptr *ptr, int argc, char const **argv);
 int ft_error(t_ptr *ptr, char *str, int n);
-void    test(t_ptr *ptr);
+void    create_scaled_map(t_ptr *ptr);
 char    **allocate_memory_for_map2d(t_ptr *ptr, int y, int x);
 
 #endif

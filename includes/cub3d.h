@@ -2,8 +2,8 @@
 #define CUB3D_H
 
 #include <mlx.h>
-#include <X11/keysym.h>
-#include <X11/X.h>
+// #include <X11/keysym.h>
+// #include <X11/X.h>
 #include <fcntl.h>
 #include <unistd.h>
 #include <stdio.h>
@@ -11,6 +11,10 @@
 #include <string.h>
 #include "libft.h"
 #include "get_next_line.h"
+
+
+#define	HEIGHT 600
+#define	WIDTH 600
 
 
 #define RAD 6.2831853072
@@ -31,10 +35,19 @@ typedef struct s_parse
     int y;
 } t_parse;
 
+typedef struct	s_img_data {
+	void	*img;
+	char	*addr;
+	int		bits_per_pixel;
+	int		line_length;
+	int		endian;
+}				t_img_data;
+
 typedef struct s_win
 {
-    void *mlx;
-    void *win;
+    void 		*mlx;
+    void 		*win;
+	t_img_data	img;
 } t_win;
 
 typedef struct s_player

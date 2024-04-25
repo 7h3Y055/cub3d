@@ -6,13 +6,14 @@ LIBFT_DIR = ./lib/libft
 LIBFT     = ./lib/libft/libft.a
 GNL		  = lib/gnl/get_next_line.c lib/gnl/get_next_line_utils.c
 CFLAGS    = -g #-fsanitize=address# -Wall -Werror -Wextra
-MLX_FLAGS = -lXext -lX11
+# MLX_FLAGS = -lXext -lX11
+MAC_FLAGS = -lmlx -framework OpenGL -framework AppKit
 CC        = cc
 
 all:$(NAME)
 
 $(NAME):$(GNL) $(LIBFT) $(OBJS)
-	$(CC) $(OBJS) $(MLX_FLAGS) $(CFLAGS) $(LIBFT) libmlx_Linux.a $(GNL) -I$(INC) -o $(NAME)
+	$(CC) $(OBJS) $(MLX_FLAGS) $(CFLAGS) $(LIBFT) libmlx_Linux.a $(GNL) -I$(INC) -o $(NAME) $(MAC_FLAGS)
 
 %.o:%.c
 	$(CC) $(CFLAGS) $< -c -I$(INC) -o $@

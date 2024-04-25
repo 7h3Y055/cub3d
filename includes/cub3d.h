@@ -13,12 +13,13 @@
 #include "get_next_line.h"
 
 
-#define	HEIGHT 600
-#define	WIDTH 600
+#define	HEIGHT 1080
+#define	WIDTH 720
 
 
 #define RAD 6.2831853072
-#define SCALE 15
+#define SCALE 50
+#define SCALE_P 5
 
 
 typedef struct s_parse

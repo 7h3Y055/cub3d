@@ -48,7 +48,6 @@ typedef struct s_win
 {
     void 		*mlx;
     void 		*win;
-	t_img_data	img;
 } t_win;
 
 typedef struct s_player
@@ -75,5 +74,7 @@ void ft_parse(t_ptr *ptr, int argc, char const **argv);
 int ft_error(t_ptr *ptr, char *str, int n);
 void    create_scaled_map(t_ptr *ptr);
 char    **allocate_memory_for_map2d(t_ptr *ptr, int y, int x);
+void	init_mlx(t_ptr *ptr);
+void	render_map(t_ptr ptr);
 
 #endif

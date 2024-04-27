@@ -22,17 +22,19 @@
 #define NINETY_DEGREE 1.5707963268
 #define SCALE 50
 #define SCALE_P 10
-#define PLAYER_SPEED 10
+#define PLAYER_SPEED 7 // > 1
+#define ROTATION_SPEED 0.050
 
 
-#define W       119
-#define D       100
-#define S       115
-#define A       97
 
-#define RIGHT   65363
-#define LEFT    65361
-#define ESC    65307
+#define W 0
+#define D 1
+#define S 2
+#define A 3
+#define L 4
+#define R 5
+#define E 6
+
 
 
 
@@ -79,7 +81,7 @@ typedef struct s_ptr
     t_parse parse;
     t_win   win;
     t_player player;
-
+    int     keys[7];
     char **map2d;
     char **map2d_scaled;
 } t_ptr;
@@ -106,5 +108,7 @@ void	init_mlx(t_ptr *ptr);
 void	render_map(t_ptr ptr);
 
 
+int key_pressed(int keycode, t_ptr *ptr);
+int key_released(int keycode, t_ptr *ptr);
 
 #endif

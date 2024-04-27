@@ -1,5 +1,41 @@
 #include "cub3d.h"
 
+int key_pressed(int keycode, t_ptr *ptr) {
+    if (keycode == XK_w)
+        ptr->keys[W] = 1;
+    if (keycode == XK_d)
+        ptr->keys[D] = 1;
+    if (keycode == XK_s)
+        ptr->keys[S] = 1;
+    if (keycode == XK_a)
+        ptr->keys[A] = 1;
+    if (keycode == XK_Left)
+        ptr->keys[L] = 1;
+    if (keycode == XK_Right)
+        ptr->keys[R] = 1;
+    if (keycode == XK_Escape)
+        ptr->keys[E] = 1;
+    
+    return 0;
+}
+
+int key_released(int keycode, t_ptr *ptr) {
+    if (keycode == XK_w)
+        ptr->keys[W] = 0;
+    if (keycode == XK_d)
+        ptr->keys[D] = 0;
+    if (keycode == XK_s)
+        ptr->keys[S] = 0;
+    if (keycode == XK_a)
+        ptr->keys[A] = 0;
+    if (keycode == XK_Left)
+        ptr->keys[L] = 0;
+    if (keycode == XK_Right)
+        ptr->keys[R] = 0;
+    if (keycode == XK_Escape)
+        ptr->keys[E] = 0;
+    return 0;
+}
 
 void go_up(t_ptr *ptr)
 {
@@ -13,8 +49,6 @@ void go_up(t_ptr *ptr)
         ptr->player.x +=  x;
         ptr->player.y +=  y;
     }
-    else
-        printf("REFUSE!\n");
 
 }
 
@@ -30,8 +64,6 @@ void go_right(t_ptr *ptr)
         ptr->player.x +=  x;
         ptr->player.y +=  y;
     }
-    else
-        printf("REFUSE!\n");
 }
 
 void go_down(t_ptr *ptr)
@@ -46,8 +78,6 @@ void go_down(t_ptr *ptr)
         ptr->player.x -=  x;
         ptr->player.y -=  y;
     }
-    else
-        printf("REFUSE!\n");
 }
 
 void go_left(t_ptr *ptr)
@@ -62,22 +92,18 @@ void go_left(t_ptr *ptr)
         ptr->player.x -=  x;
         ptr->player.y -=  y;
     }
-    else
-        printf("REFUSE!\n");
 }
 
 void right_angle(t_ptr *ptr)
 {
-    ptr->player.angle += 0.1;
+    ptr->player.angle += ROTATION_SPEED;
     if (ptr->player.angle > RAD)
         ptr->player.angle = 0;
-    // printf("[%f]\n", ptr->player.angle);
 }
 
 void left_argle(t_ptr *ptr)
 {
-    ptr->player.angle -= 0.1;
+    ptr->player.angle -= ROTATION_SPEED;
     if (ptr->player.angle < 0)
         ptr->player.angle = RAD;
-    // printf("[%f]\n", ptr->player.angle);
 }

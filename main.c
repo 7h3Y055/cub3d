@@ -29,6 +29,7 @@ int render_loop(t_ptr *ptr)
 {
     handle_input(ptr);
 	create_map(&ptr->win.img, ptr->map2d_scaled);
+	put_arrow(ptr);
 	put_player_to_image(&ptr->win.img, ptr->player);
 	mlx_put_image_to_window(ptr->win.mlx, ptr->win.win, ptr->win.img.img, 0, 0);
 

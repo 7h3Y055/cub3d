@@ -3,8 +3,8 @@
 
 #include <mlx.h>
 #include <math.h>
-#include <X11/keysym.h>
-#include <X11/X.h>
+// #include <X11/keysym.h>
+// #include <X11/X.h>
 #include <fcntl.h>
 #include <unistd.h>
 #include <stdio.h>
@@ -25,7 +25,14 @@
 #define PLAYER_SPEED 7 // > 1
 #define ROTATION_SPEED 0.050
 
+#define W_M       13
+#define D_M       2
+#define S_M       1
+#define A_M       0
 
+#define RIGHT_M   124
+#define LEFT_M    123
+#define ESC_M    53
 
 #define W 0
 #define D 1
@@ -36,7 +43,11 @@
 #define E 6
 
 
-
+typedef struct s_point
+{
+	long long	x;
+	long long	y;
+}	t_point;
 
 typedef struct s_parse
 {
@@ -106,6 +117,7 @@ void	create_map(t_img_data *img, char **map);
 void	put_player_to_image(t_img_data *img, t_player player);
 void	init_mlx(t_ptr *ptr);
 void	render_map(t_ptr ptr);
+void	put_arrow(t_ptr *ptr);
 
 
 int key_pressed(int keycode, t_ptr *ptr);

@@ -8,6 +8,30 @@ void	my_mlx_pixel_put(t_img_data *img, int x, int y, int color)
 	*(unsigned int*)dst = color;
 }
 
+void	put_arrow(t_ptr *ptr)
+{
+	t_point	next_point;
+	int i;
+	double	a = ptr->player.angle - 1;
+
+	next_point.y = sin(ptr->player.angle) * PLAYER_SPEED + ptr->player.y;
+    next_point.x = cos(ptr->player.angle) * PLAYER_SPEED + ptr->player.x;
+	while (a <= ptr->player.angle + 1)
+	{
+		i = 1;
+		while (1)
+		{
+			next_point.y = sin(a) * i + ptr->player.y;
+			next_point.x = cos(a) * i + ptr->player.x;
+			if (ptr->map2d_scaled[next_point.y][next_point.x] != '0')
+				break ;
+			my_mlx_pixel_put(&ptr->win.img, next_point.x, next_point.y, 0);
+			i++;
+		}
+		a += 0.0005;
+	}
+}
+
 int	color_unit_pixel(char map_unit)
 {
 	if (map_unit == '1')
@@ -62,17 +86,4 @@ void	init_mlx(t_ptr *ptr)
 {
 	ptr->win.mlx = mlx_init();
 	ptr->win.win = mlx_new_window(ptr->win.mlx, ptr->parse.x * SCALE, ptr->parse.y * SCALE, "Cub3D");
-}
-
-void	render_map(t_ptr ptr)
-{
-	t_img_data	img;
-
-	img.img = mlx_new_image(ptr.win.mlx, ptr.parse.x * SCALE, ptr.parse.y * SCALE);
-	img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length,
-				&img.endian);
-	create_map(&img, ptr.map2d_scaled);
-	put_player_to_image(&img, ptr.player);
-	mlx_clear_window(ptr.win.mlx, ptr.win.win);
-	mlx_put_image_to_window(ptr.win.mlx, ptr.win.win, img.img, 0, 0);
 }

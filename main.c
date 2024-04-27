@@ -22,6 +22,7 @@ int handle_input(t_ptr *ptr)
         left_argle(ptr);
     if (ptr->keys[E])
         destroy_all(ptr);
+	return (0);
 }
 
 
@@ -32,7 +33,7 @@ int render_loop(t_ptr *ptr)
 	put_arrow(ptr);
 	put_player_to_image(&ptr->win.img, ptr->player);
 	mlx_put_image_to_window(ptr->win.mlx, ptr->win.win, ptr->win.img.img, 0, 0);
-
+	return (0);
 }
 
 int main(int argc, char const **argv)
@@ -62,4 +63,5 @@ int main(int argc, char const **argv)
     mlx_hook(ptr.win.win, KeyRelease, KeyReleaseMask, key_released, &ptr);
 
 	mlx_loop(ptr.win.mlx);
+	return (0);
 }

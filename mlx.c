@@ -12,11 +12,11 @@ void	put_arrow(t_ptr *ptr)
 {
 	t_point	next_point;
 	int i;
-	double	a = ptr->player.angle - 1;
+	double	a = ptr->player.angle - EYE_ANGLE;
 
 	next_point.y = sin(ptr->player.angle) * PLAYER_SPEED + ptr->player.y;
     next_point.x = cos(ptr->player.angle) * PLAYER_SPEED + ptr->player.x;
-	while (a <= ptr->player.angle + 1)
+	while (a <= ptr->player.angle + EYE_ANGLE)
 	{
 		i = 1;
 		while (1)

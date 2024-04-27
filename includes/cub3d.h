@@ -3,8 +3,8 @@
 
 #include <mlx.h>
 #include <math.h>
-// #include <X11/keysym.h>
-// #include <X11/X.h>
+#include <X11/keysym.h>
+#include <X11/X.h>
 #include <fcntl.h>
 #include <unistd.h>
 #include <stdio.h>
@@ -24,6 +24,8 @@
 #define SCALE_P 10
 #define PLAYER_SPEED 7 // > 1
 #define ROTATION_SPEED 0.050
+
+#define EYE_ANGLE 0.523599
 
 #define W_M       13
 #define D_M       2

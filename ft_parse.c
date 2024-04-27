@@ -359,8 +359,8 @@ void    create_scaled_map(t_ptr *ptr)
     
 }
 
-void    test(t_ptr *ptr)
-{
+// void    test(t_ptr *ptr)
+// {
     // ptr->win.mlx = mlx_init();
     // ptr->win.win = mlx_new_window(ptr->win.mlx, 1280,720, "test");
 
@@ -372,7 +372,7 @@ void    test(t_ptr *ptr)
     // mlx_destroy_window(ptr->win.mlx, ptr->win.win);
     // mlx_destroy_display(ptr->win.mlx);
     // free(ptr->win.mlx);
-}
+// }
 
 void ft_parse(t_ptr *ptr, int argc, char const **argv)
 {

@@ -14,6 +14,16 @@
         "charconv": "c",
         "cub3d.h": "c",
         "keysym.h": "c",
-        "unistd.h": "c"
+        "unistd.h": "c",
+        "algorithm": "c",
+        "atomic": "c",
+        "*.tcc": "c",
+        "fstream": "c",
+        "memory": "c",
+        "new": "c",
+        "numeric": "c",
+        "system_error": "c",
+        "thread": "c",
+        "libft.h": "c"
     }
 }

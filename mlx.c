@@ -13,14 +13,17 @@ void	put_arrow(t_ptr *ptr)
 	t_point	next_point;
 	int i;
 	double	a = ptr->player.angle - EYE_ANGLE;
+	size_t n;
 
 	next_point.y = sin(ptr->player.angle) * PLAYER_SPEED + ptr->player.y;
     next_point.x = cos(ptr->player.angle) * PLAYER_SPEED + ptr->player.x;
 	while (a <= ptr->player.angle + EYE_ANGLE)
 	{
 		i = 1;
+		n = 1;
 		while (1)
 		{
+			n++;
 			next_point.y = sin(a) * i + ptr->player.y;
 			next_point.x = cos(a) * i + ptr->player.x;
 			if (ptr->map2d_scaled[next_point.y][next_point.x] != '0')
@@ -28,8 +31,10 @@ void	put_arrow(t_ptr *ptr)
 			my_mlx_pixel_put(&ptr->win.img, next_point.x, next_point.y, 0);
 			i++;
 		}
-		a += 0.0005;
+		// a += RAD / 5;
+		a += 0.30;
 	}
+	printf("%zu\n", n);
 }
 
 int	color_unit_pixel(char map_unit)

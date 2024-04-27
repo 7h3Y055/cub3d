@@ -25,7 +25,6 @@ int handle_input(t_ptr *ptr)
 	return (0);
 }
 
-
 int render_loop(t_ptr *ptr)
 {
     handle_input(ptr);
@@ -46,19 +45,22 @@ int main(int argc, char const **argv)
 
 
 
-    printf("valid map\n");
     ptr.win.mlx = mlx_init();
-	ptr.win.win = mlx_new_window(ptr.win.mlx, ptr.parse.x * SCALE, ptr.parse.y * SCALE, "Cub3D");
 
+
+
+
+	ptr.win.win = mlx_new_window(ptr.win.mlx, ptr.parse.x * SCALE, ptr.parse.y * SCALE, "Cub3D map2d");
 	ptr.win.img.img = mlx_new_image(ptr.win.mlx, ptr.parse.x * SCALE, ptr.parse.y * SCALE);
 	ptr.win.img.addr = mlx_get_data_addr(ptr.win.img.img, &ptr.win.img.bits_per_pixel, &ptr.win.img.line_length,
 				&ptr.win.img.endian);
 
+	test(&ptr);
+
+
+
     mlx_loop_hook(ptr.win.mlx, render_loop, &ptr);
-
-
     mlx_hook(ptr.win.win, DestroyNotify, ButtonPressMask, destroy_all, &ptr);
-
     mlx_hook(ptr.win.win, KeyPress, KeyPressMask, key_pressed, &ptr);
     mlx_hook(ptr.win.win, KeyRelease, KeyReleaseMask, key_released, &ptr);
 

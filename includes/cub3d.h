@@ -22,6 +22,12 @@
 #define	WIDTH 720
 
 
+#define	RED 0xFF0000
+#define	BLACK 0x000000
+#define	GREAN 0x36FF00
+#define	BLEU 0x0021FF
+
+
 #define RAD 6.2831853072
 #define NINETY_DEGREE 1.5707963268
 #define PI 3.141592653589793
@@ -29,7 +35,8 @@
 #define SCALE_P 10
 #define PLAYER_SPEED 7 // > 1
 // #define ROTATION_SPEED 0.0055
-#define ROTATION_SPEED 0.050
+// #define ROTATION_SPEED 0.050
+#define ROTATION_SPEED 0.100
 
 #define EYE_ANGLE 0.523599
 

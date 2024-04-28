@@ -13,15 +13,34 @@ double d2rad(double d)
 	return (d * PI/180);
 }
 
+int ft_color(double angle)
+{
+	int color;
+
+	color = 0;
+	if ((angle > d2rad(45) && angle < d2rad(135)))
+		color = RED;
+	else if ((angle > d2rad(225) && angle < d2rad(315)))
+		color = GREAN;
+	else if ((angle > d2rad(135) && angle < d2rad(225)))
+		color = BLEU;
+	else if ((angle < d2rad(45) && angle > 0) || ((angle < d2rad(360) && angle > d2rad(315))))
+		color = BLACK;
+	return (color);
+}
+
 void	put_arrow(t_ptr *ptr)
 {
 	t_point	next_point;
 	double x;
 	int i;
-	double	a = ptr->player.angle;// - EYE_ANGLE;
+	int color;
+	double	a = ptr->player.angle - EYE_ANGLE;
 	size_t n;
 
 	int	c = 0;
+
+	
 
 	next_point.y = sin(ptr->player.angle) * PLAYER_SPEED + ptr->player.y;
     next_point.x = cos(ptr->player.angle) * PLAYER_SPEED + ptr->player.x;
@@ -29,6 +48,7 @@ void	put_arrow(t_ptr *ptr)
 	{
 		i = 1;
 		n = 1;
+		color = ft_color(a);
 		while (1)
 		{
 			n++;
@@ -36,25 +56,10 @@ void	put_arrow(t_ptr *ptr)
 			next_point.x = cos(a) * i + ptr->player.x;
 			if (ptr->map2d_scaled[next_point.y][next_point.x] != '0')
 				break ;
-			// if ((ptr->player.angle < d2rad(45) || ptr->player.angle > d2rad(315)))
-			// {
-			// 	my_mlx_pixel_put(&ptr->win.img, next_point.x, next_point.y, 0x0032FF);
-			// 	printf("HI\n");
-			// }
-			if ((ptr->player.angle > d2rad(45) && ptr->player.angle > d2rad(135)))
-			{
-				my_mlx_pixel_put(&ptr->win.img, next_point.x, next_point.y, 0xFF0000);
-				printf("HI\n");
-			}
-			else if ((ptr->player.angle > d2rad(225) && ptr->player.angle > d2rad(315)))
-			{
-				my_mlx_pixel_put(&ptr->win.img, next_point.x, next_point.y, 0x36FF00);
-				printf("HI\n");
-			}
-			else
-				my_mlx_pixel_put(&ptr->win.img, next_point.x, next_point.y, 0x000000);
+			my_mlx_pixel_put(&ptr->win.img, next_point.x, next_point.y, color);
 			i++;
 		}
+
 		x = ptr->player.angle - a;
 		if (x < 0)
 			x += RAD;
@@ -63,8 +68,8 @@ void	put_arrow(t_ptr *ptr)
 		n = n*cos(x);
 
 		create_square(&ptr->img3d, n, c++);
-		// a += 0.00081812308687;
-		a += RAD;
+		a += 0.00081812308687;
+		// a += RAD;
 	}
 }
 

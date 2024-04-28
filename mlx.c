@@ -8,11 +8,17 @@ void	my_mlx_pixel_put(t_img_data *img, int x, int y, int color)
 	*(unsigned int*)dst = color;
 }
 
+double d2rad(double d)
+{
+	return (d * PI/180);
+}
+
 void	put_arrow(t_ptr *ptr)
 {
 	t_point	next_point;
+	double x;
 	int i;
-	double	a = ptr->player.angle - EYE_ANGLE;
+	double	a = ptr->player.angle;// - EYE_ANGLE;
 	size_t n;
 
 	int	c = 0;
@@ -30,12 +36,35 @@ void	put_arrow(t_ptr *ptr)
 			next_point.x = cos(a) * i + ptr->player.x;
 			if (ptr->map2d_scaled[next_point.y][next_point.x] != '0')
 				break ;
-			my_mlx_pixel_put(&ptr->win.img, next_point.x, next_point.y, 0);
+			// if ((ptr->player.angle < d2rad(45) || ptr->player.angle > d2rad(315)))
+			// {
+			// 	my_mlx_pixel_put(&ptr->win.img, next_point.x, next_point.y, 0x0032FF);
+			// 	printf("HI\n");
+			// }
+			if ((ptr->player.angle > d2rad(45) && ptr->player.angle > d2rad(135)))
+			{
+				my_mlx_pixel_put(&ptr->win.img, next_point.x, next_point.y, 0xFF0000);
+				printf("HI\n");
+			}
+			else if ((ptr->player.angle > d2rad(225) && ptr->player.angle > d2rad(315)))
+			{
+				my_mlx_pixel_put(&ptr->win.img, next_point.x, next_point.y, 0x36FF00);
+				printf("HI\n");
+			}
+			else
+				my_mlx_pixel_put(&ptr->win.img, next_point.x, next_point.y, 0x000000);
 			i++;
 		}
-		create_square(&ptr->img3d, WIDTH / n, 1164, c++);
-		a += 0.0009;
-		// a += 0.30;
+		x = ptr->player.angle - a;
+		if (x < 0)
+			x += RAD;
+		if (x > RAD)
+			x -= RAD;
+		n = n*cos(x);
+
+		create_square(&ptr->img3d, n, c++);
+		// a += 0.00081812308687;
+		a += RAD;
 	}
 }
 

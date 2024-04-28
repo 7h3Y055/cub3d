@@ -31,7 +31,7 @@ int render_loop(t_ptr *ptr)
 	create_map(&ptr->win.img, ptr->map2d_scaled);
 	put_arrow(ptr);
 
-	midle_line(ptr);
+	// midle_line(ptr);
 	mlx_put_image_to_window(ptr->win.mlx, ptr->win3d, ptr->img3d.img, 0, 0);
 
 	put_player_to_image(&ptr->win.img, ptr->player);
@@ -44,10 +44,12 @@ int main(int argc, char const **argv)
     t_ptr	ptr;
 
     ft_parse(&ptr, argc, argv);
-
+    printf("%d\n", ptr.parse.y * SCALE);
+    printf("%d\n", ptr.parse.x * SCALE);
 	init_mlx(&ptr);
 
     mlx_loop_hook(ptr.win.mlx, render_loop, &ptr);
+    // render_loop(&ptr);
     mlx_hook(ptr.win.win, DestroyNotify, ButtonPressMask, destroy_all, &ptr);
     mlx_hook(ptr.win.win, KeyPress, KeyPressMask, key_pressed, &ptr);
     mlx_hook(ptr.win.win, KeyRelease, KeyReleaseMask, key_released, &ptr);

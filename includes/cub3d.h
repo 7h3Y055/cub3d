@@ -18,16 +18,17 @@
 // #include "/Users/mezzine/homebrew/include/X11/X.h"
 
 
-#define	HEIGHT 1164
+#define	HEIGHT 1280
 #define	WIDTH 720
 
 
 #define RAD 6.2831853072
 #define NINETY_DEGREE 1.5707963268
-#define SCALE 50
+#define PI 3.141592653589793
+#define SCALE 100
 #define SCALE_P 10
-#define PLAYER_SPEED 2 // > 1
-// #define ROTATION_SPEED 0.0005
+#define PLAYER_SPEED 7 // > 1
+// #define ROTATION_SPEED 0.0055
 #define ROTATION_SPEED 0.050
 
 #define EYE_ANGLE 0.523599
@@ -128,7 +129,7 @@ void	init_mlx(t_ptr *ptr);
 void	render_map(t_ptr ptr);
 void	put_arrow(t_ptr *ptr);
 void	my_mlx_pixel_put(t_img_data *img, int x, int y, int color);
-void    create_square(t_img_data *img, size_t ray_l, size_t ray_c, size_t n);
+void    create_square(t_img_data *img, size_t ray_l, size_t n);
 
 void midle_line(t_ptr *ptr);
 

@@ -33,7 +33,7 @@ void	put_arrow(t_ptr *ptr)
 			my_mlx_pixel_put(&ptr->win.img, next_point.x, next_point.y, 0);
 			i++;
 		}
-		create_square(&ptr->img3d, HEIGHT / n, 1164, c++);
+		create_square(&ptr->img3d, WIDTH / n, 1164, c++);
 		a += 0.0009;
 		// a += 0.30;
 	}

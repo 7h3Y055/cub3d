@@ -15,6 +15,8 @@ void	put_arrow(t_ptr *ptr)
 	double	a = ptr->player.angle - EYE_ANGLE;
 	size_t n;
 
+	int	c = 0;
+
 	next_point.y = sin(ptr->player.angle) * PLAYER_SPEED + ptr->player.y;
     next_point.x = cos(ptr->player.angle) * PLAYER_SPEED + ptr->player.x;
 	while (a <= ptr->player.angle + EYE_ANGLE)
@@ -31,10 +33,10 @@ void	put_arrow(t_ptr *ptr)
 			my_mlx_pixel_put(&ptr->win.img, next_point.x, next_point.y, 0);
 			i++;
 		}
-		// a += RAD / 5;
-		a += 0.30;
+		create_square(&ptr->img3d, HEIGHT / n, 1164, c++);
+		a += 0.0009;
+		// a += 0.30;
 	}
-	printf("%zu\n", n);
 }
 
 int	color_unit_pixel(char map_unit)
@@ -90,5 +92,12 @@ void	put_player_to_image(t_img_data *img, t_player player)
 void	init_mlx(t_ptr *ptr)
 {
 	ptr->win.mlx = mlx_init();
-	ptr->win.win = mlx_new_window(ptr->win.mlx, ptr->parse.x * SCALE, ptr->parse.y * SCALE, "Cub3D");
+	ptr->win.win = mlx_new_window(ptr->win.mlx, ptr->parse.x * SCALE, ptr->parse.y * SCALE, "Cub3D map2d");
+	ptr->win3d = mlx_new_window(ptr->win.mlx, HEIGHT, WIDTH, "Cub3D map3D");
+	ptr->win.img.img = mlx_new_image(ptr->win.mlx, ptr->parse.x * SCALE, ptr->parse.y * SCALE);
+	ptr->win.img.addr = mlx_get_data_addr(ptr->win.img.img, &ptr->win.img.bits_per_pixel, &ptr->win.img.line_length,
+				&ptr->win.img.endian);
+	ptr->img3d.img = mlx_new_image(ptr->win.mlx,HEIGHT ,WIDTH);
+	ptr->img3d.addr = mlx_get_data_addr(ptr->img3d.img, &ptr->img3d.bits_per_pixel, &ptr->img3d.line_length,
+				&ptr->img3d.endian);
 }

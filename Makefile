@@ -1,14 +1,16 @@
 NAME      = cub3d
-SRCS      = main.c ft_parse.c utils.c mlx.c moves.c test.c
+SRCS      = main.c ft_parse.c utils.c mlx.c moves.c raycasting.c
 OBJS      = $(SRCS:.c=.o)
 INC       = ./includes
 LIBFT_DIR = ./lib/libft
 LIBFT     = ./lib/libft/libft.a
 GNL		  = lib/gnl/get_next_line.c lib/gnl/get_next_line_utils.c
-CFLAGS    = -g #-fsanitize=address# -Wall -Werror -Wextra
+CFLAGS    = #-g -fsanitize=address -Wall -Werror -Wextra
 MLX_FLAGS = -lXext -lX11 -lm
-# MAC_FLAGS = -lmlx -framework OpenGL -framework AppKit -lm
 CC        = cc
+
+# MAC_FLAGS = -lmlx -framework OpenGL -framework AppKit -lm
+# X11 = -I /Users/mezzine/homebrew/lib/X11/locale/common
 
 all:$(NAME)
 

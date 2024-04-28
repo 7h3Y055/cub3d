@@ -13,8 +13,12 @@
 #include "libft.h"
 #include "get_next_line.h"
 
+//MAC
+// #include "/Users/mezzine/homebrew/include/X11/keysym.h"
+// #include "/Users/mezzine/homebrew/include/X11/X.h"
 
-#define	HEIGHT 1280
+
+#define	HEIGHT 1164
 #define	WIDTH 720
 
 
@@ -23,8 +27,8 @@
 #define SCALE 50
 #define SCALE_P 10
 #define PLAYER_SPEED 2 // > 1
-#define ROTATION_SPEED 0.0005
-// #define ROTATION_SPEED 0.050
+// #define ROTATION_SPEED 0.0005
+#define ROTATION_SPEED 0.050
 
 #define EYE_ANGLE 0.523599
 
@@ -94,6 +98,8 @@ typedef struct s_ptr
 {
     t_parse parse;
     t_win   win;
+	t_img_data img3d;
+	void 	*win3d;
     t_player player;
     int     keys[7];
     char **map2d;
@@ -122,7 +128,9 @@ void	init_mlx(t_ptr *ptr);
 void	render_map(t_ptr ptr);
 void	put_arrow(t_ptr *ptr);
 void	my_mlx_pixel_put(t_img_data *img, int x, int y, int color);
-void test(t_ptr *ptr);
+void    create_square(t_img_data *img, size_t ray_l, size_t ray_c, size_t n);
+
+void midle_line(t_ptr *ptr);
 
 int key_pressed(int keycode, t_ptr *ptr);
 int key_released(int keycode, t_ptr *ptr);

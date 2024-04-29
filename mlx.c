@@ -13,26 +13,28 @@ double d2rad(double d)
 	return (d * PI/180);
 }
 
-int ft_color(double angle)
-{
-	int color;
+// int ft_color(double angle)
+// {
+// 	int color;
 
-	color = 0;
-	if ((angle > d2rad(45) && angle < d2rad(135)))
-		color = RED;
-	else if ((angle > d2rad(225) && angle < d2rad(315)))
-		color = GREAN;
-	else if ((angle > d2rad(135) && angle < d2rad(225)))
-		color = BLEU;
-	else if ((angle < d2rad(45) && angle > 0) || ((angle < d2rad(360) && angle > d2rad(315))))
-		color = BLACK;
-	return (color);
-}
+// 	color = 0;
+// 	if ((angle > d2rad(45) && angle < d2rad(135)))
+// 		color = RED;
+// 	else if ((angle > d2rad(225) && angle < d2rad(315)))
+// 		color = GREAN;
+// 	else if ((angle > d2rad(135) && angle < d2rad(225)))
+// 		color = BLEU;
+// 	else if ((angle < d2rad(45) && angle > 0) || ((angle < d2rad(360) && angle > d2rad(315))))
+// 		color = BLACK;
+// 	return (color);
+// }
 
 void	put_arrow(t_ptr *ptr)
 {
 	t_point	next_point;
 	double x;
+	long long dx;
+	long long dy;
 	int i;
 	int color;
 	double	a = ptr->player.angle - EYE_ANGLE;
@@ -48,15 +50,18 @@ void	put_arrow(t_ptr *ptr)
 	{
 		i = 1;
 		n = 1;
-		color = ft_color(a);
 		while (1)
 		{
 			n++;
+			dx = next_point.x;
+			dy = next_point.y;
 			next_point.y = sin(a) * i + ptr->player.y;
 			next_point.x = cos(a) * i + ptr->player.x;
+
+
 			if (ptr->map2d_scaled[next_point.y][next_point.x] != '0')
 				break ;
-			my_mlx_pixel_put(&ptr->win.img, next_point.x, next_point.y, color);
+			// my_mlx_pixel_put(&ptr->win.img, next_point.x, next_point.y, color);
 			i++;
 		}
 
@@ -67,9 +72,14 @@ void	put_arrow(t_ptr *ptr)
 			x -= RAD;
 		n = n*cos(x);
 
-		create_square(&ptr->img3d, n, c++);
+
+		if (ptr->map2d_scaled[dy][next_point.x] != '0')
+			color = RED;
+		if (ptr->map2d_scaled[next_point.y][dx] != '0')
+			color = BLEU;
+
+		create_square(&ptr->img3d, n, c++, color);
 		a += 0.00081812308687;
-		// a += RAD;
 	}
 }
 

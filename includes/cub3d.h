@@ -32,12 +32,9 @@
 #define NINETY_DEGREE 1.5707963268
 #define PI 3.141592653589793
 #define SCALE 100
-#define SCALE_P 10
-#define PLAYER_SPEED 7 // > 1
-// #define ROTATION_SPEED 0.0055
-// #define ROTATION_SPEED 0.050
-#define ROTATION_SPEED 0.100
-
+#define SCALE_P 7
+#define PLAYER_SPEED 7
+#define ROTATION_SPEED 0.05
 #define EYE_ANGLE 0.523599
 
 #define W_M       13
@@ -136,8 +133,7 @@ void	init_mlx(t_ptr *ptr);
 void	render_map(t_ptr ptr);
 void	put_arrow(t_ptr *ptr);
 void	my_mlx_pixel_put(t_img_data *img, int x, int y, int color);
-void    create_square(t_img_data *img, size_t ray_l, size_t n);
-
+void    create_square(t_img_data *img, size_t ray_l, size_t x, int color);
 void midle_line(t_ptr *ptr);
 
 int key_pressed(int keycode, t_ptr *ptr);

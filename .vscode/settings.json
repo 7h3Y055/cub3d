@@ -26,6 +26,7 @@
 		"thread": "c",
 		"libft.h": "c",
 		"fcntl.h": "c",
-		"get_next_line.h": "c"
+		"get_next_line.h": "c",
+		"mlx.h": "c"
 	}
 }

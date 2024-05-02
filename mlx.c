@@ -74,9 +74,11 @@ void	put_arrow(t_ptr *ptr)
 
 
 		if (ptr->map2d_scaled[dy][next_point.x] != '0')
-			color = RED;
+			color = GREEN;
 		if (ptr->map2d_scaled[next_point.y][dx] != '0')
-			color = BLEU;
+			color = WHITE;
+		// else
+		// 	printf("NN\n");
 
 		create_square(&ptr->img3d, n, c++, color);
 		a += 0.00081812308687;
@@ -136,11 +138,11 @@ void	put_player_to_image(t_img_data *img, t_player player)
 void	init_mlx(t_ptr *ptr)
 {
 	ptr->win.mlx = mlx_init();
-	ptr->win.win = mlx_new_window(ptr->win.mlx, ptr->parse.x * SCALE, ptr->parse.y * SCALE, "Cub3D map2d");
+	// ptr->win.win = mlx_new_window(ptr->win.mlx, ptr->parse.x * SCALE, ptr->parse.y * SCALE, "Cub3D map2d");
 	ptr->win3d = mlx_new_window(ptr->win.mlx, HEIGHT, WIDTH, "Cub3D map3D");
-	ptr->win.img.img = mlx_new_image(ptr->win.mlx, ptr->parse.x * SCALE, ptr->parse.y * SCALE);
-	ptr->win.img.addr = mlx_get_data_addr(ptr->win.img.img, &ptr->win.img.bits_per_pixel, &ptr->win.img.line_length,
-				&ptr->win.img.endian);
+	// ptr->win.img.img = mlx_new_image(ptr->win.mlx, ptr->parse.x * SCALE, ptr->parse.y * SCALE);
+	// ptr->win.img.addr = mlx_get_data_addr(ptr->win.img.img, &ptr->win.img.bits_per_pixel, &ptr->win.img.line_length,
+	// 			&ptr->win.img.endian);
 	ptr->img3d.img = mlx_new_image(ptr->win.mlx,HEIGHT ,WIDTH);
 	ptr->img3d.addr = mlx_get_data_addr(ptr->img3d.img, &ptr->img3d.bits_per_pixel, &ptr->img3d.line_length,
 				&ptr->img3d.endian);

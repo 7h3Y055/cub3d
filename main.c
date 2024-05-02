@@ -28,14 +28,14 @@ int render_loop(t_ptr *ptr)
 	ft_bzero(ptr->img3d.addr, WIDTH * HEIGHT * (ptr->img3d.bits_per_pixel / 8));
 
     handle_input(ptr);
-	create_map(&ptr->win.img, ptr->map2d_scaled);
+	// create_map(&ptr->win.img, ptr->map2d_scaled);
 	put_arrow(ptr);
 
 	// midle_line(ptr);
 	mlx_put_image_to_window(ptr->win.mlx, ptr->win3d, ptr->img3d.img, 0, 0);
 
-	put_player_to_image(&ptr->win.img, ptr->player);
-	mlx_put_image_to_window(ptr->win.mlx, ptr->win.win, ptr->win.img.img, 0, 0);
+	// put_player_to_image(&ptr->win.img, ptr->player);
+	// mlx_put_image_to_window(ptr->win.mlx, ptr->win.win, ptr->win.img.img, 0, 0);
 	return (0);
 }
 
@@ -50,9 +50,9 @@ int main(int argc, char const **argv)
 
     mlx_loop_hook(ptr.win.mlx, render_loop, &ptr);
     // render_loop(&ptr);
-    mlx_hook(ptr.win.win, DestroyNotify, ButtonPressMask, destroy_all, &ptr);
-    mlx_hook(ptr.win.win, KeyPress, KeyPressMask, key_pressed, &ptr);
-    mlx_hook(ptr.win.win, KeyRelease, KeyReleaseMask, key_released, &ptr);
+    mlx_hook(ptr.win3d, DestroyNotify, ButtonPressMask, destroy_all, &ptr);
+    mlx_hook(ptr.win3d, KeyPress, KeyPressMask, key_pressed, &ptr);
+    mlx_hook(ptr.win3d, KeyRelease, KeyReleaseMask, key_released, &ptr);
 
 
 	mlx_loop(ptr.win.mlx);

@@ -37,6 +37,7 @@ int key_released(int keycode, t_ptr *ptr) {
     return 0;
 }
 
+
 void go_up(t_ptr *ptr)
 {
     long long y;

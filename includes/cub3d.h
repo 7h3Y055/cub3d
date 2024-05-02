@@ -14,8 +14,8 @@
 #include "get_next_line.h"
 
 //MAC
-// #include "/Users/mezzine/homebrew/include/X11/keysym.h"
-// #include "/Users/mezzine/homebrew/include/X11/X.h"
+// #include "/Users/mezzine/.brew/include/X11/keysym.h"
+// #include "/Users/mezzine/.brew/include/X11/X.h"
 
 
 #define	HEIGHT 1280
@@ -23,8 +23,9 @@
 
 
 #define	RED 0xFF0000
+#define	WHITE 0xFFFFFF
 #define	BLACK 0x000000
-#define	GREAN 0x36FF00
+#define	GREEN 0x40E8B7
 #define	BLEU 0x0021FF
 
 

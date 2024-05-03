@@ -15,7 +15,9 @@ double d2rad(double d)
 
 void	put_arrow(t_ptr *ptr)
 {
+	double angle = ptr->player.angle;
 
+	
 }
 
 int	color_unit_pixel(char map_unit)
@@ -53,6 +55,7 @@ void	put_player_to_image(t_img_data *img, t_player player)
 {
 	size_t x;
 	size_t y;
+	size_t n;
 	size_t x_max;
 	size_t y_max;
 
@@ -68,6 +71,12 @@ void	put_player_to_image(t_img_data *img, t_player player)
 			x++;
 		}
 		y++;
+	}
+	n = 1;
+	while (n < 20)
+	{
+		my_mlx_pixel_put(img, player.x + (cos(player.angle) * n), player.y + (sin(player.angle) * n), 0xFE2D00);
+		n++;
 	}
 }
 

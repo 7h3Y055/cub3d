@@ -178,13 +178,13 @@ void    ft_init_player_position(t_ptr *ptr, int y, int x,  char c)
     ptr->player.x = x * SCALE + SCALE / 2;
 
     if (c == 'N')
-        ptr->player.angle = 4.7123889804;
+        ptr->player.angle = -PI / 2;
     else if (c == 'S')
-        ptr->player.angle = 3.1415926536;
+        ptr->player.angle = PI / 2;
     else if (c == 'E')
-        ptr->player.angle = 1.5707963267;
+        ptr->player.angle = 0;
     else if (c == 'W')
-        ptr->player.angle = 0.0;
+        ptr->player.angle = PI;
 }
 
 void    ft_init_map2d(t_ptr *ptr, char *str)

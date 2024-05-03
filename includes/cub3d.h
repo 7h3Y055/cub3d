@@ -25,16 +25,17 @@
 #define	RED 0xFF0000
 #define	BLACK 0x000000
 #define	GREAN 0x36FF00
+#define	GRAY 0x808080
 #define	BLEU 0x0021FF
 
 
 #define RAD 6.2831853072
 #define NINETY_DEGREE 1.5707963268
 #define PI 3.141592653589793
-#define SCALE 100
+#define SCALE 50
 #define SCALE_P 7
 #define PLAYER_SPEED 7
-#define ROTATION_SPEED 0.05
+#define ROTATION_SPEED 0.07
 #define EYE_ANGLE 0.523599
 
 #define W_M       13
@@ -104,17 +105,17 @@ typedef struct s_ptr
     t_parse parse;
     t_win   win;
 	t_img_data img3d;
-	void 	*win3d;
+	// void 	*win3d;
     t_player player;
     int     keys[7];
     char **map2d;
-    char **map2d_scaled;
+    // char **map2d_scaled;
 } t_ptr;
 
 
 void ft_parse(t_ptr *ptr, int argc, char const **argv);
 int ft_error(t_ptr *ptr, char *str, int n);
-void    create_scaled_map(t_ptr *ptr);
+// void    create_scaled_map(t_ptr *ptr);
 char    **allocate_memory_for_map2d(t_ptr *ptr, int y, int x);
 
 
@@ -127,7 +128,7 @@ void left_argle(t_ptr *ptr);
 
 
 
-void	create_map(t_img_data *img, char **map);
+void	create_map(t_ptr *ptr);
 void	put_player_to_image(t_img_data *img, t_player player);
 void	init_mlx(t_ptr *ptr);
 void	render_map(t_ptr ptr);

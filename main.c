@@ -28,11 +28,8 @@ int render_loop(t_ptr *ptr)
 	ft_bzero(ptr->img3d.addr, WIDTH * HEIGHT * (ptr->img3d.bits_per_pixel / 8));
 
     handle_input(ptr);
-	create_map(&ptr->win.img, ptr->map2d_scaled);
+	create_map(ptr);
 	put_arrow(ptr);
-
-	// midle_line(ptr);
-	mlx_put_image_to_window(ptr->win.mlx, ptr->win3d, ptr->img3d.img, 0, 0);
 
 	put_player_to_image(&ptr->win.img, ptr->player);
 	mlx_put_image_to_window(ptr->win.mlx, ptr->win.win, ptr->win.img.img, 0, 0);
@@ -44,8 +41,6 @@ int main(int argc, char const **argv)
     t_ptr	ptr;
 
     ft_parse(&ptr, argc, argv);
-    printf("%d\n", ptr.parse.y * SCALE);
-    printf("%d\n", ptr.parse.x * SCALE);
 	init_mlx(&ptr);
 
     mlx_loop_hook(ptr.win.mlx, render_loop, &ptr);

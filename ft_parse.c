@@ -318,46 +318,46 @@ int ft_close(int flag, void *a)
     exit(0);
 }
 
-void ft_init_scaled_character(t_ptr *ptr, int i, int j, char c)
-{
-    int y;
-    int y_tmp;
-    int x;
-    int x_tmp;
+// void ft_init_scaled_character(t_ptr *ptr, int i, int j, char c)
+// {
+//     int y;
+//     int y_tmp;
+//     int x;
+//     int x_tmp;
 
 
-    y = 0;
-    while (y < SCALE)
-    {
-        x = 0;
-        while (x < SCALE)
-        {
-            ptr->map2d_scaled[SCALE * i + y][SCALE * j + x] = ptr->map2d[i][j];
-            x++;
-        }
-        y++;
-    }
-}
+//     y = 0;
+//     while (y < SCALE)
+//     {
+//         x = 0;
+//         while (x < SCALE)
+//         {
+//             ptr->map2d_scaled[SCALE * i + y][SCALE * j + x] = ptr->map2d[i][j];
+//             x++;
+//         }
+//         y++;
+//     }
+// }
 
-void    create_scaled_map(t_ptr *ptr)
-{
-    int i;
-    int j;
-    ptr->map2d_scaled = allocate_memory_for_map2d(ptr, ptr->parse.y * SCALE, ptr->parse.x * SCALE);
+// void    create_scaled_map(t_ptr *ptr)
+// {
+//     int i;
+//     int j;
+//     ptr->map2d_scaled = allocate_memory_for_map2d(ptr, ptr->parse.y * SCALE, ptr->parse.x * SCALE);
     
-    i = 0;
-    while (i < ptr->parse.y)
-    {
-        j = 0;
-        while (j < ptr->parse.x)
-        {
-            ft_init_scaled_character(ptr, i, j, ptr->map2d[i][j]);
-            j++;
-        }
-        i++;
-    }
+//     i = 0;
+//     while (i < ptr->parse.y)
+//     {
+//         j = 0;
+//         while (j < ptr->parse.x)
+//         {
+//             ft_init_scaled_character(ptr, i, j, ptr->map2d[i][j]);
+//             j++;
+//         }
+//         i++;
+//     }
     
-}
+// }
 
 // void    test(t_ptr *ptr)
 // {
@@ -385,5 +385,5 @@ void ft_parse(t_ptr *ptr, int argc, char const **argv)
     fd = ft_open(ptr, argv[1]);
     ft_init(ptr, fd);
     check_valide_map(ptr);
-    create_scaled_map(ptr);
+    // create_scaled_map(ptr);
 }

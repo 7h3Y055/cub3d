@@ -44,7 +44,7 @@ void go_up(t_ptr *ptr)
 
     y = sin(ptr->player.angle) * PLAYER_SPEED;
     x = cos(ptr->player.angle) * PLAYER_SPEED;
-    if (ptr->map2d_scaled[ptr->player.y +  y][ptr->player.x +  x] == '0')
+    if (ptr->map2d[(ptr->player.y +  y) / SCALE][(ptr->player.x +  x) / SCALE] == '0')
     {
         ptr->player.x +=  x;
         ptr->player.y +=  y;
@@ -59,7 +59,7 @@ void go_right(t_ptr *ptr)
 
     y = sin(ptr->player.angle + NINETY_DEGREE) * PLAYER_SPEED;
     x = cos(ptr->player.angle + NINETY_DEGREE) * PLAYER_SPEED;
-    if (ptr->map2d_scaled[ptr->player.y +  y][ptr->player.x +  x] == '0')
+    if (ptr->map2d[(ptr->player.y +  y) / SCALE][(ptr->player.x +  x) / SCALE] == '0')
     {
         ptr->player.x +=  x;
         ptr->player.y +=  y;
@@ -73,7 +73,7 @@ void go_down(t_ptr *ptr)
 
     y = sin(ptr->player.angle) * PLAYER_SPEED;
     x = cos(ptr->player.angle) * PLAYER_SPEED;
-    if (ptr->map2d_scaled[ptr->player.y -  y][ptr->player.x -  x] == '0')
+    if (ptr->map2d[(ptr->player.y -  y) / SCALE][(ptr->player.x -  x) / SCALE] == '0')
     {
         ptr->player.x -=  x;
         ptr->player.y -=  y;
@@ -87,7 +87,7 @@ void go_left(t_ptr *ptr)
 
     y = sin(ptr->player.angle + NINETY_DEGREE) * PLAYER_SPEED;
     x = cos(ptr->player.angle + NINETY_DEGREE) * PLAYER_SPEED;
-    if (ptr->map2d_scaled[ptr->player.y -  y][ptr->player.x -  x] == '0')
+    if (ptr->map2d[(ptr->player.y -  y) / SCALE][(ptr->player.x -  x) / SCALE] == '0')
     {
         ptr->player.x -=  x;
         ptr->player.y -=  y;

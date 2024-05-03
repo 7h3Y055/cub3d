@@ -59,8 +59,8 @@
 
 typedef struct s_point
 {
-	long long	x;
-	long long	y;
+	double	x;
+	double	y;
 }	t_point;
 
 typedef struct s_parse

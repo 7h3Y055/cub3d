@@ -18,7 +18,7 @@ int	exeed_map(t_ptr *ptr, t_point p)
 	if (p.x >= ptr->parse.x * SCALE || p.y >= ptr->parse.y * SCALE
 		|| p.x < 0 || p.y < 0)
 		{
-			puts("w9f");	
+			// puts("w9f");	
 		return (1);
 		}
 	return (0);
@@ -38,90 +38,175 @@ void x(t_ptr *ptr, t_point *next, double angle)
 	i = 1;
 	while (i < d && !exeed_map(ptr, *next))
 	{
-		next->x = ptr->player.x + (cos(ptr->player.angle) * i);
-		next->y = ptr->player.y + (sin(ptr->player.angle) * i);
+		next->x = ptr->player.x + (cos(angle) * i);
+		next->y = ptr->player.y + (sin(angle) * i);
 		my_mlx_pixel_put(&ptr->win.img, next->x, next->y, GREAN);
 		i++;
 	}
 
 
 
-
-	my_mlx_pixel_put(&ptr->win.img, next->x, next->y, RED);
-	my_mlx_pixel_put(&ptr->win.img, next->x, next->y + 1, RED);
-	my_mlx_pixel_put(&ptr->win.img, next->x, next->y - 1 , RED);
-	my_mlx_pixel_put(&ptr->win.img, next->x - 1, next->y, RED);
-	my_mlx_pixel_put(&ptr->win.img, next->x + 1, next->y, RED);
+	if (!exeed_map(ptr, *next))
+	{
+		my_mlx_pixel_put(&ptr->win.img, next->x, next->y, RED);
+	// my_mlx_pixel_put(&ptr->win.img, next->x, next->y + 1, RED);
+	// my_mlx_pixel_put(&ptr->win.img, next->x, next->y - 1 , RED);
+	// my_mlx_pixel_put(&ptr->win.img, next->x - 1, next->y, RED);
+	// my_mlx_pixel_put(&ptr->win.img, next->x + 1, next->y, RED);
+	}
 }
 
-void	init_param_y(t_ptr *ptr, t_player player, t_point *next, t_point *a)
+void	init_param_y(t_ptr *ptr, t_point *next, t_point *a, double angle)
 {
-	if (player.angle > PI && player.angle < RAD)
+	if (angle > PI && angle < RAD)
 	{
-		if (player.angle > PI + PI / 2)//puts("up rigth");
+		if (angle > PI + PI / 2)//puts("up rigth");
 		{
-			next->y = player.y / SCALE * SCALE - 1;
-			next->x = player.x + (player.y - next->y) / tan(RAD - player.angle);
+			next->y = ptr->player.y / SCALE * SCALE - 1;
+			next->x = ptr->player.x + (ptr->player.y - next->y) / tan(RAD - angle);
 			a->y = -SCALE;
-			a->x = SCALE / tan(RAD - player.angle);
+			a->x = SCALE / tan(RAD - angle);
 		}
-		else if (player.angle < PI + PI / 2)//puts("up left");
+		else if (angle < PI + PI / 2)//puts("up left");
 		{
-			next->y = player.y / SCALE * SCALE - 1;
-			next->x = player.x + (player.y - next->y) / tan(RAD - player.angle);
+			next->y = ptr->player.y / SCALE * SCALE - 1;
+			next->x = ptr->player.x + (ptr->player.y - next->y) / tan(RAD - angle);
 			a->y = -SCALE;
-			a->x = a->y / tan(player.angle - PI);
+			a->x = a->y / tan(angle - PI);
 		}
 		else // up
 		{
-			next->y = next->y = player.y / SCALE * SCALE - 1;; 
-			next->x = player.x; 
+			next->y = next->y = ptr->player.y / SCALE * SCALE - 1;; 
+			next->x = ptr->player.x; 
 			a->y = -SCALE;
 			a->x = 0;
 		}
 	}
-	else if (player.angle < PI && player.angle > 0)//puts("down");
+	else if (angle < PI && angle > 0)//puts("down");
 	{
-		if (player.angle < PI / 2)//puts("down rigth");
+		if (angle < PI / 2)//puts("down rigth");
 		{
-			next->y = player.y / SCALE * SCALE + SCALE;
-			next->x = player.x + (next->y - player.y) / tan(player.angle);
+			next->y = ptr->player.y / SCALE * SCALE + SCALE;
+			next->x = ptr->player.x + (next->y - ptr->player.y) / tan(angle);
 			a->y = SCALE;
-			a->x = a->y / tan(player.angle);
+			a->x = a->y / tan(angle);
 		}
-		else if (player.angle > PI / 2)//puts("down left");
+		else if (angle > PI / 2)//puts("down left");
 		{
-			next->y = player.y / SCALE * SCALE + SCALE;
-			next->x = player.x + (next->y - player.y) / tan(player.angle);
+			next->y = ptr->player.y / SCALE * SCALE + SCALE;
+			next->x = ptr->player.x + (next->y - ptr->player.y) / tan(angle);
 			a->y = SCALE;
-			a->x = -a->y / tan(PI - player.angle);
+			a->x = -a->y / tan(PI - angle);
 		}
 		else //puts("down");
 		{
-			next->y = next->y = player.y / SCALE * SCALE + SCALE;
-			next->x = player.x; 
+			next->y = next->y = ptr->player.y / SCALE * SCALE + SCALE;
+			next->x = ptr->player.x; 
 			a->y = SCALE;
 			a->x = 0;
 		}
 	}
+	else//<----- ----->
+	{
+		//to do
+		next->x = 9999999999999;
+		next->y = 9999999999999;
+		a->x = 9999999999999;
+		a->y = 9999999999999;
+	}
+}
+
+void	init_param_x(t_ptr *ptr, t_point *next, t_point *a, double angle)
+{
+	if (angle > PI + PI / 2) //puts("RIGHT UP");
+	{
+		next->x = ptr->player.x / SCALE * SCALE + SCALE;
+		next->y = ptr->player.y - (next->x - ptr->player.x) * tan(RAD - angle);
+		a->x = SCALE;
+		a->y = SCALE * tan(RAD - angle);
+		while (!exeed_map(ptr, *next))
+		{
+			if (ptr->map2d[(long long)(next->y / SCALE)][(long long)(next->x / SCALE)] != '0')
+				break ;
+			next->x += a->x;
+			next->y -= a->y;
+		}
+		x(ptr, next, angle);
+	}
+	else if (angle < PI / 2) //puts("RIGHT DOWN");//hona wsslate
+	{
+		next->x = ptr->player.x / SCALE * SCALE + SCALE;
+		next->y = ptr->player.y - (next->x - ptr->player.x) * tan(angle);
+		a->x = SCALE;//<----
+		a->y = SCALE * tan(RAD - angle);//<----
+		// while (!exeed_map(ptr, *next))
+		// {
+		// 	if (ptr->map2d[(long long)(next->y / SCALE)][(long long)(next->x / SCALE)] != '0')
+		// 		break ;
+		// 	next->x += a->x;
+		// 	next->y += a->y;
+		// 	break ;
+		// }
+		x(ptr, next, angle);
+	}
+	else if (angle > PI / 2 && angle < PI + PI / 2)// LEFT
+	{
+		puts("LEFT");
+	}
+	else
+	{
+		puts("walo dya	l X");
+	}
+}
+
+t_point	ray(t_ptr *ptr, double angle)
+{
+	t_point	next;
+	t_point	a;
+
+	// init_param_y(ptr, &next, &a, angle);
+	init_param_x(ptr, &next, &a, angle);
+	// while (!exeed_map(ptr, next))
+	// {
+	// 	if (ptr->map2d[(long long)(next.y / SCALE)][(long long)(next.x / SCALE)] != '0')
+	// 		break ;
+	// 	next.x += a.x;
+	// 	next.y += a.y;
+	// }
+	return (next);
+}
+
+double function_(double a)
+{
+	a = a - (int)(a / RAD) * RAD;
+	if (a < 0)
+		a = RAD + a;
+	return (a);
 }
 
 void	put_arrow(t_ptr *ptr)
 {
-	t_player player = ptr->player;
-	t_point	next;
-	t_point	a;
+	double	a = function_(ptr->player.angle);// - EYE_ANGLE);
+	size_t c = 0;
+	// t_player	p = ptr->player;
+	t_point		next;
+	
+	// int	n;
 
-	init_param_y(ptr, player, &next, &a);
-	while (!exeed_map(ptr, next))
-	{
-		if (ptr->map2d[next.y / SCALE][next.x / SCALE] != '0')
-			break ;
-		next.x += a.x;
-		next.y += a.y;
-	}
-	x(ptr, &next, player.angle);
-	puts("walo");
+	// while (c <= HEIGHT)
+	// {
+		next = ray(ptr, a);
+		x(ptr, &next, a);
+		// x = ptr->player.angle - a;
+		// if (x < 0)
+		// 	x += RAD;
+		// if (x > RAD)
+		// 	x -= RAD;
+		// n = distance(p, next) * cos(x);
+		// create_square(&ptr->img3d, n, c++);
+	// 	c++;
+	// 	a = function_(a + 0.00081812308687);
+	// }
 }
 
 int	color_unit_pixel(char map_unit)

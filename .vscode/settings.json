@@ -27,6 +27,9 @@
 		"libft.h": "c",
 		"fcntl.h": "c",
 		"get_next_line.h": "c",
-		"mlx.h": "c"
+		"mlx.h": "c",
+		"chrono": "c",
+		"limits": "c",
+		"ratio": "c"
 	}
 }

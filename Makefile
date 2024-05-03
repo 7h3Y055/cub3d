@@ -5,12 +5,12 @@ INC       = ./includes
 LIBFT_DIR = ./lib/libft
 LIBFT     = ./lib/libft/libft.a
 GNL		  = lib/gnl/get_next_line.c lib/gnl/get_next_line_utils.c
-CFLAGS    = -g #-fsanitize=address #-Wall -Werror -Wextra
-MLX_FLAGS = -lXext -lX11 -lm
+CFLAGS    = -g -fsanitize=address #-Wall -Werror -Wextra
+# MLX_FLAGS = -lXext -lX11 -lm
 CC        = cc
 
-# MAC_FLAGS = -lmlx -framework OpenGL -framework AppKit -lm
-# X11 = -I /Users/mezzine/homebrew/lib/X11/locale/common
+MAC_FLAGS = -lmlx -framework OpenGL -framework AppKit -lm
+X11 = -I /Users/mezzine/homebrew/lib/X11/locale/common
 
 all:$(NAME)
 

@@ -178,7 +178,7 @@ void    ft_init_player_position(t_ptr *ptr, int y, int x,  char c)
     ptr->player.x = x * SCALE + SCALE / 2;
 
     if (c == 'N')
-        ptr->player.angle = -PI / 2;
+        ptr->player.angle = PI + PI / 2;
     else if (c == 'S')
         ptr->player.angle = PI / 2;
     else if (c == 'E')

@@ -137,10 +137,12 @@ void	init_mlx(t_ptr *ptr);
 void	render_map(t_ptr ptr);
 void	put_arrow(t_ptr *ptr);
 void	my_mlx_pixel_put(t_img_data *img, int x, int y, int color);
-void    create_square(t_img_data *img, size_t ray_l, size_t x, int color);
+void    create_square(t_ptr *ptr, size_t ray_l, size_t x, int color);
 void midle_line(t_ptr *ptr);
 
 int key_pressed(int keycode, t_ptr *ptr);
 int key_released(int keycode, t_ptr *ptr);
+
+int rgb2int(int r, int g, int b);
 
 #endif

@@ -1,16 +1,31 @@
 #include "cub3d.h"
 
-void    create_square(t_img_data *img, size_t ray_l, size_t x, int color)
+void    create_square(t_ptr *ptr, size_t ray_l, size_t x, int color)
 {
     size_t  y;
+    size_t  dy;
     ray_l =  (SCALE * HEIGHT) / ray_l;
     if (ray_l > WIDTH)
         ray_l = WIDTH;
-    y =  (WIDTH / 2) - (ray_l / 2);
-    while (y < (WIDTH / 2) + (ray_l / 2))
+    dy =  (WIDTH / 2) - (ray_l / 2);
+    y = 0;
+
+    while (y < dy)
     {
-        my_mlx_pixel_put(img, x, y, color);
+        my_mlx_pixel_put(&ptr->img3d, x, y, rgb2int(ptr->parse.floor[0], ptr->parse.floor[1], ptr->parse.floor[2]));
         y++;
+    }
+
+    while (dy < (WIDTH / 2) + (ray_l / 2))
+    {
+        my_mlx_pixel_put(&ptr->img3d, x, dy, color);
+        dy++;
+    }
+
+    while (dy < WIDTH)
+    {
+        my_mlx_pixel_put(&ptr->img3d, x, dy, rgb2int(ptr->parse.ceiling[0], ptr->parse.ceiling[1], ptr->parse.ceiling[2]));
+        dy++;
     }
 }
 

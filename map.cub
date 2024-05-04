@@ -2,7 +2,11 @@
 EA ./textures/EA.xpm
         SO ./textures/SO.xpm
 	WE ./textures/WE.xpm
-		C 0,0,0
+
+
+
+
+C 0,0,0
 
 
 

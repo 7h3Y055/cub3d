@@ -25,7 +25,7 @@
 #define	RED 0xFF0000
 #define	WHITE 0xFFFFFF
 #define	BLACK 0x000000
-#define	GREAN 0x36FF00
+#define	GREEN 0x36FF00
 #define	GRAY 0x808080
 #define	BLEU 0x0021FF
 
@@ -33,9 +33,9 @@
 #define RAD 6.2831853072
 #define NINETY_DEGREE 1.5707963268
 #define PI 3.141592653589793
-#define SCALE 4000
+#define SCALE 10000
 #define SCALE_P 7
-#define PLAYER_SPEED 220
+#define PLAYER_SPEED 600
 // #define ROTATION_SPEED 0.0007
 #define ROTATION_SPEED 0.07
 #define EYE_ANGLE 0.523599
@@ -62,6 +62,7 @@ typedef struct s_point
 {
 	double	x;
 	double	y;
+    int color;
 }	t_point;
 
 typedef struct s_parse

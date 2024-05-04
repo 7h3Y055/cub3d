@@ -172,12 +172,14 @@ t_point	ray(t_ptr *ptr, double angle)
 		if (distance(ptr->player, nexty) > distance(ptr->player, nextx))
 		{
 			next = nextx;
+			next.color = GREEN;
 			nextx.x += ax.x;
 			nextx.y += ax.y;
 		}
 		else
 		{
 			next = nexty;
+			next.color = WHITE;
 			nexty.x += ay.x;
 			nexty.y += ay.y;
 		}
@@ -215,7 +217,7 @@ void	put_arrow(t_ptr *ptr)
 		if (xx > RAD)
 			xx -= RAD;
 		n = distance(p, next) * cos(xx);
-		create_square(&ptr->img3d, n, c, WHITE);
+		create_square(&ptr->img3d, n, c,next.color);
 		c++;
 		a = function_(a + 0.00081812308687);
 	}

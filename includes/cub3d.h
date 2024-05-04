@@ -33,9 +33,10 @@
 #define RAD 6.2831853072
 #define NINETY_DEGREE 1.5707963268
 #define PI 3.141592653589793
-#define SCALE 50
+#define SCALE 4000
 #define SCALE_P 7
-#define PLAYER_SPEED 7
+#define PLAYER_SPEED 220
+// #define ROTATION_SPEED 0.0007
 #define ROTATION_SPEED 0.07
 #define EYE_ANGLE 0.523599
 
@@ -106,11 +107,10 @@ typedef struct s_ptr
     t_parse parse;
     t_win   win;
 	t_img_data img3d;
-	// void 	*win3d;
+	void 	*win3d;
     t_player player;
     int     keys[7];
     char **map2d;
-    // char **map2d_scaled;
 } t_ptr;
 
 

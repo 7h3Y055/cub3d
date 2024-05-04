@@ -32,3 +32,20 @@ fclean:clean
 re:fclean all
 
 bonus:
+
+
+# // t_point	ray(t_ptr *ptr, double a)
+# // {
+# // 	t_point	nexty;
+# // 	t_point	ay;
+
+# // 	init_param_y(ptr, &nexty, &ay, a);
+# // 	while (!exeed_map(ptr, nexty))
+# // 	{
+# // 		if (ptr->map2d[(long long)(nexty.y / SCALE)][(long long)(nexty.x / SCALE)] != '0')
+# // 			break ;
+# // 		nexty.x += ay.x;
+# // 		nexty.y += ay.y;
+# // 	}
+# // 	return (nexty);
+# // }

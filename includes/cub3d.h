@@ -39,7 +39,7 @@
 #define PLAYER_SPEED 1500
 #define ROTATION_SPEED 0.011
 // #define ROTATION_SPEED 0.07
-#define EYE_ANGLE 0.523599
+#define EYE_ANGLE 60
 
 #define W_M       13
 #define D_M       2

@@ -172,6 +172,12 @@ int check_wall(t_ptr *ptr, t_point point)
 	return (0);
 }
 
+double calculate_incrementation()
+{
+	return (d2rad(1. / ((double)HEIGHT / EYE_ANGLE)));
+	// return (0.00081812308687);
+}
+
 t_point	ray(t_ptr *ptr, double angle)
 {
 	t_point	next;
@@ -220,7 +226,7 @@ double function_(double a)
 
 void	put_arrow(t_ptr *ptr)
 {
-	double	a = function_(ptr->player.angle - EYE_ANGLE);
+	double	a = function_(ptr->player.angle - d2rad(EYE_ANGLE / 2));
 	size_t c = 0;
 	t_player	p = ptr->player;
 	t_point		next;
@@ -239,7 +245,7 @@ void	put_arrow(t_ptr *ptr)
 		n = distance(p, next) * cos(xx);
 		create_square(ptr, n, c,next.color);
 		c++;
-		a = function_(a + 0.00081812308687);
+		a = function_(a + calculate_incrementation());
 	}
 }
 

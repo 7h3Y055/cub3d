@@ -7,7 +7,7 @@ void    create_square(t_img_data *img, size_t ray_l, size_t x, int color)
     if (ray_l > WIDTH)
         ray_l = WIDTH;
     y =  (WIDTH / 2) - (ray_l / 2);
-    while (y < (WIDTH / 2) + (ray_l / 2) - 1)
+    while (y < (WIDTH / 2) + (ray_l / 2))
     {
         my_mlx_pixel_put(img, x, y, color);
         y++;

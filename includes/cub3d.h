@@ -3,8 +3,8 @@
 
 #include <mlx.h>
 #include <math.h>
-// #include <X11/keysym.h>
-// #include <X11/X.h>
+#include <X11/keysym.h>
+#include <X11/X.h>
 #include <fcntl.h>
 #include <unistd.h>
 #include <stdio.h>
@@ -14,8 +14,8 @@
 #include "get_next_line.h"
 
 //MAC
-#include "/Users/mezzine/.brew/include/X11/keysym.h"
-#include "/Users/mezzine/.brew/include/X11/X.h"
+// #include "/Users/mezzine/.brew/include/X11/keysym.h"
+// #include "/Users/mezzine/.brew/include/X11/X.h"
 
 
 #define	HEIGHT 1280
@@ -29,15 +29,16 @@
 #define	GRAY 0x808080
 #define	BLEU 0x0021FF
 
-
+#define DEBUG   0
+#define DEBUG_SCALE   25
 #define RAD 6.2831853072
 #define NINETY_DEGREE 1.5707963268
 #define PI 3.141592653589793
-#define SCALE 10000
-#define SCALE_P 7
-#define PLAYER_SPEED 600
-// #define ROTATION_SPEED 0.0007
-#define ROTATION_SPEED 0.07
+#define SCALE 100000
+#define SCALE_P 1
+#define PLAYER_SPEED 1500
+#define ROTATION_SPEED 0.011
+// #define ROTATION_SPEED 0.07
 #define EYE_ANGLE 0.523599
 
 #define W_M       13

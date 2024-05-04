@@ -28,11 +28,13 @@ int render_loop(t_ptr *ptr)
 	ft_bzero(ptr->img3d.addr, WIDTH * HEIGHT * (ptr->img3d.bits_per_pixel / 8));
 
     handle_input(ptr);
-	// create_map(ptr);
 	put_arrow(ptr);
-
-	// put_player_to_image(&ptr->win.img, ptr->player);
-	// mlx_put_image_to_window(ptr->win.mlx, ptr->win.win, ptr->win.img.img, 0, 0);
+    if (DEBUG)
+    {
+        create_map(ptr);
+        put_player_to_image(&ptr->win.img, ptr->player);
+        mlx_put_image_to_window(ptr->win.mlx, ptr->win.win, ptr->win.img.img, 0, 0);
+    }
     mlx_put_image_to_window(ptr->win.mlx, ptr->win3d, ptr->img3d.img, 0, 0);
 	return (0);
 }

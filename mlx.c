@@ -76,7 +76,7 @@ void	init_param_y(t_ptr *ptr, t_point *next, t_point *a, double angle)
 		}
 		else // up
 		{
-			next->y = next->y = ptr->player.y / SCALE * SCALE - 1; 
+			next->y = ptr->player.y / SCALE * SCALE - 1; 
 			next->x = ptr->player.x; 
 			a->y = -SCALE;
 			a->x = 0;
@@ -100,7 +100,7 @@ void	init_param_y(t_ptr *ptr, t_point *next, t_point *a, double angle)
 		}
 		else //puts("down");
 		{
-			next->y = next->y = ptr->player.y / SCALE * SCALE + SCALE;
+			next->y = ptr->player.y / SCALE * SCALE + SCALE;
 			next->x = ptr->player.x; 
 			a->y = SCALE;
 			a->x = 0;
@@ -193,7 +193,7 @@ t_point	ray(t_ptr *ptr, double angle)
 		if (distance(ptr->player, nexty) > distance(ptr->player, nextx))
 		{
 			next = nextx;
-			if (check_wall(ptr, nextx) && ((angle < PI / 2 && angle >= 0) || angle > PI + PI / 2 && angle <= RAD))
+			if (check_wall(ptr, nextx) && ((angle < PI / 2 && angle >= 0) || (angle > PI + PI / 2 && angle <= RAD)))
 				next.color = GRAY;
 			else if (check_wall(ptr, nextx))
 				next.color = GREEN;
@@ -232,7 +232,7 @@ void	put_arrow(t_ptr *ptr)
 	t_point		next;
 	double xx;
 
-	int	n;
+	double	n;
 
 	while (c < HEIGHT)
 	{

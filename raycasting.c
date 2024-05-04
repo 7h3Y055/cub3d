@@ -1,9 +1,9 @@
 #include "cub3d.h"
 
-void    create_square(t_ptr *ptr, size_t ray_l, size_t x, int color)
+void    create_square(t_ptr *ptr, double ray_l, size_t x, int color)
 {
-    size_t  y;
-    size_t  dy;
+    double  y;
+    double  dy;
     ray_l =  (SCALE * HEIGHT) / ray_l;
     if (ray_l > WIDTH)
         ray_l = WIDTH;

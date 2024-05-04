@@ -5,7 +5,7 @@ INC       = ./includes
 LIBFT_DIR = ./lib/libft
 LIBFT     = ./lib/libft/libft.a
 GNL		  = lib/gnl/get_next_line.c lib/gnl/get_next_line_utils.c
-CFLAGS    = #-g -fsanitize=address #-Wall -Werror -Wextra
+CFLAGS    = -Wall #-g -fsanitize=address  #-Werror -Wextra
 MLX_FLAGS = -lXext -lX11 -lm
 CC        = cc
 
@@ -32,19 +32,5 @@ re:fclean all
 
 bonus:
 
-
-# // t_point	ray(t_ptr *ptr, double a)
-# // {
-# // 	t_point	nexty;
-# // 	t_point	ay;
-
-# // 	init_param_y(ptr, &nexty, &ay, a);
-# // 	while (!exeed_map(ptr, nexty))
-# // 	{
-# // 		if (ptr->map2d[(long long)(nexty.y / SCALE)][(long long)(nexty.x / SCALE)] != '0')
-# // 			break ;
-# // 		nexty.x += ay.x;
-# // 		nexty.y += ay.y;
-# // 	}
-# // 	return (nexty);
-# // }
+# obunga game
+# https://pixabay.com/photos/brick-wall-red-structure-masonry-1916752/

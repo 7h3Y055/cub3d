@@ -80,7 +80,7 @@ void go_up(t_ptr *ptr)
 {
     long long y;
     long long x;
-
+    
     y = sin(ptr->player.angle) * PLAYER_SPEED;
     x = cos(ptr->player.angle) * PLAYER_SPEED;
     if (ptr->map2d[(ptr->player.y +  y) / SCALE][(ptr->player.x) / SCALE] == '0')

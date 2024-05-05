@@ -28,18 +28,23 @@
 #define	GREEN 0x36FF00
 #define	GRAY 0x808080
 #define	BLEU 0x0021FF
+#define	yellow 0xFFF000
 
 #define DEBUG   0
-#define DEBUG_SCALE   25
+#define DEBUG_SCALE   10
 #define RAD 6.2831853072
 #define NINETY_DEGREE 1.5707963268
 #define PI 3.141592653589793
 #define SCALE 1000000
-#define SCALE_P 1
-#define PLAYER_SPEED 20000
+// #define SCALE 25
+#define SCALE_P 2
+#define PLAYER_SPEED 10000
+// #define PLAYER_SPEED 3
 #define ROTATION_SPEED 0.011
 // #define ROTATION_SPEED 0.07
 #define EYE_ANGLE 60
+
+#define MAGIC_NUMBER 0.00001
 
 #define W_M       13
 #define D_M       2
@@ -63,7 +68,7 @@ typedef struct s_point
 {
 	double	x;
 	double	y;
-    int color;
+    int face;
 }	t_point;
 
 typedef struct s_parse
@@ -86,7 +91,7 @@ typedef struct	s_img_data {
 	int		bits_per_pixel;
 	int		line_length;
 	int		endian;
-}				t_img_data;
+}   t_img_data;
 
 typedef struct s_win
 {
@@ -103,6 +108,29 @@ typedef struct s_player
     double angle;
 } t_player;
 
+typedef struct s_texture
+{
+    int no_w;
+    int no_h;
+    t_img_data no_img;
+
+    
+    int so_w;
+    int so_h;
+    t_img_data so_img;
+
+    
+    int we_w;
+    int we_h;
+    t_img_data we_img;
+
+    
+    int ea_w;
+    int ea_h;
+    t_img_data ea_img;
+
+}   
+t_texture;
 
 typedef struct s_ptr
 {
@@ -112,6 +140,7 @@ typedef struct s_ptr
 	void 	*win3d;
     t_player player;
     int     keys[7];
+    t_texture texture;
     char **map2d;
 } t_ptr;
 

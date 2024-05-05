@@ -9,16 +9,31 @@
 // }
 
 // my_mlx_pixel_put(&ptr->win.img, (size_t)(next.x / SCALE * DEBUG_SCALE) / DEBUG_SCALE * DEBUG_SCALE, next.y / SCALE * DEBUG_SCALE, yellow);
-int get_pixel_color(t_ptr *ptr, t_point next, size_t y, size_t x)
+
+
+
+int scaleBetween(size_t unscaledNum, size_t minAllowed, size_t maxAllowed, size_t min, size_t max) {
+  return (maxAllowed - minAllowed) * (unscaledNum - min) / (max - min) + minAllowed;
+}
+
+int get_pixel_color(t_ptr *ptr, t_point next, size_t y, size_t min, size_t max)
 {
-    if (next.x == (size_t)next.x / SCALE * SCALE)
-        return (yellow);
-    return(BLACK);
-    // char	*dst;
 
-	// dst = ptr->texture.no_img.addr + (y * ptr->texture.no_img.line_length + x * (ptr->texture.no_img.bits_per_pixel / 8));
+    // calculate offset
 
-    // return (*(int*)dst);
+    char *dst;
+
+    int img_y = scaleBetween(y, 0, ptr->texture.no_h, min, max);
+
+    // printf("%zu\n", img_y);
+
+    int img_x = next.x - (long long)next.x / SCALE * SCALE;
+    img_x = img_x * ptr->texture.no_w / SCALE;
+
+
+	dst = ptr->texture.no_img.addr + (img_y * ptr->texture.no_img.line_length + img_x * (ptr->texture.no_img.bits_per_pixel / 8));
+
+    return (*(int*)dst);
 }
 
 
@@ -41,7 +56,7 @@ void    create_square(t_ptr *ptr, double ray_l, size_t x, t_point next)
 
     while (dy < (WIDTH / 2) + (ray_l / 2))
     {
-        my_mlx_pixel_put(&ptr->img3d, x, dy, get_pixel_color(ptr, next, (size_t)dy, x));//HERE
+        my_mlx_pixel_put(&ptr->img3d, x, dy, get_pixel_color(ptr, next, (size_t)dy, y, (WIDTH / 2) + (ray_l / 2)));//HERE
         dy++;
     }
 

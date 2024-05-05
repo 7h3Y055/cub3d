@@ -31,7 +31,7 @@
 #define	yellow 0xFFF000
 
 #define DEBUG   1
-#define DEBUG_SCALE   50
+#define DEBUG_SCALE   25
 #define SCALE_P 2
 #define PLAYER_SPEED 100000
 
@@ -47,7 +47,8 @@
 // #define ROTATION_SPEED 0.07
 #define EYE_ANGLE 60
 
-#define MAGIC_NUMBER 0.00001
+#define MAGIC_NUMBER 1
+// #define MAGIC_NUMBER 0.00001
 
 #define W_M       13
 #define D_M       2

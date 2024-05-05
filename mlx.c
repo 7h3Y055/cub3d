@@ -248,6 +248,14 @@ void	put_arrow(t_ptr *ptr)
 		if (xx > RAD)
 			xx -= RAD;
 		n = distance(p, next) * cos(xx);
+
+		// printf("%ld, %f\n", (size_t)(next.x / SCALE * SCALE) / SCALE * SCALE  ,   next.y / SCALE * SCALE + MAGIC_NUMBER);
+
+	
+		// my_mlx_pixel_put(&ptr->win.img, (size_t)(next.x / SCALE * DEBUG_SCALE) / DEBUG_SCALE * DEBUG_SCALE, next.y / SCALE * DEBUG_SCALE + 1, yellow);
+		// my_mlx_pixel_put(&ptr->win.img, (size_t)(next.x / SCALE * DEBUG_SCALE) / DEBUG_SCALE * DEBUG_SCALE, next.y / SCALE * DEBUG_SCALE - 1, yellow);
+		// my_mlx_pixel_put(&ptr->win.img, (size_t)(next.x / SCALE * DEBUG_SCALE) / DEBUG_SCALE * DEBUG_SCALE - 1, next.y / SCALE * DEBUG_SCALE, yellow);
+		// my_mlx_pixel_put(&ptr->win.img, (size_t)(next.x / SCALE * DEBUG_SCALE) / DEBUG_SCALE * DEBUG_SCALE + 1, next.y / SCALE * DEBUG_SCALE, yellow);
 		create_square(ptr, n, c,next);
 		c++;
 		a = function_(a + calculate_incrementation());
@@ -335,15 +343,15 @@ void	init_mlx(t_ptr *ptr)
 	// printf("W:%d\n", ptr->texture.no_w);
 	// printf("H:%d\n", ptr->texture.no_h);
 
-
-
-	ptr->win3d = mlx_new_window(ptr->win.mlx, HEIGHT, WIDTH, "Cub3D map3D");
 	if (DEBUG)
 	{
 		ptr->win.win = mlx_new_window(ptr->win.mlx, ptr->parse.x * DEBUG_SCALE, ptr->parse.y * DEBUG_SCALE, "Cub3D map2d");
 		ptr->win.img.img = mlx_new_image(ptr->win.mlx, ptr->parse.x * DEBUG_SCALE, ptr->parse.y * DEBUG_SCALE);
 		ptr->win.img.addr = mlx_get_data_addr(ptr->win.img.img, &ptr->win.img.bits_per_pixel, &ptr->win.img.line_length, &ptr->win.img.endian);
 	}
+
+
+	ptr->win3d = mlx_new_window(ptr->win.mlx, HEIGHT, WIDTH, "Cub3D map3D");
 
 	ptr->img3d.img = mlx_new_image(ptr->win.mlx,HEIGHT ,WIDTH);
 	ptr->img3d.addr = mlx_get_data_addr(ptr->img3d.img, &ptr->img3d.bits_per_pixel, &ptr->img3d.line_length,

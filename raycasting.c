@@ -8,9 +8,10 @@
 // 	*(unsigned int*)dst = color;
 // }
 
-int get_pixel_color(t_ptr *ptr, int face, size_t y, size_t x)
+// my_mlx_pixel_put(&ptr->win.img, (size_t)(next.x / SCALE * DEBUG_SCALE) / DEBUG_SCALE * DEBUG_SCALE, next.y / SCALE * DEBUG_SCALE, yellow);
+int get_pixel_color(t_ptr *ptr, t_point next, size_t y, size_t x)
 {
-    if (x % 100 == 0)
+    if (next.x == (size_t)next.x / SCALE * SCALE)
         return (yellow);
     return(BLACK);
     // char	*dst;
@@ -20,7 +21,9 @@ int get_pixel_color(t_ptr *ptr, int face, size_t y, size_t x)
     // return (*(int*)dst);
 }
 
-void    create_square(t_ptr *ptr, double ray_l, size_t x, int face)
+
+
+void    create_square(t_ptr *ptr, double ray_l, size_t x, t_point next)
 {
     double  y;
     double  dy;
@@ -38,7 +41,7 @@ void    create_square(t_ptr *ptr, double ray_l, size_t x, int face)
 
     while (dy < (WIDTH / 2) + (ray_l / 2))
     {
-        my_mlx_pixel_put(&ptr->img3d, x, dy, get_pixel_color(ptr, face, (size_t)dy, x));//HERE
+        my_mlx_pixel_put(&ptr->img3d, x, dy, get_pixel_color(ptr, next, (size_t)dy, x));//HERE
         dy++;
     }
 

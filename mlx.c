@@ -38,10 +38,10 @@ void x(t_ptr *ptr, t_point *next, double angle)
 	if (!exeed_map(ptr, *next))
 	{
 		my_mlx_pixel_put(&ptr->win.img, (double)next->x / SCALE * DEBUG_SCALE, (double)next->y / SCALE * DEBUG_SCALE, RED);
-		// my_mlx_pixel_put(&ptr->win.img, (double)next->x / SCALE * DEBUG_SCALE + 1, (double)next->y / SCALE * DEBUG_SCALE, RED);
-		// my_mlx_pixel_put(&ptr->win.img, (double)next->x / SCALE * DEBUG_SCALE - 1, (double)next->y / SCALE * DEBUG_SCALE, RED);
-		// my_mlx_pixel_put(&ptr->win.img, (double)next->x / SCALE * DEBUG_SCALE, (double)next->y / SCALE * DEBUG_SCALE - 1, RED);
-		// my_mlx_pixel_put(&ptr->win.img, (double)next->x / SCALE * DEBUG_SCALE, (double)next->y / SCALE * DEBUG_SCALE + 1, RED);
+		my_mlx_pixel_put(&ptr->win.img, (double)next->x / SCALE * DEBUG_SCALE + 1, (double)next->y / SCALE * DEBUG_SCALE, RED);
+		my_mlx_pixel_put(&ptr->win.img, (double)next->x / SCALE * DEBUG_SCALE - 1, (double)next->y / SCALE * DEBUG_SCALE, RED);
+		my_mlx_pixel_put(&ptr->win.img, (double)next->x / SCALE * DEBUG_SCALE, (double)next->y / SCALE * DEBUG_SCALE - 1, RED);
+		my_mlx_pixel_put(&ptr->win.img, (double)next->x / SCALE * DEBUG_SCALE, (double)next->y / SCALE * DEBUG_SCALE + 1, RED);
 	}
 	// i = 1;
 	// while (i < d && !exeed_map(ptr, *next))
@@ -76,7 +76,7 @@ void	init_param_y(t_ptr *ptr, t_point *next, t_point *a, double angle)
 		}
 		else // up
 		{
-			next->y = ptr->player.y / SCALE * SCALE; 
+			next->y = ptr->player.y / SCALE * SCALE - MAGIC_NUMBER; 
 			next->x = ptr->player.x; 
 			a->y = -SCALE;
 			a->x = 0;
@@ -226,11 +226,14 @@ double function_(double a)
 
 void	put_arrow(t_ptr *ptr)
 {
+	// double	a = function_(ptr->player.angle);
 	double	a = function_(ptr->player.angle - d2rad(EYE_ANGLE / 2));
 	size_t c = 0;
 	t_player	p = ptr->player;
 	t_point		next;
 	double xx;
+
+	// t_point	h;
 
 	double	n;
 
@@ -245,7 +248,7 @@ void	put_arrow(t_ptr *ptr)
 		if (xx > RAD)
 			xx -= RAD;
 		n = distance(p, next) * cos(xx);
-		create_square(ptr, n, c,next.face);
+		create_square(ptr, n, c,next);
 		c++;
 		a = function_(a + calculate_incrementation());
 	}
@@ -329,8 +332,8 @@ void	init_mlx(t_ptr *ptr)
 		exit(ft_error(ptr, "Error in images2", 1));
 
 
-	printf("W:%d\n", ptr->texture.no_w);
-	printf("H:%d\n", ptr->texture.no_h);
+	// printf("W:%d\n", ptr->texture.no_w);
+	// printf("H:%d\n", ptr->texture.no_h);
 
 
 

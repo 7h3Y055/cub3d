@@ -12,27 +12,45 @@
 
 
 
-int scaleBetween(size_t unscaledNum, size_t minAllowed, size_t maxAllowed, size_t min, size_t max) {
-  return (maxAllowed - minAllowed) * (unscaledNum - min) / (max - min) + minAllowed;
-}
-
-int get_pixel_color(t_ptr *ptr, t_point next, size_t y, size_t min, size_t max)
+// int scaleBetween(size_t unscaledNum, size_t minAllowed, size_t maxAllowed, size_t min, size_t max) {
+//   return (maxAllowed - minAllowed) * (unscaledNum - min) / (max - min) + minAllowed;
+// }
+//scaleBetween(y, 0, ptr->texture.no_h, min, max)
+int get_pixel_color(t_ptr *ptr, t_point next, size_t y, size_t first_point_in_wall, double ray_l)
 {
 
-    // calculate offset
-
     char *dst;
+    int img_y;
+    int img_x;
 
-    int img_y = scaleBetween(y, 0, ptr->texture.no_h, min, max);
-
-    // printf("%zu\n", img_y);
-
-    int img_x = next.x - (long long)next.x / SCALE * SCALE;
-    img_x = img_x * ptr->texture.no_w / SCALE;
+    if (next.face == GREEN || next.face == GRAY)
+    {
+        img_x = (next.y - (long long)next.y / SCALE * SCALE) * ptr->texture.no_w / SCALE;
+    }
+    else
+    {
+        img_x = (next.x - (long long)next.x / SCALE * SCALE) * ptr->texture.no_w / SCALE;
+    }
+    
+    img_y = (y - first_point_in_wall) * ((double)ptr->texture.no_h / ray_l);
+    
+    // printf ("%d\n", img_);
+    if (img_y < 0 || img_y > ptr->texture.no_h)
+        return (-1);
+    if (img_x < 0 || img_x > ptr->texture.no_w)    
+        return (-1);
+    
+    // else
+    // {
+    //     return (GREEN);
+    //     // img_x = (int)next.x % ptr->texture.no_h;
+    //     // img_y = next.y - (long long)next.y / SCALE * SCALE;
+    //     // img_y = img_y * ptr->texture.no_w / SCALE;
+    // }
 
 
 	dst = ptr->texture.no_img.addr + (img_y * ptr->texture.no_img.line_length + img_x * (ptr->texture.no_img.bits_per_pixel / 8));
-
+    // return (GREEN);
     return (*(int*)dst);
 }
 
@@ -42,9 +60,8 @@ void    create_square(t_ptr *ptr, double ray_l, size_t x, t_point next)
 {
     double  y;
     double  dy;
+    int color;
     ray_l =  (SCALE * HEIGHT) / ray_l;
-    if (ray_l > WIDTH)
-        ray_l = WIDTH;
     dy =  (WIDTH / 2) - (ray_l / 2);
     y = 0;
 
@@ -54,16 +71,18 @@ void    create_square(t_ptr *ptr, double ray_l, size_t x, t_point next)
         y++;
     }
 
-    while (dy < (WIDTH / 2) + (ray_l / 2))
+    while (y < (WIDTH / 2) + (ray_l / 2))
     {
-        my_mlx_pixel_put(&ptr->img3d, x, dy, get_pixel_color(ptr, next, (size_t)dy, y, (WIDTH / 2) + (ray_l / 2)));//HERE
-        dy++;
+        color = get_pixel_color(ptr, next, (size_t)y, dy, ray_l);
+        if (!(color == -1 || x < 0 || x > HEIGHT || y < 0 || y > WIDTH))
+            my_mlx_pixel_put(&ptr->img3d, x, y, color);
+        y++;
     }
 
-    while (dy < WIDTH)
+    while (y < WIDTH)
     {
-        my_mlx_pixel_put(&ptr->img3d, x, dy, rgb2int(ptr->parse.floor[0], ptr->parse.ceiling[1], ptr->parse.ceiling[2]));
-        dy++;
+        my_mlx_pixel_put(&ptr->img3d, x, y, rgb2int(ptr->parse.floor[0], ptr->parse.ceiling[1], ptr->parse.ceiling[2]));
+        y++;
     }
 }
 

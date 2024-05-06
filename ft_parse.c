@@ -174,11 +174,9 @@ char    **allocate_memory_for_map2d(t_ptr *ptr, int y, int x)
 
 void    ft_init_player_position(t_ptr *ptr, int y, int x,  char c)
 {
-    // ptr->player.y = y * SCALE + SCALE / 2;
-    // ptr->player.x = x * SCALE + SCALE / 2;
+    ptr->player.y = y * SCALE + SCALE / 2;
+    ptr->player.x = x * SCALE + SCALE / 2;
 
-    ptr->player.x = x * SCALE;
-    ptr->player.y = y * SCALE;
 
     if (c == 'N')
         ptr->player.angle = PI + PI / 2;

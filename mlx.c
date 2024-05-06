@@ -315,12 +315,18 @@ void	put_player_to_image(t_img_data *img, t_player player)
 		}
 		y++;
 	}
-/*	n = 1;
-	while (n < 20)
+	n = 1;
+	while (n < 10)
 	{
 		my_mlx_pixel_put(img, ((double)player.x / SCALE * DEBUG_SCALE) + (cos((double)player.angle) * n), ((double)player.y / SCALE * DEBUG_SCALE) + (sin((double)player.angle) * n), RED);
+
+		my_mlx_pixel_put(img, ((double)(player.x - 10) / SCALE * DEBUG_SCALE) + (cos((double)player.angle) * n), ((double)player.y / SCALE * DEBUG_SCALE) + (sin((double)player.angle) * n), RED);
+		my_mlx_pixel_put(img, ((double)(player.x + 10) / SCALE * DEBUG_SCALE) + (cos((double)player.angle) * n), ((double)player.y / SCALE * DEBUG_SCALE) + (sin((double)player.angle) * n), RED);
+
+		my_mlx_pixel_put(img, ((double)player.x / SCALE * DEBUG_SCALE) + (cos((double)player.angle) * n), ((double)(player.y - 10) / SCALE * DEBUG_SCALE) + (sin((double)player.angle) * n), RED);
+		my_mlx_pixel_put(img, ((double)player.x / SCALE * DEBUG_SCALE) + (cos((double)player.angle) * n), ((double)(player.y + 10) / SCALE * DEBUG_SCALE) + (sin((double)player.angle) * n), RED);
 		n++;
-	}*/
+	}
 }
 
 void init_images(t_ptr *ptr)

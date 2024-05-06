@@ -33,6 +33,7 @@ int init_img_yx(t_ptr *ptr, t_point next, int *img_y, int *img_x, int y)
     else
         *img_x = (next.x - (long long)next.x / SCALE * SCALE) * w / SCALE;
 
+
     *img_y = (y - next.first_point_in_wall) * (h / next.ray_l);
     
     if (*img_y < 0 || *img_y >= h || *img_x < 0 || *img_x >= w)
@@ -73,9 +74,11 @@ void    create_square(t_ptr *ptr, double ray_l, size_t x, t_point next)
     int color;
 
     ray_l =  (SCALE * HEIGHT) / ray_l;
+
     dy =  (WIDTH / 2) - (ray_l / 2);
     y = 0;
 
+    
     while (y < dy)
     {
         my_mlx_pixel_put(&ptr->img3d, x, y, rgb2int(ptr->parse.ceiling[0], ptr->parse.ceiling[1], ptr->parse.ceiling[2]));
@@ -84,7 +87,7 @@ void    create_square(t_ptr *ptr, double ray_l, size_t x, t_point next)
 
     next.ray_l = ray_l;
     next.first_point_in_wall = dy;
-    while (y < (WIDTH / 2) + (ray_l / 2))
+    while (y < (WIDTH / 2) + (ray_l / 2) && y < WIDTH)
     {
         color = get_pixel_color(ptr, next, (size_t)y);
 
@@ -92,7 +95,6 @@ void    create_square(t_ptr *ptr, double ray_l, size_t x, t_point next)
             my_mlx_pixel_put(&ptr->img3d, x, y, color);
         y++;
     }
-
     while (y < WIDTH)
     {
         my_mlx_pixel_put(&ptr->img3d, x, y, rgb2int(ptr->parse.floor[0], ptr->parse.floor[1], ptr->parse.floor[2]));

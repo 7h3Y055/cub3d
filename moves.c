@@ -110,6 +110,18 @@ void go_down(t_ptr *ptr)
 
     y = sin(ptr->player.angle) * PLAYER_SPEED;
     x = cos(ptr->player.angle) * PLAYER_SPEED;
+
+
+    // if (ptr->map2d[(ptr->player.y - y + 100) / SCALE][(ptr->player.x - x) / SCALE] == '0')
+    //     return;
+    // if (ptr->map2d[(ptr->player.y - y - 100) / SCALE][(ptr->player.x - x) / SCALE] == '0')
+    //     return;
+    // if (ptr->map2d[(ptr->player.y - y ) / SCALE][(ptr->player.x - x + 100) / SCALE] == '0')
+    //     return;
+    // if (ptr->map2d[(ptr->player.y - y ) / SCALE][(ptr->player.x - x - 100) / SCALE] == '0')
+    //     return;
+
+
     if (ptr->map2d[(ptr->player.y) / SCALE][(ptr->player.x - (x * SOME_SPACE)) / SCALE] == '0')
         ptr->player.x -=  x;
     if (ptr->map2d[(ptr->player.y - (y * SOME_SPACE)) / SCALE][(ptr->player.x) / SCALE] == '0')

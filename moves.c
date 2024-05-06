@@ -83,9 +83,9 @@ void go_up(t_ptr *ptr)
     
     y = sin(ptr->player.angle) * PLAYER_SPEED;
     x = cos(ptr->player.angle) * PLAYER_SPEED;
-    if (ptr->map2d[(ptr->player.y +  y) / SCALE][(ptr->player.x) / SCALE] == '0')
+    if (ptr->map2d[(ptr->player.y + (y * SOME_SPACE)) / SCALE][(ptr->player.x) / SCALE] == '0')
         ptr->player.y +=  y;
-    if (ptr->map2d[(ptr->player.y) / SCALE][(ptr->player.x + x) / SCALE] == '0')
+    if (ptr->map2d[(ptr->player.y) / SCALE][(ptr->player.x + (x * SOME_SPACE)) / SCALE] == '0')
         ptr->player.x +=  x;
 
 }
@@ -97,10 +97,10 @@ void go_right(t_ptr *ptr)
 
     y = sin(ptr->player.angle + NINETY_DEGREE) * PLAYER_SPEED;
     x = cos(ptr->player.angle + NINETY_DEGREE) * PLAYER_SPEED;
-    if (ptr->map2d[(ptr->player.y) / SCALE][(ptr->player.x +  x) / SCALE] == '0')
-        ptr->player.x +=  x;
-    if (ptr->map2d[(ptr->player.y +  y) / SCALE][(ptr->player.x) / SCALE] == '0')
+    if (ptr->map2d[(ptr->player.y + (y * SOME_SPACE)) / SCALE][(ptr->player.x) / SCALE] == '0')
         ptr->player.y +=  y;
+    if (ptr->map2d[(ptr->player.y) / SCALE][(ptr->player.x + (x * SOME_SPACE)) / SCALE] == '0')
+        ptr->player.x +=  x;
 }
 
 void go_down(t_ptr *ptr)
@@ -110,9 +110,9 @@ void go_down(t_ptr *ptr)
 
     y = sin(ptr->player.angle) * PLAYER_SPEED;
     x = cos(ptr->player.angle) * PLAYER_SPEED;
-    if (ptr->map2d[(ptr->player.y) / SCALE][(ptr->player.x -  x) / SCALE] == '0')
+    if (ptr->map2d[(ptr->player.y) / SCALE][(ptr->player.x - (x * SOME_SPACE)) / SCALE] == '0')
         ptr->player.x -=  x;
-    if (ptr->map2d[(ptr->player.y -  y) / SCALE][(ptr->player.x) / SCALE] == '0')
+    if (ptr->map2d[(ptr->player.y - (y * SOME_SPACE)) / SCALE][(ptr->player.x) / SCALE] == '0')
         ptr->player.y -=  y;
 }
 
@@ -123,9 +123,9 @@ void go_left(t_ptr *ptr)
 
     y = sin(ptr->player.angle + NINETY_DEGREE) * PLAYER_SPEED;
     x = cos(ptr->player.angle + NINETY_DEGREE) * PLAYER_SPEED;
-    if (ptr->map2d[(ptr->player.y) / SCALE][(ptr->player.x -  x) / SCALE] == '0')
+    if (ptr->map2d[(ptr->player.y) / SCALE][(ptr->player.x - (x * SOME_SPACE)) / SCALE] == '0')
         ptr->player.x -=  x;
-    if (ptr->map2d[(ptr->player.y -  y) / SCALE][(ptr->player.x) / SCALE] == '0')
+    if (ptr->map2d[(ptr->player.y - (y * SOME_SPACE)) / SCALE][(ptr->player.x) / SCALE] == '0')
         ptr->player.y -=  y;
 }
 

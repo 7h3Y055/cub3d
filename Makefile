@@ -5,7 +5,7 @@ INC       = ./includes
 LIBFT_DIR = ./lib/libft
 LIBFT     = ./lib/libft/libft.a
 GNL		  = lib/gnl/get_next_line.c lib/gnl/get_next_line_utils.c
-CFLAGS    = #-g -fsanitize=address #-Wall  #-Werror -Wextra
+CFLAGS    = #-fsanitize=address #-Wall  #-Werror -Wextra
 MLX_FLAGS = -lXext -lX11 -lm
 CC        = cc
 
@@ -34,3 +34,4 @@ bonus:
 
 # obunga game
 # https://pixabay.com/photos/brick-wall-red-structure-masonry-1916752/
+# check is images is sqaure

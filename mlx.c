@@ -323,21 +323,34 @@ void	put_player_to_image(t_img_data *img, t_player player)
 	}
 }
 
+void init_images(t_ptr *ptr)
+{
+	ptr->texture.no_img.img = mlx_xpm_file_to_image(ptr->win.mlx, ptr->parse.no, &ptr->texture.no_w, &ptr->texture.no_h);
+	ptr->texture.so_img.img = mlx_xpm_file_to_image(ptr->win.mlx, ptr->parse.so, &ptr->texture.so_w, &ptr->texture.so_h);
+	ptr->texture.ea_img.img = mlx_xpm_file_to_image(ptr->win.mlx, ptr->parse.ea, &ptr->texture.ea_w, &ptr->texture.ea_h);
+	ptr->texture.we_img.img = mlx_xpm_file_to_image(ptr->win.mlx, ptr->parse.we, &ptr->texture.we_w, &ptr->texture.we_h);
+	
+	if (!ptr->texture.we_img.img || !ptr->texture.no_img.img || !ptr->texture.so_img.img || !ptr->texture.ea_img.img)
+		exit(ft_error(ptr, "Error in images", 1));
+
+	ptr->texture.no_img.addr = mlx_get_data_addr(ptr->texture.no_img.img, &ptr->texture.no_img.bits_per_pixel, &ptr->texture.no_img.line_length, &ptr->texture.no_img.endian);
+	ptr->texture.so_img.addr = mlx_get_data_addr(ptr->texture.so_img.img, &ptr->texture.so_img.bits_per_pixel, &ptr->texture.so_img.line_length, &ptr->texture.so_img.endian);
+	ptr->texture.we_img.addr = mlx_get_data_addr(ptr->texture.we_img.img, &ptr->texture.we_img.bits_per_pixel, &ptr->texture.we_img.line_length, &ptr->texture.we_img.endian);
+
+	ptr->texture.ea_img.addr = mlx_get_data_addr(ptr->texture.ea_img.img, &ptr->texture.ea_img.bits_per_pixel, &ptr->texture.ea_img.line_length, &ptr->texture.ea_img.endian);
+	if (!ptr->texture.ea_img.addr || !ptr->texture.no_img.addr || !ptr->texture.so_img.addr || !ptr->texture.we_img.addr)
+		exit(ft_error(ptr, "Error in images2", 1));
+}
+
 void	init_mlx(t_ptr *ptr)
 {
 	ptr->win.mlx = mlx_init();
 
 
 
+	init_images(ptr);
 
 
-	ptr->texture.no_img.img = mlx_xpm_file_to_image(ptr->win.mlx, ptr->parse.no, &ptr->texture.no_w, &ptr->texture.no_h);
-	if (!ptr->texture.no_img.img)
-		exit(ft_error(ptr, "Error in images", 1));
-	
-	ptr->texture.no_img.addr = mlx_get_data_addr(ptr->texture.no_img.img, &ptr->texture.no_img.bits_per_pixel, &ptr->texture.no_img.line_length, &ptr->texture.no_img.endian);
-	if (!ptr->texture.no_img.addr)
-		exit(ft_error(ptr, "Error in images2", 1));
 
 
 	// printf("W:%d\n", ptr->texture.no_w);

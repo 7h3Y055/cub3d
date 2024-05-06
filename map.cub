@@ -1,19 +1,14 @@
-      NO ./textures/brick-wall_.xpm
-EA ./textures/EA.xpm
-
-
-
-
-C 0  ,  0     ,0   
-	WE ./textures/WE.xpm
-
-        SO ./textures/SO.xpm
+NO ./textures/messi.xpm
+SO ./textures/messi.xpm
+EA ./textures/brick-wall_.xpm
+WE ./textures/brick-wall_.xpm
 
 
 
 
 
-F 44,110,73
+C 171, 199, 216   
+F 186, 128, 74
 
 
 

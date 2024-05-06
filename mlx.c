@@ -35,14 +35,14 @@ void x(t_ptr *ptr, t_point *next, double angle)
 	long long d = distance(ptr->player, *next);
 	t_point a;
 
-	if (!exeed_map(ptr, *next))
+	/*if (!exeed_map(ptr, *next))
 	{
 		my_mlx_pixel_put(&ptr->win.img, (double)next->x / SCALE * DEBUG_SCALE, (double)next->y / SCALE * DEBUG_SCALE, RED);
 		my_mlx_pixel_put(&ptr->win.img, (double)next->x / SCALE * DEBUG_SCALE + 1, (double)next->y / SCALE * DEBUG_SCALE, RED);
 		my_mlx_pixel_put(&ptr->win.img, (double)next->x / SCALE * DEBUG_SCALE - 1, (double)next->y / SCALE * DEBUG_SCALE, RED);
 		my_mlx_pixel_put(&ptr->win.img, (double)next->x / SCALE * DEBUG_SCALE, (double)next->y / SCALE * DEBUG_SCALE - 1, RED);
 		my_mlx_pixel_put(&ptr->win.img, (double)next->x / SCALE * DEBUG_SCALE, (double)next->y / SCALE * DEBUG_SCALE + 1, RED);
-	}
+	}*/
 	// i = 1;
 	// while (i < d && !exeed_map(ptr, *next))
 	// {
@@ -315,12 +315,12 @@ void	put_player_to_image(t_img_data *img, t_player player)
 		}
 		y++;
 	}
-	n = 1;
+/*	n = 1;
 	while (n < 20)
 	{
 		my_mlx_pixel_put(img, ((double)player.x / SCALE * DEBUG_SCALE) + (cos((double)player.angle) * n), ((double)player.y / SCALE * DEBUG_SCALE) + (sin((double)player.angle) * n), RED);
 		n++;
-	}
+	}*/
 }
 
 void init_images(t_ptr *ptr)

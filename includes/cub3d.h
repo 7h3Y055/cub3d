@@ -30,7 +30,7 @@
 #define	BLEU 0x0021FF
 #define	yellow 0xFFF000
 
-#define DEBUG   0
+#define DEBUG   1
 #define DEBUG_SCALE   25
 #define SCALE_P 2
 #define PLAYER_SPEED 100000

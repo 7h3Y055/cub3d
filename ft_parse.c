@@ -188,6 +188,12 @@ void    ft_init_player_position(t_ptr *ptr, int y, int x,  char c)
         ptr->player.angle = PI;
 }
 
+void ft_init_obunga_position(t_ptr *ptr, int y, int x)
+{
+    ptr->obunga.y = y * SCALE + SCALE / 2;
+    ptr->obunga.x = x * SCALE + SCALE / 2;
+}
+
 void    ft_init_map2d(t_ptr *ptr, char *str)
 {
     int i;
@@ -211,8 +217,13 @@ void    ft_init_map2d(t_ptr *ptr, char *str)
             if (!str[i])
                 break;
         }
-        else if (str[i] != 'N' && str[i] != 'S' && str[i] != 'W' && str[i] != 'E')
+        else if (str[i] != 'N' && str[i] != 'S' && str[i] != 'W' && str[i] != 'E'&& str[i] != 'X')
             ptr->map2d[y][x++] = str[i];
+        else if (str[i] == 'X')
+        {
+            ft_init_obunga_position(ptr, y, x);
+            ptr->map2d[y][x++] = '0';
+        }
         else
         {
             n++;
@@ -385,6 +396,6 @@ void ft_parse(t_ptr *ptr, int argc, char const **argv)
     check_extention(ptr, argv);
     fd = ft_open(ptr, argv[1]);
     ft_init(ptr, fd);
-    check_valide_map(ptr);
+    // check_valide_map(ptr);
     // create_scaled_map(ptr);
 }

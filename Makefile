@@ -9,7 +9,8 @@ CFLAGS    = #-fsanitize=address #-Wall  #-Werror -Wextra
 MLX_FLAGS = -lXext -lX11 -lm
 CC        = cc
 
-# MAC_FLAGS = -lmlx -frasq/homebrew/lib/X11/locale/common
+# MAC_FLAGS = -L /Users/mezzine/.brew/lib/X11/locale/common
+# MLX_FLAGS =  -lmlx -framework OpenGL -framework AppKit
 
 all:$(NAME)
 
@@ -35,3 +36,4 @@ bonus:
 # obunga game
 # https://pixabay.com/photos/brick-wall-red-structure-masonry-1916752/
 # check is images is sqaure
+

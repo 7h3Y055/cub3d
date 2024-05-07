@@ -20,22 +20,49 @@ int handle_input(t_ptr *ptr)
         left_argle(ptr);
     if (ptr->keys[E])
         destroy_all(ptr);
+    if (ptr->keys[7])
+    {
+        if (ptr->jump < 200)
+            ptr->jump += 30;
+        else
+            ptr->keys[7] = 0;
+    }
+    else
+    {
+        if (ptr->jump > 0)
+            ptr->jump -= 30;
+    }
 	return (0);
 }
 
+void    put_obunga(t_ptr *ptr)
+{
+    size_t  i = 0;
+    size_t  x,y;
+
+    
+}
+
+// int    check_enemy(t_ptr *ptr)
+// {
+//     double  enemy_angle;
+
+//     enemy_angle = 
+// }
+
 int render_loop(t_ptr *ptr)
 {
-	ft_bzero(ptr->img3d.addr, WIDTH * HEIGHT * (ptr->img3d.bits_per_pixel / 8));
-
     handle_input(ptr);
     if (DEBUG)
     {
         create_map(ptr);
         put_player_to_image(&ptr->win.img, ptr->player);
+        put_player_to_image(&ptr->win.img, ptr->player);
         mlx_put_image_to_window(ptr->win.mlx, ptr->win.win, ptr->win.img.img, 0, 0);
     }
 	put_arrow(ptr);
     mlx_put_image_to_window(ptr->win.mlx, ptr->win3d, ptr->img3d.img, 0, 0);
+    ft_bzero(ptr->img3d.addr, WIDTH * HEIGHT * (ptr->img3d.bits_per_pixel / 8));
 	return (0);
 }
 
@@ -43,6 +70,7 @@ int main(int argc, char const **argv)
 {
     t_ptr	ptr;
 
+    ft_bzero(&ptr, sizeof(ptr));
     ft_parse(&ptr, argc, argv);
 	init_mlx(&ptr);
 

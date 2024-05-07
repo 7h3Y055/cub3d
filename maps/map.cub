@@ -1,6 +1,6 @@
       NO ./textures/brick-wall_.xpm
 EA ./textures/EA.xpm
-        SO ./textures/SO.xpm
+        SO ./textures/brick-wall_.xpm
 	WE ./textures/WE.xpm
 		C 0,0,0
 

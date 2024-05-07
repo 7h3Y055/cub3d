@@ -35,22 +35,24 @@ void x(t_ptr *ptr, t_point *next, double angle)
 	long long d = distance(ptr->player, *next);
 	t_point a;
 
-	/*if (!exeed_map(ptr, *next))
+	t_point n = *next;
+	if (!(n.x < 0 || n.x >= ptr->parse.x * DEBUG_SCALE || n.y < 0 || n.y >= ptr->parse.y * DEBUG_SCALE))
 	{
 		my_mlx_pixel_put(&ptr->win.img, (double)next->x / SCALE * DEBUG_SCALE, (double)next->y / SCALE * DEBUG_SCALE, RED);
-		my_mlx_pixel_put(&ptr->win.img, (double)next->x / SCALE * DEBUG_SCALE + 1, (double)next->y / SCALE * DEBUG_SCALE, RED);
-		my_mlx_pixel_put(&ptr->win.img, (double)next->x / SCALE * DEBUG_SCALE - 1, (double)next->y / SCALE * DEBUG_SCALE, RED);
-		my_mlx_pixel_put(&ptr->win.img, (double)next->x / SCALE * DEBUG_SCALE, (double)next->y / SCALE * DEBUG_SCALE - 1, RED);
-		my_mlx_pixel_put(&ptr->win.img, (double)next->x / SCALE * DEBUG_SCALE, (double)next->y / SCALE * DEBUG_SCALE + 1, RED);
-	}*/
-	// i = 1;
-	// while (i < d && !exeed_map(ptr, *next))
-	// {
-	// 	next->x = ptr->player.x + (cos(angle) * i);
-	// 	next->y = ptr->player.y + (sin(angle) * i);
-	// 	my_mlx_pixel_put(&ptr->win.img, next->x, next->y, GREAN);
-	// 	i++;
-	// }
+		// my_mlx_pixel_put(&ptr->win.img, (double)next->x / SCALE * DEBUG_SCALE + 1, (double)next->y / SCALE * DEBUG_SCALE, RED);
+		// my_mlx_pixel_put(&ptr->win.img, (double)next->x / SCALE * DEBUG_SCALE - 1, (double)next->y / SCALE * DEBUG_SCALE, RED);
+		// my_mlx_pixel_put(&ptr->win.img, (double)next->x / SCALE * DEBUG_SCALE, (double)next->y / SCALE * DEBUG_SCALE - 1, RED);
+		// my_mlx_pixel_put(&ptr->win.img, (double)next->x / SCALE * DEBUG_SCALE, (double)next->y / SCALE * DEBUG_SCALE + 1, RED);
+	}
+	i = 1;
+	while (i < d && !exeed_map(ptr, n))
+	{
+		n.x = ptr->player.x / SCALE * DEBUG_SCALE + (cos(angle) * i);
+		n.y = ptr->player.y / SCALE * DEBUG_SCALE + (sin(angle) * i);
+		if (!(n.x < 0 || n.x >= ptr->parse.x * DEBUG_SCALE || n.y < 0 || n.y >= ptr->parse.y * DEBUG_SCALE))
+			my_mlx_pixel_put(&ptr->win.img, n.x, n.y, GREEN);
+		i++;
+	}
 
 
 
@@ -227,6 +229,7 @@ double function_(double a)
 void	put_arrow(t_ptr *ptr)
 {
 	// double	a = function_(ptr->player.angle);
+    // ft_bzero(ptr->img3d.addr, WIDTH * HEIGHT * (ptr->img3d.bits_per_pixel / 8));
 	double	a = function_(ptr->player.angle - d2rad(EYE_ANGLE / 2));
 	size_t c = 0;
 	t_player	p = ptr->player;
@@ -320,11 +323,11 @@ void	put_player_to_image(t_img_data *img, t_player player)
 	{
 		my_mlx_pixel_put(img, ((double)player.x / SCALE * DEBUG_SCALE) + (cos((double)player.angle) * n), ((double)player.y / SCALE * DEBUG_SCALE) + (sin((double)player.angle) * n), RED);
 
-		my_mlx_pixel_put(img, ((double)(player.x - 10) / SCALE * DEBUG_SCALE) + (cos((double)player.angle) * n), ((double)player.y / SCALE * DEBUG_SCALE) + (sin((double)player.angle) * n), RED);
-		my_mlx_pixel_put(img, ((double)(player.x + 10) / SCALE * DEBUG_SCALE) + (cos((double)player.angle) * n), ((double)player.y / SCALE * DEBUG_SCALE) + (sin((double)player.angle) * n), RED);
+		// my_mlx_pixel_put(img, ((double)(player.x - 10) / SCALE * DEBUG_SCALE) + (cos((double)player.angle) * n), ((double)player.y / SCALE * DEBUG_SCALE) + (sin((double)player.angle) * n), RED);
+		// my_mlx_pixel_put(img, ((double)(player.x + 10) / SCALE * DEBUG_SCALE) + (cos((double)player.angle) * n), ((double)player.y / SCALE * DEBUG_SCALE) + (sin((double)player.angle) * n), RED);
 
-		my_mlx_pixel_put(img, ((double)player.x / SCALE * DEBUG_SCALE) + (cos((double)player.angle) * n), ((double)(player.y - 10) / SCALE * DEBUG_SCALE) + (sin((double)player.angle) * n), RED);
-		my_mlx_pixel_put(img, ((double)player.x / SCALE * DEBUG_SCALE) + (cos((double)player.angle) * n), ((double)(player.y + 10) / SCALE * DEBUG_SCALE) + (sin((double)player.angle) * n), RED);
+		// my_mlx_pixel_put(img, ((double)player.x / SCALE * DEBUG_SCALE) + (cos((double)player.angle) * n), ((double)(player.y - 10) / SCALE * DEBUG_SCALE) + (sin((double)player.angle) * n), RED);
+		// my_mlx_pixel_put(img, ((double)player.x / SCALE * DEBUG_SCALE) + (cos((double)player.angle) * n), ((double)(player.y + 10) / SCALE * DEBUG_SCALE) + (sin((double)player.angle) * n), RED);
 		n++;
 	}
 }

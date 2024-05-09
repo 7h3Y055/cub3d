@@ -32,6 +32,21 @@ re:fclean all
 
 bonus:
 
-# obunga game
-# https://pixabay.com/photos/brick-wall-red-structure-masonry-1916752/
-# check is images is sqaure
+# save rays in array
+
+# death sound https://www.youtube.com/watch?v=CNVbPpXCC1c&ab_channel=F4Playzz
+# death sound https://www.youtube.com/watch?v=Vk4KK-gh0FM&ab_channel=NostalgiaChannel
+# intro sounf https://youtu.be/fcwOIz2jwkM?si=2BIqd165a5VUwsDT
+# https://www.youtube.com/watch?v=7qKlU2a9-Zg&ab_channel=MemeSoundEffects
+# game sound https://youtu.be/0bQJRumF59E?si=DME0h9lW7baNN8rD
+# game sound https://youtu.be/KU0AdJh_AIU?si=QacsW9dsqcNQsFtG
+# game sound https://youtu.be/RVzRwWVl9FU?si=4PW6RRZczg27bJF6
+# https://youtu.be/UG0HtBg7KAk?si=ziDZEisQDBMAVoMc
+# https://www.youtube.com/watch?v=cQKq-ti1CSs&ab_channel=UpscaledHistory
+
+# https://www.youtube.com/watch?v=O7JPP1SY1dE&ab_channel=zakariaTalk
+
+# coach zouhir 
+# https://www.youtube.com/watch?v=SNhCQdBIOds&ab_channel=Alaa-EddineGuimimi
+
+# https://www.youtube.com/watch?v=q8KyFepTGEg&ab_channel=MiawX2

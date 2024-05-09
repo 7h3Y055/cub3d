@@ -87,7 +87,7 @@ void    create_square(t_ptr *ptr, double ray_l, size_t x, t_point next)
     while (y < (WIDTH / 2) + (ray_l / 2) && y < WIDTH)
     {
         color = GREEN;
-        // color = get_pixel_color(ptr, next, (size_t)y);
+        color = get_pixel_color(ptr, next, (size_t)y);
 
         if (!(color == -1 || x < 0 || x > HEIGHT || y < 0 || y > WIDTH))
             my_mlx_pixel_put(&ptr->img3d, x, y, color);

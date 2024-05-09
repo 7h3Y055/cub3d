@@ -182,6 +182,35 @@ double calculate_incrementation()
 }
 
 
+int check_obunga_angle(t_ptr *ptr, double o_angle, double p_angle)
+{
+	double	a = fix_rad_overflow(p_angle + calculate_incrementation() / 2);
+	double	b = fix_rad_overflow(p_angle - calculate_incrementation() / 2);
+
+	// if ()
+	// if (o_angle < fix_rad_overflow(ptr->player.angle - d2rad(EYE_ANGLE / 2)) || o_angle > fix_rad_overflow(ptr->player.angle + d2rad(EYE_ANGLE / 2)))
+	// 	return (0);
+	if (o_angle <= fix_rad_overflow(p_angle + calculate_incrementation() / 2) && o_angle > fix_rad_overflow(p_angle - calculate_incrementation() / 2))
+		return (1);
+	return (0);
+}
+
+
+int btw_range(double a, double min, double max)
+{
+	if (max > min)
+	{
+		if (a >= min && a <= max)
+			return (1);
+	}
+	else
+	{
+		if ((a >= min && a <= RAD) || (a >= 0 && a <= max))
+			return (1);
+	}
+	return (0);
+}
+
 void init_obunga(t_ptr *ptr,t_point *next, double p_angle, int c)
 {
 	double o_angle = 0;
@@ -204,23 +233,24 @@ void init_obunga(t_ptr *ptr,t_point *next, double p_angle, int c)
 		o_angle = RAD - atan((ptr->player.y - ptr->obunga.y) / (ptr->obunga.x - ptr->player.x));
 	}
 
-	printf("%f\n", o_angle);
-	ptr->obunga.dst = 0;
-	// if (o_angle < p_angle + calculate_incrementation() / 2 && o_angle > p_angle - calculate_incrementation() / 2)
-	// {
-	// 	if (distance(*ptr, ptr->flgas.tmp, 1) < distance(*ptr, *next, 0))
-	// 	{
-	// 		ptr->obunga.img_x = c;
-	// 		ptr->obunga.dst = distance(*ptr, ptr->flgas.tmp, 1);
-	// 	}
-	// 	else
-	// 	{
-	// 		ptr->obunga.dst = 0;
-	// 	}
-	// }
-	// else if (o_angle > fix_rad_overflow(ptr->player.angle + d2rad(EYE_ANGLE) / 2) || o_angle < fix_rad_overflow(ptr->player.angle + d2rad(EYE_ANGLE) / 2))
-		// puts("A");
-		// ptr->obunga.dst = 0;
+
+	// if (!(o_angle < fix_rad_overflow( ptr->player.angle + d2rad(EYE_ANGLE / 2)) && o_angle > fix_rad_overflow( ptr->player.angle - d2rad(EYE_ANGLE / 2)) ))
+	if (!btw_range(o_angle, fix_rad_overflow( ptr->player.angle - d2rad(EYE_ANGLE / 2)), fix_rad_overflow( ptr->player.angle + d2rad(EYE_ANGLE / 2))))
+		ptr->obunga.dst = 0;
+	// if (o_angle <= fix_rad_overflow(p_angle + calculate_incrementation() / 2) && o_angle > fix_rad_overflow(p_angle - calculate_incrementation() / 2))
+	else if (btw_range(o_angle, fix_rad_overflow(p_angle - calculate_incrementation() / 2), fix_rad_overflow(p_angle + calculate_incrementation() / 2)))
+	{
+		if (distance(*ptr, ptr->flgas.tmp, 1) < distance(*ptr, *next, 0))
+		{
+			ptr->obunga.img_x = c;
+			ptr->obunga.dst = distance(*ptr, ptr->flgas.tmp, 1);
+		}
+		else
+		{
+			ptr->obunga.dst = 0;
+		}
+	}
+
 
 }
 

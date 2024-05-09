@@ -10,7 +10,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <float.h>
 #include "libft.h"
 #include "get_next_line.h"
 
@@ -31,18 +30,22 @@
 #define	BLEU 0x0021FF
 #define	yellow 0xFFF000
 
-#define DEBUG   0
+#define DEBUG   1
 #define DEBUG_SCALE   25
 #define SCALE_P 2
+// #define PLAYER_SPEED 100000
 
 #define SOME_SPACE 4
 
 #define RAD 6.2831853072
 #define NINETY_DEGREE 1.5707963268
 #define PI 3.141592653589793
-#define SCALE 100 
-#define PLAYER_SPEED 10
-#define ROTATION_SPEED 0.06
+// #define SCALE 1000000
+#define SCALE 100
+// #define SCALE 25
+#define PLAYER_SPEED 7
+#define ROTATION_SPEED 0.019
+// #define ROTATION_SPEED 0.07
 #define EYE_ANGLE 60
 
 #define MAGIC_NUMBER 0.00001
@@ -55,7 +58,6 @@
 #define RIGHT_M   124
 #define LEFT_M    123
 #define ESC_M    53
-#define SPACE_M    49
 
 #define W 0
 #define D 1
@@ -65,11 +67,6 @@
 #define R 5
 #define E 6
 
-typedef struct s_obunga
-{
-	double	x;
-	double	y;
-}	t_obunga;
 
 typedef struct s_point
 {
@@ -109,6 +106,17 @@ typedef struct s_win
 	t_img_data	img;
 } t_win;
 
+typedef struct s_obunga
+{
+	double	x;
+	double	y;
+    int img_w;
+    int img_h;
+    size_t  img_x;
+    t_img_data  img;
+    size_t  dst;
+}	t_obunga;
+
 typedef struct s_player
 {
     size_t y;
@@ -141,6 +149,11 @@ typedef struct s_texture
 }   
 t_texture;
 
+typedef struct s_flags
+{
+    t_point tmp;
+} t_flags;
+
 typedef struct s_ptr
 {
     t_parse parse;
@@ -149,10 +162,10 @@ typedef struct s_ptr
 	void 	*win3d;
     t_player player;
     t_obunga obunga;
-    int     keys[8];
-    int     jump;
+    int     keys[7];
     t_texture texture;
     char **map2d;
+    t_flags flgas;
 } t_ptr;
 
 
@@ -179,7 +192,7 @@ void	put_arrow(t_ptr *ptr);
 void	my_mlx_pixel_put(t_img_data *img, int x, int y, int color);
 void    create_square(t_ptr *ptr, double ray_l, size_t x, t_point);
 void midle_line(t_ptr *ptr);
-
+double fix_rad_overflow(double a);
 int key_pressed(int keycode, t_ptr *ptr);
 int key_released(int keycode, t_ptr *ptr);
 

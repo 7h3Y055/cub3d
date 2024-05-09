@@ -188,12 +188,6 @@ void    ft_init_player_position(t_ptr *ptr, int y, int x,  char c)
         ptr->player.angle = PI;
 }
 
-void ft_init_obunga_position(t_ptr *ptr, int y, int x)
-{
-    ptr->obunga.y = y * SCALE + SCALE / 2;
-    ptr->obunga.x = x * SCALE + SCALE / 2;
-}
-
 void    ft_init_map2d(t_ptr *ptr, char *str)
 {
     int i;
@@ -217,13 +211,8 @@ void    ft_init_map2d(t_ptr *ptr, char *str)
             if (!str[i])
                 break;
         }
-        else if (str[i] != 'N' && str[i] != 'S' && str[i] != 'W' && str[i] != 'E'&& str[i] != 'X')
+        else if (str[i] != 'N' && str[i] != 'S' && str[i] != 'W' && str[i] != 'E')
             ptr->map2d[y][x++] = str[i];
-        else if (str[i] == 'X')
-        {
-            ft_init_obunga_position(ptr, y, x);
-            ptr->map2d[y][x++] = '0';
-        }
         else
         {
             n++;
@@ -297,14 +286,20 @@ int check_valid_map(t_ptr *ptr, int y, int x)
     return (0);
 }
 
+void ft_init_obunga_position(t_ptr *ptr, int y, int x)
+{
+    ptr->obunga.y = y * SCALE + SCALE / 2;
+    ptr->obunga.x = x * SCALE + SCALE / 2;
+}
+
 void    check_valide_map(t_ptr *ptr)
 {
     int y;
     int x;
-    // int n;
+    int n;
 
     y = 0;
-    // n = 0;
+    n = 0;
     while (y < ptr->parse.y)
     {
         x = 0;
@@ -312,16 +307,20 @@ void    check_valide_map(t_ptr *ptr)
         {
             if (ptr->map2d[y][x] == '0' && check_valid_map(ptr, y, x))
                 exit(ft_error(ptr, "Invalid map: map is not closed by wall (1)\n", check_valid_map(ptr, y, x)));
-            // else if (ptr->map2d[y][x] == 'N')
-                // n++;
-            else if (ptr->map2d[y][x] && ptr->map2d[y][x] != '0' && ptr->map2d[y][x] != '1' && ptr->map2d[y][x] != ' ')
+            else if (ptr->map2d[y][x] && ptr->map2d[y][x] != '0' && ptr->map2d[y][x] != '1' && ptr->map2d[y][x] != ' '  && ptr->map2d[y][x] != 'X')
                 exit(ft_error(ptr, "Invalid map: contain invalid character!\n", check_valid_map(ptr, y, x)));
+            else if (ptr->map2d[y][x] == 'X')
+            {
+                ft_init_obunga_position(ptr, y, x);
+                ptr->map2d[y][x] = '0';
+                n++;
+            }
             x++;
         }
         y++;
     }
-    // if (n == 0 || n > 1)
-    //     exit(ft_error(ptr, "Invalid map: less or more than one player starting point (N)\n", 1));
+    if (n > 1)
+        exit(ft_error(ptr, "Invalid map: more than one obunga starting point (X)\n", 1));
 }
 
 
@@ -396,6 +395,6 @@ void ft_parse(t_ptr *ptr, int argc, char const **argv)
     check_extention(ptr, argv);
     fd = ft_open(ptr, argv[1]);
     ft_init(ptr, fd);
-    // check_valide_map(ptr);
+    check_valide_map(ptr);
     // create_scaled_map(ptr);
 }

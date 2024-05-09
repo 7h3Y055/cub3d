@@ -5,12 +5,11 @@ INC       = ./includes
 LIBFT_DIR = ./lib/libft
 LIBFT     = ./lib/libft/libft.a
 GNL		  = lib/gnl/get_next_line.c lib/gnl/get_next_line_utils.c
-CFLAGS    = #-fsanitize=address #-Wall  #-Werror -Wextra
+CFLAGS    = #-g -fsanitize=address #-Wall  #-Werror -Wextra
 MLX_FLAGS = -lXext -lX11 -lm
 CC        = cc
 
-# MAC_FLAGS = -L /Users/mezzine/.brew/lib/X11/locale/common
-# MLX_FLAGS =  -lmlx -framework OpenGL -framework AppKit
+# MAC_FLAGS = -lmlx -frasq/homebrew/lib/X11/locale/common
 
 all:$(NAME)
 
@@ -24,10 +23,10 @@ $(LIBFT):
 	make -C $(LIBFT_DIR)
 
 clean:
-	make clean -C $(LIBFT_DIR)
+	# make clean -C $(LIBFT_DIR)
 	rm -f $(OBJS)
 fclean:clean
-	make fclean -C $(LIBFT_DIR)
+	# make fclean -C $(LIBFT_DIR)
 	rm -f $(NAME)
 re:fclean all
 
@@ -36,4 +35,3 @@ bonus:
 # obunga game
 # https://pixabay.com/photos/brick-wall-red-structure-masonry-1916752/
 # check is images is sqaure
-

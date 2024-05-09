@@ -24,35 +24,36 @@ int	exeed_map(t_ptr *ptr, t_point p)
 	return (0);
 }
 
-double	distance(t_player p, t_point next)
+double	distance(t_ptr ptr, t_point next, int flag)
 {
-	return (sqrt((p.x - next.x) * (p.x - next.x) + (p.y - next.y) * (p.y - next.y)));
+	if (flag)
+		return (sqrt((ptr.player.x - ptr.obunga.x) * (ptr.player.x - ptr.obunga.x) + (ptr.player.y - ptr.obunga.y) * (ptr.player.y - ptr.obunga.y)));
+	else
+		return (sqrt((ptr.player.x - next.x) * (ptr.player.x - next.x) + (ptr.player.y - next.y) * (ptr.player.y - next.y)));
 }
 
 void x(t_ptr *ptr, t_point *next, double angle)
 {
 	long long i = 1;
-	long long d = distance(ptr->player, *next);
+	long long d = distance(*ptr, *next, 0);
 	t_point a;
 
-	t_point n = *next;
-	if (!(n.x < 0 || n.x >= ptr->parse.x * DEBUG_SCALE || n.y < 0 || n.y >= ptr->parse.y * DEBUG_SCALE))
+	if (!exeed_map(ptr, *next))
 	{
 		my_mlx_pixel_put(&ptr->win.img, (double)next->x / SCALE * DEBUG_SCALE, (double)next->y / SCALE * DEBUG_SCALE, RED);
-		// my_mlx_pixel_put(&ptr->win.img, (double)next->x / SCALE * DEBUG_SCALE + 1, (double)next->y / SCALE * DEBUG_SCALE, RED);
-		// my_mlx_pixel_put(&ptr->win.img, (double)next->x / SCALE * DEBUG_SCALE - 1, (double)next->y / SCALE * DEBUG_SCALE, RED);
-		// my_mlx_pixel_put(&ptr->win.img, (double)next->x / SCALE * DEBUG_SCALE, (double)next->y / SCALE * DEBUG_SCALE - 1, RED);
-		// my_mlx_pixel_put(&ptr->win.img, (double)next->x / SCALE * DEBUG_SCALE, (double)next->y / SCALE * DEBUG_SCALE + 1, RED);
+		my_mlx_pixel_put(&ptr->win.img, (double)next->x / SCALE * DEBUG_SCALE + 1, (double)next->y / SCALE * DEBUG_SCALE, RED);
+		my_mlx_pixel_put(&ptr->win.img, (double)next->x / SCALE * DEBUG_SCALE - 1, (double)next->y / SCALE * DEBUG_SCALE, RED);
+		my_mlx_pixel_put(&ptr->win.img, (double)next->x / SCALE * DEBUG_SCALE, (double)next->y / SCALE * DEBUG_SCALE - 1, RED);
+		my_mlx_pixel_put(&ptr->win.img, (double)next->x / SCALE * DEBUG_SCALE, (double)next->y / SCALE * DEBUG_SCALE + 1, RED);
 	}
-	i = 1;
-	while (i < d && !exeed_map(ptr, n))
-	{
-		n.x = ptr->player.x / SCALE * DEBUG_SCALE + (cos(angle) * i);
-		n.y = ptr->player.y / SCALE * DEBUG_SCALE + (sin(angle) * i);
-		if (!(n.x < 0 || n.x >= ptr->parse.x * DEBUG_SCALE || n.y < 0 || n.y >= ptr->parse.y * DEBUG_SCALE))
-			my_mlx_pixel_put(&ptr->win.img, n.x, n.y, GREEN);
-		i++;
-	}
+	// i = 1;
+	// while (i < d && !exeed_map(ptr, *next))
+	// {
+	// 	next->x = ptr->player.x + (cos(angle) * i);
+	// 	next->y = ptr->player.y + (sin(angle) * i);
+	// 	my_mlx_pixel_put(&ptr->win.img, next->x, next->y, GREAN);
+	// 	i++;
+	// }
 
 
 
@@ -180,7 +181,50 @@ double calculate_incrementation()
 	// return (0.00081812308687);
 }
 
-t_point	ray(t_ptr *ptr, double angle)
+
+void init_obunga(t_ptr *ptr,t_point *next, double p_angle, int c)
+{
+	double o_angle = 0;
+
+	if (ptr->obunga.x >= ptr->player.x && ptr->obunga.y >= ptr->player.y)
+	{
+		o_angle = atan((ptr->obunga.y - ptr->player.y) / (ptr->obunga.x - ptr->player.x));
+	}
+	else if (ptr->obunga.x <= ptr->player.x && ptr->obunga.y >= ptr->player.y)
+	{
+		o_angle = PI - atan((ptr->obunga.y - ptr->player.y) / (ptr->player.x - ptr->obunga.x));
+
+	}
+	else if (ptr->obunga.x <= ptr->player.x && ptr->obunga.y <= ptr->player.y)
+	{
+		o_angle = PI + atan((ptr->player.y - ptr->obunga.y) / (ptr->player.x - ptr->obunga.x));
+	}
+	else
+	{
+		o_angle = RAD - atan((ptr->player.y - ptr->obunga.y) / (ptr->obunga.x - ptr->player.x));
+	}
+
+	printf("%f\n", o_angle);
+	ptr->obunga.dst = 0;
+	// if (o_angle < p_angle + calculate_incrementation() / 2 && o_angle > p_angle - calculate_incrementation() / 2)
+	// {
+	// 	if (distance(*ptr, ptr->flgas.tmp, 1) < distance(*ptr, *next, 0))
+	// 	{
+	// 		ptr->obunga.img_x = c;
+	// 		ptr->obunga.dst = distance(*ptr, ptr->flgas.tmp, 1);
+	// 	}
+	// 	else
+	// 	{
+	// 		ptr->obunga.dst = 0;
+	// 	}
+	// }
+	// else if (o_angle > fix_rad_overflow(ptr->player.angle + d2rad(EYE_ANGLE) / 2) || o_angle < fix_rad_overflow(ptr->player.angle + d2rad(EYE_ANGLE) / 2))
+		// puts("A");
+		// ptr->obunga.dst = 0;
+
+}
+
+t_point	ray(t_ptr *ptr, double angle, int c)
 {
 	t_point	next;
 	t_point	nexty;
@@ -192,7 +236,7 @@ t_point	ray(t_ptr *ptr, double angle)
 	init_param_x(ptr, &nextx, &ax, angle);
 	while (1)
 	{
-		if (distance(ptr->player, nexty) > distance(ptr->player, nextx))
+		if (distance(*ptr, nexty, 0) > distance(*ptr, nextx, 0))
 		{
 			next = nextx;
 			if (check_wall(ptr, nextx) && ((angle < PI / 2 && angle >= 0) || (angle > PI + PI / 2 && angle <= RAD)))
@@ -202,7 +246,7 @@ t_point	ray(t_ptr *ptr, double angle)
 			nextx.x += ax.x;
 			nextx.y += ax.y;
 		}
-		else if (distance(ptr->player, nexty) < distance(ptr->player, nextx))
+		else if (distance(*ptr, nexty, 0) < distance(*ptr, nextx, 0))
 		{
 			next = nexty;
 			if (check_wall(ptr, nexty) && angle > PI && angle < RAD)
@@ -215,10 +259,11 @@ t_point	ray(t_ptr *ptr, double angle)
 		if (check_wall(ptr, next))	
 			break ;
 	}
+	init_obunga(ptr, &next, angle, c);
 	return (next);
 }
 
-double function_(double a)
+double fix_rad_overflow(double a)
 {
 	a = a - (int)(a / RAD) * RAD;
 	if (a < 0)
@@ -228,9 +273,8 @@ double function_(double a)
 
 void	put_arrow(t_ptr *ptr)
 {
-	// double	a = function_(ptr->player.angle);
-    // ft_bzero(ptr->img3d.addr, WIDTH * HEIGHT * (ptr->img3d.bits_per_pixel / 8));
-	double	a = function_(ptr->player.angle - d2rad(EYE_ANGLE / 2));
+	// double	a = fix_rad_overflow(ptr->player.angle);
+	double	a = fix_rad_overflow(ptr->player.angle - d2rad(EYE_ANGLE / 2));
 	size_t c = 0;
 	t_player	p = ptr->player;
 	t_point		next;
@@ -242,7 +286,7 @@ void	put_arrow(t_ptr *ptr)
 
 	while (c < HEIGHT)
 	{
-		next = ray(ptr, a);
+		next = ray(ptr, a, c);
 		if (DEBUG)
 			x(ptr, &next, a);
 		xx = ptr->player.angle - a;
@@ -250,7 +294,7 @@ void	put_arrow(t_ptr *ptr)
 			xx += RAD;
 		if (xx > RAD)
 			xx -= RAD;
-		n = distance(p, next) * cos(xx);
+		n = distance(*ptr, next, 0) * cos(xx);
 
 		// printf("%ld, %f\n", (size_t)(next.x / SCALE * SCALE) / SCALE * SCALE  ,   next.y / SCALE * SCALE + MAGIC_NUMBER);
 
@@ -261,7 +305,7 @@ void	put_arrow(t_ptr *ptr)
 		// my_mlx_pixel_put(&ptr->win.img, (size_t)(next.x / SCALE * DEBUG_SCALE) / DEBUG_SCALE * DEBUG_SCALE + 1, next.y / SCALE * DEBUG_SCALE, yellow);
 		create_square(ptr, n, c,next);
 		c++;
-		a = function_(a + calculate_incrementation());
+		a = fix_rad_overflow(a + calculate_incrementation());
 	}
 }
 
@@ -319,15 +363,9 @@ void	put_player_to_image(t_img_data *img, t_player player)
 		y++;
 	}
 	n = 1;
-	while (n < 10)
+	while (n < 20)
 	{
 		my_mlx_pixel_put(img, ((double)player.x / SCALE * DEBUG_SCALE) + (cos((double)player.angle) * n), ((double)player.y / SCALE * DEBUG_SCALE) + (sin((double)player.angle) * n), RED);
-
-		// my_mlx_pixel_put(img, ((double)(player.x - 10) / SCALE * DEBUG_SCALE) + (cos((double)player.angle) * n), ((double)player.y / SCALE * DEBUG_SCALE) + (sin((double)player.angle) * n), RED);
-		// my_mlx_pixel_put(img, ((double)(player.x + 10) / SCALE * DEBUG_SCALE) + (cos((double)player.angle) * n), ((double)player.y / SCALE * DEBUG_SCALE) + (sin((double)player.angle) * n), RED);
-
-		// my_mlx_pixel_put(img, ((double)player.x / SCALE * DEBUG_SCALE) + (cos((double)player.angle) * n), ((double)(player.y - 10) / SCALE * DEBUG_SCALE) + (sin((double)player.angle) * n), RED);
-		// my_mlx_pixel_put(img, ((double)player.x / SCALE * DEBUG_SCALE) + (cos((double)player.angle) * n), ((double)(player.y + 10) / SCALE * DEBUG_SCALE) + (sin((double)player.angle) * n), RED);
 		n++;
 	}
 }
@@ -338,16 +376,20 @@ void init_images(t_ptr *ptr)
 	ptr->texture.so_img.img = mlx_xpm_file_to_image(ptr->win.mlx, ptr->parse.so, &ptr->texture.so_w, &ptr->texture.so_h);
 	ptr->texture.ea_img.img = mlx_xpm_file_to_image(ptr->win.mlx, ptr->parse.ea, &ptr->texture.ea_w, &ptr->texture.ea_h);
 	ptr->texture.we_img.img = mlx_xpm_file_to_image(ptr->win.mlx, ptr->parse.we, &ptr->texture.we_w, &ptr->texture.we_h);
+	ptr->obunga.img.img = mlx_xpm_file_to_image(ptr->win.mlx, "resources/nextbots/Obunga.xpm", &ptr->obunga.img_w, &ptr->obunga.img_h);
+
 	
-	if (!ptr->texture.we_img.img || !ptr->texture.no_img.img || !ptr->texture.so_img.img || !ptr->texture.ea_img.img)
+	if (!ptr->texture.we_img.img || !ptr->texture.no_img.img || !ptr->texture.so_img.img || !ptr->texture.ea_img.img || !ptr->obunga.img.img)
 		exit(ft_error(ptr, "Error in images", 1));
 
 	ptr->texture.no_img.addr = mlx_get_data_addr(ptr->texture.no_img.img, &ptr->texture.no_img.bits_per_pixel, &ptr->texture.no_img.line_length, &ptr->texture.no_img.endian);
 	ptr->texture.so_img.addr = mlx_get_data_addr(ptr->texture.so_img.img, &ptr->texture.so_img.bits_per_pixel, &ptr->texture.so_img.line_length, &ptr->texture.so_img.endian);
 	ptr->texture.we_img.addr = mlx_get_data_addr(ptr->texture.we_img.img, &ptr->texture.we_img.bits_per_pixel, &ptr->texture.we_img.line_length, &ptr->texture.we_img.endian);
-
 	ptr->texture.ea_img.addr = mlx_get_data_addr(ptr->texture.ea_img.img, &ptr->texture.ea_img.bits_per_pixel, &ptr->texture.ea_img.line_length, &ptr->texture.ea_img.endian);
-	if (!ptr->texture.ea_img.addr || !ptr->texture.no_img.addr || !ptr->texture.so_img.addr || !ptr->texture.we_img.addr)
+	ptr->obunga.img.addr = mlx_get_data_addr(ptr->obunga.img.img, &ptr->obunga.img.bits_per_pixel, &ptr->obunga.img.line_length, &ptr->obunga.img.endian);
+
+
+	if (!ptr->texture.ea_img.addr || !ptr->texture.no_img.addr || !ptr->texture.so_img.addr || !ptr->texture.we_img.addr ||  !ptr->obunga.img.addr)
 		exit(ft_error(ptr, "Error in images2", 1));
 }
 

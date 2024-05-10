@@ -3,8 +3,8 @@
 
 #include <mlx.h>
 #include <math.h>
-#include <X11/keysym.h>
-#include <X11/X.h>
+// #include <X11/keysym.h>
+// #include <X11/X.h>
 #include <fcntl.h>
 #include <unistd.h>
 #include <stdio.h>
@@ -14,8 +14,8 @@
 #include "get_next_line.h"
 
 //MAC
-// #include "/Users/mezzine/.brew/include/X11/keysym.h"
-// #include "/Users/mezzine/.brew/include/X11/X.h"
+#include "/Users/mezzine/.brew/include/X11/keysym.h"
+#include "/Users/mezzine/.brew/include/X11/X.h"
 
 
 #define	HEIGHT 1280
@@ -30,7 +30,7 @@
 #define	BLEU 0x0021FF
 #define	yellow 0xFFF000
 
-#define DEBUG   1
+#define DEBUG   0
 #define DEBUG_SCALE   25
 #define SCALE_P 2
 // #define PLAYER_SPEED 100000
@@ -44,9 +44,9 @@
 #define SCALE 100
 #define ENEMY_SPEED 5
 // #define SCALE 25
-#define PLAYER_SPEED 7
-#define ROTATION_SPEED 0.019
-// #define ROTATION_SPEED 0.005
+#define PLAYER_SPEED 10
+// #define ROTATION_SPEED 0.019
+#define ROTATION_SPEED 0.05
 #define EYE_ANGLE 60
 
 #define MAGIC_NUMBER 0.00001
@@ -55,10 +55,12 @@
 #define D_M       2
 #define S_M       1
 #define A_M       0
+#define P_M       35
 
 #define RIGHT_M   124
 #define LEFT_M    123
 #define ESC_M    53
+#define ESP_M    49
 
 #define W 0
 #define D 1
@@ -172,7 +174,8 @@ typedef struct s_ptr
 	void 	*win3d;
     t_player player;
     t_obunga obunga;
-    int     keys[7];
+    int     keys[8];
+    double  jump;
     t_texture texture;
     char **map2d;
     int     start;
@@ -206,6 +209,7 @@ void midle_line(t_ptr *ptr);
 double fix_rad_overflow(double a);
 int key_pressed(int keycode, t_ptr *ptr);
 int key_released(int keycode, t_ptr *ptr);
+size_t scaleBetween(size_t unscaledNum, size_t minAllowed, size_t maxAllowed, size_t min, size_t max);
 
 int rgb2int(int r, int g, int b);
 

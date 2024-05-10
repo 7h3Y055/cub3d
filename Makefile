@@ -6,15 +6,16 @@ LIBFT_DIR = ./lib/libft
 LIBFT     = ./lib/libft/libft.a
 GNL		  = lib/gnl/get_next_line.c lib/gnl/get_next_line_utils.c
 CFLAGS    = #-g -fsanitize=address #-Wall  #-Werror -Wextra
-MLX_FLAGS = -lXext -lX11 -lm
+# MLX_FLAGS = -lXext -lX11 -lm
 CC        = cc
 
-# MAC_FLAGS = -lmlx -frasq/homebrew/lib/X11/locale/common
+MAC_FLAGS = -L /Users/mezzine/.brew/lib/X11/locale/common
+MLX_FLAGS = -lmlx -framework OpenGL -framework AppKit
 
 all:$(NAME)
 
 $(NAME):$(GNL) $(LIBFT) $(OBJS)
-	$(CC) $(OBJS) $(MLX_FLAGS) $(CFLAGS) $(LIBFT) libmlx_Linux.a $(GNL) -I$(INC) -o $(NAME) $(MAC_FLAGS)
+	$(CC) $(OBJS) $(MLX_FLAGS) $(CFLAGS) $(LIBFT) $(GNL) -I$(INC) -o $(NAME) $(MAC_FLAGS)  #libmlx_Linux.a
 
 %.o:%.c
 	$(CC) $(CFLAGS) $< -c -I$(INC) -o $@
@@ -23,10 +24,10 @@ $(LIBFT):
 	make -C $(LIBFT_DIR)
 
 clean:
-	# make clean -C $(LIBFT_DIR)
+	make clean -C $(LIBFT_DIR)
 	rm -f $(OBJS)
 fclean:clean
-	# make fclean -C $(LIBFT_DIR)
+	make fclean -C $(LIBFT_DIR)
 	rm -f $(NAME)
 re:fclean all
 

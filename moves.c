@@ -1,78 +1,79 @@
 #include "cub3d.h"
 
-int key_pressed(int keycode, t_ptr *ptr) {
-    if (keycode == XK_w)
-        ptr->keys[W] = 1;
-    if (keycode == XK_d)
-        ptr->keys[D] = 1;
-    if (keycode == XK_s)
-        ptr->keys[S] = 1;
-    if (keycode == XK_a)
-        ptr->keys[A] = 1;
-    if (keycode == XK_Left)
-        ptr->keys[L] = 1;
-    if (keycode == XK_Right)
-        ptr->keys[R] = 1;
-    if (keycode == XK_Escape)
-        ptr->keys[E] = 1;
-    
-    return 0;
-}
-
-int key_released(int keycode, t_ptr *ptr) {
-    if (keycode == XK_w)
-        ptr->keys[W] = 0;
-    if (keycode == XK_d)
-        ptr->keys[D] = 0;
-    if (keycode == XK_s)
-        ptr->keys[S] = 0;
-    if (keycode == XK_a)
-        ptr->keys[A] = 0;
-    if (keycode == XK_Left)
-        ptr->keys[L] = 0;
-    if (keycode == XK_Right)
-        ptr->keys[R] = 0;
-    if (keycode == XK_Escape)
-        ptr->keys[E] = 0;
-    return 0;
-}
-
 // int key_pressed(int keycode, t_ptr *ptr) {
-//     if (keycode == W_M)
+//     if (keycode == XK_w)
 //         ptr->keys[W] = 1;
-//     if (keycode == D_M)
+//     if (keycode == XK_d)
 //         ptr->keys[D] = 1;
-//     if (keycode == S_M)
+//     if (keycode == XK_s)
 //         ptr->keys[S] = 1;
-//     if (keycode == A_M)
+//     if (keycode == XK_a)
 //         ptr->keys[A] = 1;
-//     if (keycode == LEFT_M)
+//     if (keycode == XK_Left)
 //         ptr->keys[L] = 1;
-//     if (keycode == RIGHT_M)
+//     if (keycode == XK_Right)
 //         ptr->keys[R] = 1;
-//     if (keycode == ESC_M)
+//     if (keycode == XK_Escape)
 //         ptr->keys[E] = 1;
     
 //     return 0;
 // }
 
 // int key_released(int keycode, t_ptr *ptr) {
-//     if (keycode == W_M)
+//     if (keycode == XK_w)
 //         ptr->keys[W] = 0;
-//     if (keycode == D_M)
+//     if (keycode == XK_d)
 //         ptr->keys[D] = 0;
-//     if (keycode == S_M)
+//     if (keycode == XK_s)
 //         ptr->keys[S] = 0;
-//     if (keycode == A_M)
+//     if (keycode == XK_a)
 //         ptr->keys[A] = 0;
-//     if (keycode == LEFT_M)
+//     if (keycode == XK_Left)
 //         ptr->keys[L] = 0;
-//     if (keycode == RIGHT_M)
+//     if (keycode == XK_Right)
 //         ptr->keys[R] = 0;
-//     if (keycode == ESC_M)
+//     if (keycode == XK_Escape)
 //         ptr->keys[E] = 0;
 //     return 0;
 // }
+
+int key_pressed(int keycode, t_ptr *ptr) {
+    if (keycode == W_M)
+        ptr->keys[W] = 1;
+    if (keycode == D_M)
+        ptr->keys[D] = 1;
+    if (keycode == S_M)
+        ptr->keys[S] = 1;
+    if (keycode == A_M)
+        ptr->keys[A] = 1;
+    if (keycode == LEFT_M)
+        ptr->keys[L] = 1;
+    if (keycode == RIGHT_M)
+        ptr->keys[R] = 1;
+    if (keycode == ESC_M)
+        ptr->keys[E] = 1;
+    if (keycode == ESP_M && ptr->jump == 0)
+        ptr->keys[7] = 1;
+    return 0;
+}
+
+int key_released(int keycode, t_ptr *ptr) {
+    if (keycode == W_M)
+        ptr->keys[W] = 0;
+    if (keycode == D_M)
+        ptr->keys[D] = 0;
+    if (keycode == S_M)
+        ptr->keys[S] = 0;
+    if (keycode == A_M)
+        ptr->keys[A] = 0;
+    if (keycode == LEFT_M)
+        ptr->keys[L] = 0;
+    if (keycode == RIGHT_M)
+        ptr->keys[R] = 0;
+    if (keycode == ESC_M)
+        ptr->keys[E] = 0;
+    return 0;
+}
 
 
 

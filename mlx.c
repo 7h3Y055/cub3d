@@ -406,8 +406,8 @@ void init_images(t_ptr *ptr)
 	ptr->texture.ea_img.img = mlx_xpm_file_to_image(ptr->win.mlx, ptr->parse.ea, &ptr->texture.ea_w, &ptr->texture.ea_h);
 	ptr->texture.we_img.img = mlx_xpm_file_to_image(ptr->win.mlx, ptr->parse.we, &ptr->texture.we_w, &ptr->texture.we_h);
 	// ptr->obunga.img.img = mlx_xpm_file_to_image(ptr->win.mlx, "resources/nextbots/messi_4.xpm", &ptr->obunga.img_w, &ptr->obunga.img_h);
-	ptr->obunga.img.img = mlx_xpm_file_to_image(ptr->win.mlx, "resources/nextbots/c.xpm", &ptr->obunga.img_w, &ptr->obunga.img_h);
-	// ptr->obunga.img.img = mlx_xpm_file_to_image(ptr->win.mlx, "resources/nextbots/Obunga.xpm", &ptr->obunga.img_w, &ptr->obunga.img_h);
+	// ptr->obunga.img.img = mlx_xpm_file_to_image(ptr->win.mlx, "resources/nextbots/c.xpm", &ptr->obunga.img_w, &ptr->obunga.img_h);
+	ptr->obunga.img.img = mlx_xpm_file_to_image(ptr->win.mlx, "resources/nextbots/Obunga.xpm", &ptr->obunga.img_w, &ptr->obunga.img_h);
 	
 	if (!ptr->texture.we_img.img || !ptr->texture.no_img.img || !ptr->texture.so_img.img || !ptr->texture.ea_img.img || !ptr->obunga.img.img)
 		exit(ft_error(ptr, "Error in images", 1));

@@ -20,6 +20,18 @@ int handle_input(t_ptr *ptr)
         left_argle(ptr);
     if (ptr->keys[E])
         destroy_all(ptr);
+    if (ptr->keys[7])
+    {
+        if (ptr->jump < 2000)
+            ptr->jump += 100;
+        else
+            ptr->keys[7] = 0; 
+    }
+    else
+    {
+        if (ptr->jump > 0)
+            ptr->jump -= 100;
+    }
 	return (0);
 }
 
@@ -51,15 +63,6 @@ size_t scaleBetween(size_t unscaledNum, size_t minAllowed, size_t maxAllowed, si
   return (maxAllowed - minAllowed) * (unscaledNum - min) / (max - min) + minAllowed;
 }
 
-    // if (next.face == GREEN || next.face == GRAY)
-    //     *img_x = (next.y - (long long)next.y / SCALE * SCALE) * w / SCALE;
-    // else
-    //     *img_x = (next.x - (long long)next.x / SCALE * SCALE) * w / SCALE;
-
-    // *img_y = (y - next.first_point_in_wall) * (h / next.ray_l);
-
-
-
 int get_obunga_color(t_ptr *ptr, size_t y, size_t x, size_t first_point_y, size_t first_point_x, size_t max_y, size_t max_x)
 {
     char *dst;
@@ -75,8 +78,8 @@ int get_obunga_color(t_ptr *ptr, size_t y, size_t x, size_t first_point_y, size_
     img_x = scaleBetween(x, 0, ptr->obunga.img_h, first_point_x, max_x);
 
 
-    if (img_x > ptr->obunga.img_h || img_y > ptr->obunga.img_w)
-        return (-1);
+    // if (img_x > ptr->obunga.img_h || img_y > ptr->obunga.img_w)
+    //     return (-1);
         // return(rgb2int(ptr->parse.floor[0], ptr->parse.floor[1], ptr->parse.floor[2]));
 
     dst = ptr->obunga.img.addr + (img_y * ptr->obunga.img.line_length + img_x * (ptr->obunga.img.bits_per_pixel / 8));
@@ -86,8 +89,6 @@ int get_obunga_color(t_ptr *ptr, size_t y, size_t x, size_t first_point_y, size_
 
     return (*(int*)dst);
 }
-
-
 
 void    put_obunga_to_img(t_ptr *ptr)
 {
@@ -99,16 +100,11 @@ void    put_obunga_to_img(t_ptr *ptr)
 
     if (ptr->obunga.dst == 0)
         return;
-
     consts = (SCALE * WIDTH) / ptr->obunga.dst;
-
     dst =  (SCALE * HEIGHT) / ptr->obunga.dst;
-
     x = ptr->obunga.img_x - consts;
-    // printf("%d\t<\t%d\n", x , ptr->obunga.img_x + consts);
     while (x < (int)ptr->obunga.img_x + consts)
     {
-        // printf("Z");
         y = WIDTH / 2 - dst / 2;
         while (y < (WIDTH / 2) + (dst) / 2 && y < WIDTH)
         {
@@ -117,15 +113,12 @@ void    put_obunga_to_img(t_ptr *ptr)
                 color = get_obunga_color(ptr, y, x, WIDTH / 2 - dst / 2, ptr->obunga.img_x - consts, (WIDTH / 2) + (dst) / 2 , ptr->obunga.img_x + consts);
                 if (color >= 0)
                     my_mlx_pixel_put(&ptr->img3d, x, y, color);
-                // else
-                //     my_mlx_pixel_put(&ptr->img3d, x, y, GREEN);
 
             }
             y++;
         }
         x++;
     }
-    // printf("%d,%d\n", y, x);
 }
 
 void check_player_death(t_ptr *ptr)

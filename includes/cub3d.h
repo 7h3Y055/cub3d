@@ -45,7 +45,7 @@
 // #define SCALE 25
 #define PLAYER_SPEED 7
 #define ROTATION_SPEED 0.019
-// #define ROTATION_SPEED 0.07
+// #define ROTATION_SPEED 0.005
 #define EYE_ANGLE 60
 
 #define MAGIC_NUMBER 0.00001
@@ -67,7 +67,6 @@
 #define R 5
 #define E 6
 
-
 typedef struct s_point
 {
 	double	x;
@@ -76,6 +75,13 @@ typedef struct s_point
     size_t first_point_in_wall;
     double ray_l;
 }	t_point;
+
+typedef struct s_rays
+{
+	t_point next;
+    double  n;
+}	t_rays;
+
 
 typedef struct s_parse
 {
@@ -113,6 +119,7 @@ typedef struct s_obunga
     int img_w;
     int img_h;
     size_t  img_x;
+    char    *path;
     t_img_data  img;
     size_t  dst;
 }	t_obunga;
@@ -156,6 +163,7 @@ typedef struct s_flags
 
 typedef struct s_ptr
 {
+    t_rays  rays[HEIGHT];
     t_parse parse;
     t_win   win;
 	t_img_data img3d;

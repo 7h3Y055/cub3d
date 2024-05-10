@@ -146,10 +146,18 @@ int    ft_init_texture(t_ptr *ptr, char *str)
         ptr->parse.floor = get_color(ptr, str);
     else if (!ptr->parse.ceiling && ft_strncmp(&str[i], "C", 1) == 0)
         ptr->parse.ceiling = get_color(ptr, str);
+    else if (!ptr->parse.ceiling && ft_strncmp(&str[i], "EN", 2) == 0)
+    {
+        ptr->obunga.path = get_texture_path(ptr, str);
+        printf("%s\n", ptr->obunga.path);
+    }
     else if (ft_just_whitespaces(str, i))
         return (0);
     else if (str[i] && str[i] != '\n')
+    {
+        // printf("%s\n", str);
         exit(ft_error(ptr, "Error2\n", 1));
+    }
     return (1);
 }
 
@@ -277,11 +285,11 @@ int check_valid_map(t_ptr *ptr, int y, int x)
 {
    if (!ptr->map2d[y + 1] || (ptr->map2d[y + 1][x] == '\0' || ptr->map2d[y + 1][x] == ' '))
         return (1);
-   else if (!ptr->map2d[y - 1] || (ptr->map2d[y - 1][x] == '\0' || ptr->map2d[y - 1][x] == ' '))
+   else if (y > 0 && (!ptr->map2d[y - 1] || (ptr->map2d[y - 1][x] == '\0' || ptr->map2d[y - 1][x] == ' ')))
         return (2);
    else if (ptr->map2d[y][x + 1] == '\0' || ptr->map2d[y][x + 1] == ' ')
         return (3);
-   else if (ptr->map2d[y][x - 1] == '\0' || ptr->map2d[y][x - 1] == ' ')
+   else if (x > 0 && (ptr->map2d[y][x - 1] == '\0' || ptr->map2d[y][x - 1] == ' '))
         return (4);
     return (0);
 }
@@ -308,7 +316,10 @@ void    check_valide_map(t_ptr *ptr)
             if (ptr->map2d[y][x] == '0' && check_valid_map(ptr, y, x))
                 exit(ft_error(ptr, "Invalid map: map is not closed by wall (1)\n", check_valid_map(ptr, y, x)));
             else if (ptr->map2d[y][x] && ptr->map2d[y][x] != '0' && ptr->map2d[y][x] != '1' && ptr->map2d[y][x] != ' '  && ptr->map2d[y][x] != 'X')
+            {
+                printf("%c\n", ptr->map2d[y][x]);
                 exit(ft_error(ptr, "Invalid map: contain invalid character!\n", check_valid_map(ptr, y, x)));
+            }
             else if (ptr->map2d[y][x] == 'X')
             {
                 ft_init_obunga_position(ptr, y, x);
@@ -320,7 +331,7 @@ void    check_valide_map(t_ptr *ptr)
         y++;
     }
     if (n > 1)
-        exit(ft_error(ptr, "Invalid map: more than one obunga starting point (X)\n", 1));
+        exit(ft_error(ptr, "Invalid map: more than one enemy starting point (X)\n", 1));
 }
 
 

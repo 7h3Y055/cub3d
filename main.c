@@ -78,7 +78,6 @@ int get_obunga_color(t_ptr *ptr, size_t y, size_t x, size_t first_point_y, size_
     // if (init_img_yx(ptr, next, &img_y, &img_x, y) == -1)
     //     return(rgb2int(ptr->parse.floor[0], ptr->parse.floor[1], ptr->parse.floor[2]));
 
-
     dst = ptr->obunga.img.addr + (img_y * ptr->obunga.img.line_length + img_x * (ptr->obunga.img.bits_per_pixel / 8));
 
     // printf("%d\n", *(int*)dst);
@@ -92,20 +91,23 @@ int get_obunga_color(t_ptr *ptr, size_t y, size_t x, size_t first_point_y, size_
 void    put_obunga_to_img(t_ptr *ptr)
 {
     int color ;
+    int y;
+    int x;
+    int consts;
+    int dst;
+
     if (ptr->obunga.dst == 0)
         return;
-    size_t consts = (SCALE * WIDTH) / ptr->obunga.dst;
-    size_t dst;
-    // printf("%d\n", ptr->obunga.dst);
 
-    size_t y;
-    size_t x = ptr->obunga.img_x - consts;
-    // size_t x = ptr->obunga.img_x - (SCALE * ptr->obunga.img_h) / ptr->obunga.dst;
+    consts = (SCALE * WIDTH) / ptr->obunga.dst;
 
     dst =  (SCALE * HEIGHT) / ptr->obunga.dst;
 
-    while (x < ptr->obunga.img_x + consts)
+    x = ptr->obunga.img_x - consts;
+    // printf("%d\t<\t%d\n", x , ptr->obunga.img_x + consts);
+    while (x < (int)ptr->obunga.img_x + consts)
     {
+        // printf("Z");
         y = WIDTH / 2 - dst / 2;
         while (y < (WIDTH / 2) + (dst) / 2 && y < WIDTH)
         {
@@ -114,13 +116,15 @@ void    put_obunga_to_img(t_ptr *ptr)
                 color = get_obunga_color(ptr, y, x, WIDTH / 2 - dst / 2, ptr->obunga.img_x - consts, (WIDTH / 2) + (dst) / 2 , ptr->obunga.img_x + consts);
                 if (color >= 0)
                     my_mlx_pixel_put(&ptr->img3d, x, y, color);
+                // else
+                //     my_mlx_pixel_put(&ptr->img3d, x, y, GREEN);
 
             }
             y++;
         }
         x++;
     }
-    
+    // printf("%d,%d\n", y, x);
 }
 
 int render_loop(t_ptr *ptr)

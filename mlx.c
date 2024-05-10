@@ -187,9 +187,6 @@ int check_obunga_angle(t_ptr *ptr, double o_angle, double p_angle)
 	double	a = fix_rad_overflow(p_angle + calculate_incrementation() / 2);
 	double	b = fix_rad_overflow(p_angle - calculate_incrementation() / 2);
 
-	// if ()
-	// if (o_angle < fix_rad_overflow(ptr->player.angle - d2rad(EYE_ANGLE / 2)) || o_angle > fix_rad_overflow(ptr->player.angle + d2rad(EYE_ANGLE / 2)))
-	// 	return (0);
 	if (o_angle <= fix_rad_overflow(p_angle + calculate_incrementation() / 2) && o_angle > fix_rad_overflow(p_angle - calculate_incrementation() / 2))
 		return (1);
 	return (0);
@@ -216,29 +213,18 @@ void init_obunga(t_ptr *ptr,t_point *next, double p_angle, int c)
 	double o_angle = 0;
 
 	if (ptr->obunga.x >= ptr->player.x && ptr->obunga.y >= ptr->player.y)
-	{
 		o_angle = atan((ptr->obunga.y - ptr->player.y) / (ptr->obunga.x - ptr->player.x));
-	}
 	else if (ptr->obunga.x <= ptr->player.x && ptr->obunga.y >= ptr->player.y)
-	{
 		o_angle = PI - atan((ptr->obunga.y - ptr->player.y) / (ptr->player.x - ptr->obunga.x));
-
-	}
 	else if (ptr->obunga.x <= ptr->player.x && ptr->obunga.y <= ptr->player.y)
-	{
 		o_angle = PI + atan((ptr->player.y - ptr->obunga.y) / (ptr->player.x - ptr->obunga.x));
-	}
 	else
-	{
 		o_angle = RAD - atan((ptr->player.y - ptr->obunga.y) / (ptr->obunga.x - ptr->player.x));
-	}
 
 
-	// if (!(o_angle < fix_rad_overflow( ptr->player.angle + d2rad(EYE_ANGLE / 2)) && o_angle > fix_rad_overflow( ptr->player.angle - d2rad(EYE_ANGLE / 2)) ))
 	if (!btw_range(o_angle, fix_rad_overflow( ptr->player.angle - d2rad(EYE_ANGLE / 2)), fix_rad_overflow( ptr->player.angle + d2rad(EYE_ANGLE / 2))))
 		ptr->obunga.dst = 0;
-	// if (o_angle <= fix_rad_overflow(p_angle + calculate_incrementation() / 2) && o_angle > fix_rad_overflow(p_angle - calculate_incrementation() / 2))
-	else if (btw_range(o_angle, fix_rad_overflow(p_angle - calculate_incrementation() / 2), fix_rad_overflow(p_angle + calculate_incrementation() / 2)))
+	if (btw_range(o_angle, fix_rad_overflow(p_angle - calculate_incrementation() / 2), fix_rad_overflow(p_angle + calculate_incrementation() / 2)))
 	{
 		if (distance(*ptr, ptr->flgas.tmp, 1) < distance(*ptr, *next, 0))
 		{
@@ -310,8 +296,6 @@ void	put_arrow(t_ptr *ptr)
 	t_point		next;
 	double xx;
 
-	// t_point	h;
-
 	double	n;
 
 	while (c < HEIGHT)
@@ -325,14 +309,6 @@ void	put_arrow(t_ptr *ptr)
 		if (xx > RAD)
 			xx -= RAD;
 		n = distance(*ptr, next, 0) * cos(xx);
-
-		// printf("%ld, %f\n", (size_t)(next.x / SCALE * SCALE) / SCALE * SCALE  ,   next.y / SCALE * SCALE + MAGIC_NUMBER);
-
-	
-		// my_mlx_pixel_put(&ptr->win.img, (size_t)(next.x / SCALE * DEBUG_SCALE) / DEBUG_SCALE * DEBUG_SCALE, next.y / SCALE * DEBUG_SCALE + 1, yellow);
-		// my_mlx_pixel_put(&ptr->win.img, (size_t)(next.x / SCALE * DEBUG_SCALE) / DEBUG_SCALE * DEBUG_SCALE, next.y / SCALE * DEBUG_SCALE - 1, yellow);
-		// my_mlx_pixel_put(&ptr->win.img, (size_t)(next.x / SCALE * DEBUG_SCALE) / DEBUG_SCALE * DEBUG_SCALE - 1, next.y / SCALE * DEBUG_SCALE, yellow);
-		// my_mlx_pixel_put(&ptr->win.img, (size_t)(next.x / SCALE * DEBUG_SCALE) / DEBUG_SCALE * DEBUG_SCALE + 1, next.y / SCALE * DEBUG_SCALE, yellow);
 		create_square(ptr, n, c,next);
 		c++;
 		a = fix_rad_overflow(a + calculate_incrementation());
@@ -406,7 +382,8 @@ void init_images(t_ptr *ptr)
 	ptr->texture.so_img.img = mlx_xpm_file_to_image(ptr->win.mlx, ptr->parse.so, &ptr->texture.so_w, &ptr->texture.so_h);
 	ptr->texture.ea_img.img = mlx_xpm_file_to_image(ptr->win.mlx, ptr->parse.ea, &ptr->texture.ea_w, &ptr->texture.ea_h);
 	ptr->texture.we_img.img = mlx_xpm_file_to_image(ptr->win.mlx, ptr->parse.we, &ptr->texture.we_w, &ptr->texture.we_h);
-	ptr->obunga.img.img = mlx_xpm_file_to_image(ptr->win.mlx, "resources/nextbots/Obunga.xpm", &ptr->obunga.img_w, &ptr->obunga.img_h);
+	ptr->obunga.img.img = mlx_xpm_file_to_image(ptr->win.mlx, "resources/nextbots/messi_4.xpm", &ptr->obunga.img_w, &ptr->obunga.img_h);
+	// ptr->obunga.img.img = mlx_xpm_file_to_image(ptr->win.mlx, "resources/nextbots/Obunga.xpm", &ptr->obunga.img_w, &ptr->obunga.img_h);
 
 	
 	if (!ptr->texture.we_img.img || !ptr->texture.no_img.img || !ptr->texture.so_img.img || !ptr->texture.ea_img.img || !ptr->obunga.img.img)

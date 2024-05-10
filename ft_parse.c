@@ -146,11 +146,11 @@ int    ft_init_texture(t_ptr *ptr, char *str)
         ptr->parse.floor = get_color(ptr, str);
     else if (!ptr->parse.ceiling && ft_strncmp(&str[i], "C", 1) == 0)
         ptr->parse.ceiling = get_color(ptr, str);
-    else if (!ptr->parse.ceiling && ft_strncmp(&str[i], "EN", 2) == 0)
-    {
-        ptr->obunga.path = get_texture_path(ptr, str);
-        printf("%s\n", ptr->obunga.path);
-    }
+    // else if (!ptr->parse.ceiling && ft_strncmp(&str[i], "EN", 2) == 0)
+    // {
+    //     ptr->obunga.path = get_texture_path(ptr, str);
+    //     printf("%s\n", ptr->obunga.path);
+    // }
     else if (ft_just_whitespaces(str, i))
         return (0);
     else if (str[i] && str[i] != '\n')
@@ -401,6 +401,7 @@ void ft_parse(t_ptr *ptr, int argc, char const **argv)
     int fd;
 
     ft_bzero(ptr, sizeof(t_ptr));
+    ptr->start = 1;
     if (argc != 2)
         exit(ft_error(ptr, "need one parameter have path of map\n", 1));
     check_extention(ptr, argv);

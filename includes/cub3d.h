@@ -42,6 +42,7 @@
 #define PI 3.141592653589793
 // #define SCALE 1000000
 #define SCALE 100
+#define ENEMY_SPEED 5
 // #define SCALE 25
 #define PLAYER_SPEED 7
 #define ROTATION_SPEED 0.019
@@ -122,6 +123,7 @@ typedef struct s_obunga
     char    *path;
     t_img_data  img;
     size_t  dst;
+    double angle;
 }	t_obunga;
 
 typedef struct s_player
@@ -163,7 +165,7 @@ typedef struct s_flags
 
 typedef struct s_ptr
 {
-    t_rays  rays[HEIGHT];
+    t_rays  *rays;
     t_parse parse;
     t_win   win;
 	t_img_data img3d;
@@ -173,6 +175,7 @@ typedef struct s_ptr
     int     keys[7];
     t_texture texture;
     char **map2d;
+    int     start;
     t_flags flgas;
 } t_ptr;
 
@@ -189,9 +192,9 @@ void go_down(t_ptr *ptr);
 void go_right(t_ptr *ptr);
 void right_angle(t_ptr *ptr);
 void left_argle(t_ptr *ptr);
-
-
-
+double	distance(t_ptr ptr, t_point next, int flag);
+void	put_rays(t_ptr *ptr);
+void    put_obunga_to_img(t_ptr *ptr);
 void	create_map(t_ptr *ptr);
 void	put_player_to_image(t_img_data *img, t_player player);
 void	init_mlx(t_ptr *ptr);

@@ -221,6 +221,7 @@ void init_obunga(t_ptr *ptr,t_point *next, double p_angle, int c)
 	else
 		o_angle = RAD - atan((ptr->player.y - ptr->obunga.y) / (ptr->obunga.x - ptr->player.x));
 
+	ptr->obunga.angle = o_angle;
 
 	if (!btw_range(o_angle, fix_rad_overflow( ptr->player.angle - d2rad(EYE_ANGLE / 2)), fix_rad_overflow( ptr->player.angle + d2rad(EYE_ANGLE / 2))))
 		ptr->obunga.dst = 0;
@@ -289,29 +290,51 @@ double fix_rad_overflow(double a)
 
 void	put_arrow(t_ptr *ptr)
 {
-	// double	a = fix_rad_overflow(ptr->player.angle);
 	double	a = fix_rad_overflow(ptr->player.angle - d2rad(EYE_ANGLE / 2));
 	size_t c = 0;
-	t_player	p = ptr->player;
-	t_point		next;
+	// t_point		next;
 	double xx;
-
 	double	n;
 
 	while (c < HEIGHT)
 	{
-		next = ray(ptr, a, c);
+		ptr->rays[c].next = ray(ptr, a, c);
 		if (DEBUG)
-			x(ptr, &next, a);
+			x(ptr, &ptr->rays[c].next, a);
 		xx = ptr->player.angle - a;
 		if (xx < 0)
 			xx += RAD;
 		if (xx > RAD)
 			xx -= RAD;
-		n = distance(*ptr, next, 0) * cos(xx);
-		create_square(ptr, n, c,next);
+		ptr->rays[c].n = distance(*ptr, ptr->rays[c].next, 0) * cos(xx);
+		
+		// create_square(ptr, n, c,next);
 		c++;
 		a = fix_rad_overflow(a + calculate_incrementation());
+	}
+}
+
+
+void	put_rays(t_ptr *ptr)
+{
+	size_t c;
+
+	c = 0;
+	while (c < HEIGHT)
+	{
+		if (distance(*ptr, ptr->rays[c].next, 0) > distance(*ptr, ptr->flgas.tmp, 1))
+			create_square(ptr, ptr->rays[c].n, c, ptr->rays[c].next);
+		c++;
+	}
+
+    put_obunga_to_img(ptr);
+
+	c = 0;
+	while (c < HEIGHT)
+	{
+		if (distance(*ptr, ptr->rays[c].next, 0) <= distance(*ptr, ptr->flgas.tmp, 1))
+			create_square(ptr, ptr->rays[c].n, c, ptr->rays[c].next);
+		c++;
 	}
 }
 
@@ -382,9 +405,9 @@ void init_images(t_ptr *ptr)
 	ptr->texture.so_img.img = mlx_xpm_file_to_image(ptr->win.mlx, ptr->parse.so, &ptr->texture.so_w, &ptr->texture.so_h);
 	ptr->texture.ea_img.img = mlx_xpm_file_to_image(ptr->win.mlx, ptr->parse.ea, &ptr->texture.ea_w, &ptr->texture.ea_h);
 	ptr->texture.we_img.img = mlx_xpm_file_to_image(ptr->win.mlx, ptr->parse.we, &ptr->texture.we_w, &ptr->texture.we_h);
-	ptr->obunga.img.img = mlx_xpm_file_to_image(ptr->win.mlx, "resources/nextbots/messi_4.xpm", &ptr->obunga.img_w, &ptr->obunga.img_h);
+	// ptr->obunga.img.img = mlx_xpm_file_to_image(ptr->win.mlx, "resources/nextbots/messi_4.xpm", &ptr->obunga.img_w, &ptr->obunga.img_h);
+	ptr->obunga.img.img = mlx_xpm_file_to_image(ptr->win.mlx, "resources/nextbots/c.xpm", &ptr->obunga.img_w, &ptr->obunga.img_h);
 	// ptr->obunga.img.img = mlx_xpm_file_to_image(ptr->win.mlx, "resources/nextbots/Obunga.xpm", &ptr->obunga.img_w, &ptr->obunga.img_h);
-
 	
 	if (!ptr->texture.we_img.img || !ptr->texture.no_img.img || !ptr->texture.so_img.img || !ptr->texture.ea_img.img || !ptr->obunga.img.img)
 		exit(ft_error(ptr, "Error in images", 1));
@@ -408,7 +431,7 @@ void	init_mlx(t_ptr *ptr)
 
 	init_images(ptr);
 
-
+	ptr->rays = malloc(sizeof(t_rays)  * HEIGHT);
 
 
 	// printf("W:%d\n", ptr->texture.no_w);

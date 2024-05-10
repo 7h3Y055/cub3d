@@ -75,8 +75,9 @@ int get_obunga_color(t_ptr *ptr, size_t y, size_t x, size_t first_point_y, size_
     img_x = scaleBetween(x, 0, ptr->obunga.img_h, first_point_x, max_x);
 
 
-    // if (init_img_yx(ptr, next, &img_y, &img_x, y) == -1)
-    //     return(rgb2int(ptr->parse.floor[0], ptr->parse.floor[1], ptr->parse.floor[2]));
+    if (img_x > ptr->obunga.img_h || img_y > ptr->obunga.img_w)
+        return (-1);
+        // return(rgb2int(ptr->parse.floor[0], ptr->parse.floor[1], ptr->parse.floor[2]));
 
     dst = ptr->obunga.img.addr + (img_y * ptr->obunga.img.line_length + img_x * (ptr->obunga.img.bits_per_pixel / 8));
 
@@ -127,9 +128,29 @@ void    put_obunga_to_img(t_ptr *ptr)
     // printf("%d,%d\n", y, x);
 }
 
+void check_player_death(t_ptr *ptr)
+{
+    if (distance(*ptr, ptr->flgas.tmp, 1) < SCALE)
+    {
+        exit(ft_error(ptr, "DEATH!\n", 0));
+    }
+}
+
+void obunga_move(t_ptr *ptr)
+{
+    long long y;
+    long long x;
+    
+    y = -sin(ptr->obunga.angle) * ENEMY_SPEED;
+    x = -cos(ptr->obunga.angle) * ENEMY_SPEED;
+    if (ptr->map2d[((int)ptr->obunga.y + y) / SCALE][((int)ptr->obunga.x) / SCALE] == '0')
+        ptr->obunga.y +=  y;
+    if (ptr->map2d[((int)ptr->obunga.y) / SCALE][((int)ptr->obunga.x + x) / SCALE] == '0')
+        ptr->obunga.x +=  x;
+}
+
 int render_loop(t_ptr *ptr)
 {
-    // printf("O:%f,%f\n", ptr->obunga.y, ptr->obunga.x);
     handle_input(ptr);
     if (DEBUG)
     {
@@ -139,7 +160,9 @@ int render_loop(t_ptr *ptr)
         mlx_put_image_to_window(ptr->win.mlx, ptr->win.win, ptr->win.img.img, 0, 0);
     }
 	put_arrow(ptr);
-    put_obunga_to_img(ptr);
+    put_rays(ptr);
+    obunga_move(ptr);
+    check_player_death(ptr);
     mlx_put_image_to_window(ptr->win.mlx, ptr->win3d, ptr->img3d.img, 0, 0);
 	return (0);
 }

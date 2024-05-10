@@ -22,8 +22,8 @@ int handle_input(t_ptr *ptr)
         destroy_all(ptr);
     if (ptr->keys[7])
     {
-        if (ptr->jump < 2000)
-            ptr->jump += 100;
+        if (ptr->jump < 1500)
+            ptr->jump += 200;
         else
             ptr->keys[7] = 0; 
     }
@@ -31,6 +31,8 @@ int handle_input(t_ptr *ptr)
     {
         if (ptr->jump > 0)
             ptr->jump -= 100;
+        else
+            ptr->jump = 0;
     }
 	return (0);
 }
@@ -69,6 +71,7 @@ int get_obunga_color(t_ptr *ptr, size_t y, size_t x, size_t first_point_y, size_
     int img_y;
     int img_x;
 
+    static int n;
     
 
     // img_y = ((y - first_point_y) * (ptr->obunga.img_w / SCALE));
@@ -78,9 +81,13 @@ int get_obunga_color(t_ptr *ptr, size_t y, size_t x, size_t first_point_y, size_
     img_x = scaleBetween(x, 0, ptr->obunga.img_h, first_point_x, max_x);
 
 
-    // if (img_x > ptr->obunga.img_h || img_y > ptr->obunga.img_w)
-    //     return (-1);
-        // return(rgb2int(ptr->parse.floor[0], ptr->parse.floor[1], ptr->parse.floor[2]));
+    // if (n == 1 && img_x == 0 && img_y == 0)
+    //     return -1;
+    // if (img_x == 0 && img_y == 0)
+    // {
+    //     printf("%d %d\n", y == first_point_y, x == first_point_x);
+    // }
+    // return(rgb2int(ptr->parse.floor[0], ptr->parse.floor[1], ptr->parse.floor[2]));
 
     dst = ptr->obunga.img.addr + (img_y * ptr->obunga.img.line_length + img_x * (ptr->obunga.img.bits_per_pixel / 8));
 
@@ -97,20 +104,22 @@ void    put_obunga_to_img(t_ptr *ptr)
     int x;
     int consts;
     int dst;
+    double constss;
 
     if (ptr->obunga.dst == 0)
         return;
     consts = (SCALE * WIDTH) / ptr->obunga.dst;
     dst =  (SCALE * HEIGHT) / ptr->obunga.dst;
+    constss = scaleBetween(ptr->jump * dst, 0, 200, 0, WIDTH * HEIGHT);
     x = ptr->obunga.img_x - consts;
     while (x < (int)ptr->obunga.img_x + consts)
     {
-        y = WIDTH / 2 - dst / 2;
-        while (y < (WIDTH / 2) + (dst) / 2 && y < WIDTH)
+        y = WIDTH / 2 + constss - dst / 2;
+        while (y < (WIDTH / 2 + constss) + (dst) / 2 && y < WIDTH)
         {
             if (x < HEIGHT && x > 0 && y > 0 && y < WIDTH)
             {
-                color = get_obunga_color(ptr, y, x, WIDTH / 2 - dst / 2, ptr->obunga.img_x - consts, (WIDTH / 2) + (dst) / 2 , ptr->obunga.img_x + consts);
+                color = get_obunga_color(ptr, y - constss, x, WIDTH / 2 - dst / 2, ptr->obunga.img_x - consts, (WIDTH / 2) + (dst) / 2 , ptr->obunga.img_x + consts);
                 if (color >= 0)
                     my_mlx_pixel_put(&ptr->img3d, x, y, color);
 
@@ -119,6 +128,7 @@ void    put_obunga_to_img(t_ptr *ptr)
         }
         x++;
     }
+    // exit(0);
 }
 
 void check_player_death(t_ptr *ptr)
@@ -136,9 +146,9 @@ void obunga_move(t_ptr *ptr)
     
     y = -sin(ptr->obunga.angle) * ENEMY_SPEED;
     x = -cos(ptr->obunga.angle) * ENEMY_SPEED;
-    if (ptr->map2d[((int)ptr->obunga.y + y) / SCALE][((int)ptr->obunga.x) / SCALE] == '0')
+    if (ptr->map2d[((int)ptr->obunga.y + (y * SOME_SPACE)) / SCALE][((int)ptr->obunga.x) / SCALE] == '0')
         ptr->obunga.y +=  y;
-    if (ptr->map2d[((int)ptr->obunga.y) / SCALE][((int)ptr->obunga.x + x) / SCALE] == '0')
+    if (ptr->map2d[((int)ptr->obunga.y) / SCALE][((int)ptr->obunga.x + (x * SOME_SPACE)) / SCALE] == '0')
         ptr->obunga.x +=  x;
 }
 

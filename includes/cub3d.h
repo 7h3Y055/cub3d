@@ -35,14 +35,14 @@
 #define SCALE_P 2
 // #define PLAYER_SPEED 100000
 
-#define SOME_SPACE 4
+#define SOME_SPACE 8
 
 #define RAD 6.2831853072
 #define NINETY_DEGREE 1.5707963268
 #define PI 3.141592653589793
 // #define SCALE 1000000
 #define SCALE 100
-#define ENEMY_SPEED 5
+#define ENEMY_SPEED 11
 // #define SCALE 25
 #define PLAYER_SPEED 10
 // #define ROTATION_SPEED 0.019

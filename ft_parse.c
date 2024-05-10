@@ -146,16 +146,12 @@ int    ft_init_texture(t_ptr *ptr, char *str)
         ptr->parse.floor = get_color(ptr, str);
     else if (!ptr->parse.ceiling && ft_strncmp(&str[i], "C", 1) == 0)
         ptr->parse.ceiling = get_color(ptr, str);
-    // else if (!ptr->parse.ceiling && ft_strncmp(&str[i], "EN", 2) == 0)
-    // {
-    //     ptr->obunga.path = get_texture_path(ptr, str);
-    //     printf("%s\n", ptr->obunga.path);
-    // }
+    else if (!ptr->parse.ceiling && ft_strncmp(&str[i], "EN", 2) == 0)
+        ptr->obunga.path = get_texture_path(ptr, str);
     else if (ft_just_whitespaces(str, i))
         return (0);
     else if (str[i] && str[i] != '\n')
     {
-        // printf("%s\n", str);
         exit(ft_error(ptr, "Error2\n", 1));
     }
     return (1);
@@ -269,7 +265,7 @@ void    ft_init(t_ptr *ptr, int fd)
     int  n;
 
     n = 0;
-    while (n < 6)
+    while (n < 7)
     {
         line = get_next_line(fd);
         if (!line)

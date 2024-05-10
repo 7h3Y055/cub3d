@@ -3,8 +3,8 @@
 
 #include <mlx.h>
 #include <math.h>
-// #include <X11/keysym.h>
-// #include <X11/X.h>
+#include <X11/keysym.h>
+#include <X11/X.h>
 #include <fcntl.h>
 #include <unistd.h>
 #include <stdio.h>
@@ -14,8 +14,8 @@
 #include "get_next_line.h"
 
 //MAC
-#include "/Users/mezzine/.brew/include/X11/keysym.h"
-#include "/Users/mezzine/.brew/include/X11/X.h"
+// #include "/Users/mezzine/.brew/include/X11/keysym.h"
+// #include "/Users/mezzine/.brew/include/X11/X.h"
 
 
 #define	HEIGHT 1280
@@ -31,18 +31,19 @@
 #define	yellow 0xFFF000
 
 #define DEBUG   0
-#define DEBUG_SCALE   25
+#define DEBUG_SCALE   10
 #define SCALE_P 2
 // #define PLAYER_SPEED 100000
 
-#define SOME_SPACE 8
+#define ENEMY_SPACE (SCALE / 4)
+#define PLAYER_SPACE 3
 
 #define RAD 6.2831853072
 #define NINETY_DEGREE 1.5707963268
 #define PI 3.141592653589793
 // #define SCALE 1000000
 #define SCALE 100
-#define ENEMY_SPEED 11
+#define ENEMY_SPEED 7
 // #define SCALE 25
 #define PLAYER_SPEED 10
 // #define ROTATION_SPEED 0.019

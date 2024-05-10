@@ -146,9 +146,9 @@ void obunga_move(t_ptr *ptr)
     
     y = -sin(ptr->obunga.angle) * ENEMY_SPEED;
     x = -cos(ptr->obunga.angle) * ENEMY_SPEED;
-    if (ptr->map2d[((int)ptr->obunga.y + (y * SOME_SPACE)) / SCALE][((int)ptr->obunga.x) / SCALE] == '0')
+    if (ptr->map2d[((int)ptr->obunga.y + (y * ENEMY_SPACE)) / SCALE][((int)ptr->obunga.x) / SCALE] == '0')
         ptr->obunga.y +=  y;
-    if (ptr->map2d[((int)ptr->obunga.y) / SCALE][((int)ptr->obunga.x + (x * SOME_SPACE)) / SCALE] == '0')
+    if (ptr->map2d[((int)ptr->obunga.y) / SCALE][((int)ptr->obunga.x + (x * ENEMY_SPACE)) / SCALE] == '0')
         ptr->obunga.x +=  x;
 }
 
@@ -175,6 +175,7 @@ int main(int argc, char const **argv)
     t_ptr	ptr;
 
     ft_parse(&ptr, argc, argv);
+
 	init_mlx(&ptr);
 
     mlx_loop_hook(ptr.win.mlx, render_loop, &ptr);

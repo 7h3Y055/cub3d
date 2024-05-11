@@ -162,23 +162,11 @@ void    move_angle_with_mouse(t_ptr *ptr)
 
     mlx_mouse_get_pos(ptr->win.mlx, ptr->win3d, &x, &y);
     n = abs(x -  last_p);
-
-    if (x != last_p && x >= 0 && x < HEIGHT)
-    {
-        if (x > last_p)
-        {
-            ptr->player.angle += PI * (n - 0) / (HEIGHT - 0) + 0;
-            // printf("right : %d\n", n);
-        }
-        else
-        {
-            ptr->player.angle -= PI * (n - 0) / (HEIGHT - 0) + 0;
-            // printf("left : %d\n", n);
-        }
-        last_p = x;
-    }
-
-    fflush(stdout);
+    if (x > last_p)
+        ptr->player.angle += PI * (n - 0) / (HEIGHT - 0) + 0;
+    else
+        ptr->player.angle -= PI * (n - 0) / (HEIGHT - 0) + 0;
+    last_p = x;
 
 }
 

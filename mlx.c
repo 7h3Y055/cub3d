@@ -158,19 +158,10 @@ void	init_param_x(t_ptr *ptr, t_point *next, t_point *a, double angle)
 	}
 }
 
-void check_faces(t_ptr *ptr, t_point *next, t_point nexty, t_point nextx)
-{
-
-	// printf("%f:%f\n", distance(ptr->player, nexty) , distance(ptr->player, nextx));
-	// if (next.x == nexty.x && next)
-	// 	next->color = GREEN;
-	// else
-		// next->color = WHITE;
-}
 
 int check_wall(t_ptr *ptr, t_point point)
 {
-	if (exeed_map(ptr, point) || ptr->map2d[(long long)point.y / SCALE][(long long)point.x / SCALE] != '0')
+	if (exeed_map(ptr, point) || ptr->map2d[(long long)point.y / SCALE][(long long)point.x / SCALE] == '1' || ptr->map2d[(long long)point.y / SCALE][(long long)point.x / SCALE] == 'D')
 		return (1);
 	return (0);
 }
@@ -256,7 +247,9 @@ t_point	ray(t_ptr *ptr, double angle, int c)
 		if (distance(*ptr, nexty, 0) > distance(*ptr, nextx, 0))
 		{
 			next = nextx;
-			if (check_wall(ptr, nextx) && ((angle < PI / 2 && angle >= 0) || (angle > PI + PI / 2 && angle <= RAD)))
+			if (ptr->map2d[(int)next.y / SCALE][(int)next.x / SCALE] == 'D')
+				next.face = DOOR_W;
+			else if (check_wall(ptr, nextx) && ((angle < PI / 2 && angle >= 0) || (angle > PI + PI / 2 && angle <= RAD)))
 				next.face = GRAY;
 			else if (check_wall(ptr, nextx))
 				next.face = GREEN;
@@ -266,16 +259,39 @@ t_point	ray(t_ptr *ptr, double angle, int c)
 		else if (distance(*ptr, nexty, 0) < distance(*ptr, nextx, 0))
 		{
 			next = nexty;
-			if (check_wall(ptr, nexty) && angle > PI && angle < RAD)
+			if (ptr->map2d[(int)next.y / SCALE][(int)next.x / SCALE] == 'D')
+				next.face = DOOR_H;
+			else if (check_wall(ptr, nexty) && angle > PI && angle < RAD)
 				next.face = WHITE;
 			else if (check_wall(ptr, nexty))
 				next.face = BLEU;
 			nexty.x += ay.x;
 			nexty.y += ay.y;
 		}
+		if (c == HEIGHT / 2 && ptr->map2d[(long long)next.y / SCALE][(long long)next.x / SCALE] == 'O' && ptr->keys[O] &&  distance(*ptr, next, 0) < SCALE * 3)
+		{
+			ptr->keys[O] = 0;
+			ptr->map2d[(long long)next.y / SCALE][(long long)next.x / SCALE] = 'D';
+		}
 		if (check_wall(ptr, next))	
 			break ;
 	}
+
+
+
+	if (c == HEIGHT / 2 && (next.face == DOOR_H || next.face == DOOR_W) && ptr->keys[O] && distance(*ptr, next, 0) < SCALE * 3)
+	{
+			ptr->keys[O] = 0;
+		ptr->map2d[(int)next.y / SCALE][(int)next.x / SCALE] = 'O';
+
+	}
+	// if (door && ptr->keys[O] && distance(*ptr, next, 0) < SCALE * 3)
+	// {
+	// 	// puts("S");
+	// 	ptr->map2d[(long long)next.y / SCALE][(long long)next.x / SCALE] = 'D';
+	// }
+
+
 	init_obunga(ptr, &next, angle, c);
 	return (next);
 }
@@ -344,7 +360,10 @@ int	color_unit_pixel(char map_unit)
 		return (0x002177);
 	else if (map_unit == '0')
 		return (0xffffff);
-	else
+	else if (map_unit == 'D')
+		return (RED);
+	else if (map_unit == 'O')
+		return (BLEU);
 		return (0);
 }
 
@@ -406,11 +425,12 @@ void init_images(t_ptr *ptr)
 	ptr->texture.ea_img.img = mlx_xpm_file_to_image(ptr->win.mlx, ptr->parse.ea, &ptr->texture.ea_w, &ptr->texture.ea_h);
 	ptr->texture.we_img.img = mlx_xpm_file_to_image(ptr->win.mlx, ptr->parse.we, &ptr->texture.we_w, &ptr->texture.we_h);
 	ptr->obunga.img.img = mlx_xpm_file_to_image(ptr->win.mlx, ptr->obunga.path, &ptr->obunga.img_w, &ptr->obunga.img_h);
-	// ptr->obunga.img.img = mlx_xpm_file_to_image(ptr->win.mlx, "resources/nextbots/messi_4.xpm", &ptr->obunga.img_w, &ptr->obunga.img_h);
-	// ptr->obunga.img.img = mlx_xpm_file_to_image(ptr->win.mlx, "resources/nextbots/c.xpm", &ptr->obunga.img_w, &ptr->obunga.img_h);
-	// ptr->obunga.img.img = mlx_xpm_file_to_image(ptr->win.mlx, "resources/nextbots/Obunga.xpm", &ptr->obunga.img_w, &ptr->obunga.img_h);
+
+
+	ptr->texture.d_img.img = mlx_xpm_file_to_image(ptr->win.mlx, "./resources/doors/c.xpm", &ptr->texture.d_w, &ptr->texture.d_h);
+
 	
-	if (!ptr->texture.we_img.img || !ptr->texture.no_img.img || !ptr->texture.so_img.img || !ptr->texture.ea_img.img || !ptr->obunga.img.img)
+	if (!ptr->texture.we_img.img || !ptr->texture.no_img.img || !ptr->texture.so_img.img || !ptr->texture.ea_img.img || !ptr->obunga.img.img || !ptr->texture.d_img.img)
 		exit(ft_error(ptr, "Error in images", 1));
 
 	ptr->texture.no_img.addr = mlx_get_data_addr(ptr->texture.no_img.img, &ptr->texture.no_img.bits_per_pixel, &ptr->texture.no_img.line_length, &ptr->texture.no_img.endian);
@@ -419,8 +439,10 @@ void init_images(t_ptr *ptr)
 	ptr->texture.ea_img.addr = mlx_get_data_addr(ptr->texture.ea_img.img, &ptr->texture.ea_img.bits_per_pixel, &ptr->texture.ea_img.line_length, &ptr->texture.ea_img.endian);
 	ptr->obunga.img.addr = mlx_get_data_addr(ptr->obunga.img.img, &ptr->obunga.img.bits_per_pixel, &ptr->obunga.img.line_length, &ptr->obunga.img.endian);
 
+	ptr->texture.d_img.addr = mlx_get_data_addr(ptr->texture.d_img.img, &ptr->texture.d_img.bits_per_pixel, &ptr->texture.d_img.line_length, &ptr->texture.d_img.endian);
 
-	if (!ptr->texture.ea_img.addr || !ptr->texture.no_img.addr || !ptr->texture.so_img.addr || !ptr->texture.we_img.addr ||  !ptr->obunga.img.addr)
+
+	if (!ptr->texture.ea_img.addr || !ptr->texture.no_img.addr || !ptr->texture.so_img.addr || !ptr->texture.we_img.addr ||  !ptr->obunga.img.addr || !ptr->texture.d_img.addr)
 		exit(ft_error(ptr, "Error in images2", 1));
 }
 

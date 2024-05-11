@@ -25,17 +25,19 @@
 #define	RED 0xFF0000
 #define	WHITE 0xFFFFFF
 #define	BLACK 0x000000
+#define	DOOR_H 0xFFF000
+#define	DOOR_W 0x0F00FF
 #define	GREEN 0x36FF00
 #define	GRAY 0x808080
 #define	BLEU 0x0021FF
-#define	yellow 0xFFF000
+// #define	yellow 0xFFF000
 
 #define DEBUG   0
 #define DEBUG_SCALE   10
 #define SCALE_P 2
 // #define PLAYER_SPEED 100000
 
-#define ENEMY_SPACE (SCALE / 4)
+#define ENEMY_SPACE 30
 #define PLAYER_SPACE 3
 
 #define RAD 6.2831853072
@@ -43,7 +45,7 @@
 #define PI 3.141592653589793
 // #define SCALE 1000000
 #define SCALE 100
-#define ENEMY_SPEED 7
+#define ENEMY_SPEED 3
 // #define SCALE 25
 #define PLAYER_SPEED 10
 // #define ROTATION_SPEED 0.019
@@ -70,6 +72,7 @@
 #define L 4
 #define R 5
 #define E 6
+#define O 7
 
 typedef struct s_point
 {
@@ -157,6 +160,11 @@ typedef struct s_texture
     int ea_w;
     int ea_h;
     t_img_data ea_img;
+
+
+    int d_w;
+    int d_h;
+    t_img_data d_img;
 
 }   
 t_texture;

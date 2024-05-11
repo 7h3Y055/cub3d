@@ -13,8 +13,10 @@ int key_pressed(int keycode, t_ptr *ptr) {
         ptr->keys[L] = 1;
     if (keycode == XK_Right)
         ptr->keys[R] = 1;
-    if (keycode == XK_space && ptr->jump == 0)
-        ptr->keys[7] = 1;
+    if (keycode == XK_f)
+        ptr->keys[O] = 1;
+    // if (keycode == XK_space && ptr->jump == 0)
+    //     ptr->keys[E] = 1;
     
     return 0;
 }
@@ -32,6 +34,8 @@ int key_released(int keycode, t_ptr *ptr) {
         ptr->keys[L] = 0;
     if (keycode == XK_Right)
         ptr->keys[R] = 0;
+    if (keycode == XK_f)
+        ptr->keys[O] = 0;
     return 0;
 }
 
@@ -73,6 +77,13 @@ int key_released(int keycode, t_ptr *ptr) {
 //     return 0;
 // }
 
+void check_player_move(t_ptr *ptr, long long y, long long x)
+{
+    if (ptr->map2d[(ptr->player.y) / SCALE][(ptr->player.x + (x * PLAYER_SPACE)) / SCALE] == '0' || ptr->map2d[(ptr->player.y) / SCALE][(ptr->player.x + (x * PLAYER_SPACE)) / SCALE] == 'O')
+        ptr->player.x += x;
+    if (ptr->map2d[(ptr->player.y + (y * PLAYER_SPACE)) / SCALE][(ptr->player.x) / SCALE] == '0' || ptr->map2d[(ptr->player.y + (y * PLAYER_SPACE)) / SCALE][(ptr->player.x) / SCALE] == 'O')
+        ptr->player.y += y;
+}
 
 
 void go_up(t_ptr *ptr)
@@ -82,10 +93,7 @@ void go_up(t_ptr *ptr)
     
     y = sin(ptr->player.angle) * PLAYER_SPEED;
     x = cos(ptr->player.angle) * PLAYER_SPEED;
-    if (ptr->map2d[(ptr->player.y + (y * PLAYER_SPACE)) / SCALE][(ptr->player.x) / SCALE] == '0')
-        ptr->player.y +=  y;
-    if (ptr->map2d[(ptr->player.y) / SCALE][(ptr->player.x + (x * PLAYER_SPACE)) / SCALE] == '0')
-        ptr->player.x +=  x;
+    check_player_move(ptr, y, x);
 
 }
 
@@ -96,10 +104,7 @@ void go_right(t_ptr *ptr)
 
     y = sin(ptr->player.angle + NINETY_DEGREE) * PLAYER_SPEED;
     x = cos(ptr->player.angle + NINETY_DEGREE) * PLAYER_SPEED;
-    if (ptr->map2d[(ptr->player.y + (y * PLAYER_SPACE)) / SCALE][(ptr->player.x) / SCALE] == '0')
-        ptr->player.y +=  y;
-    if (ptr->map2d[(ptr->player.y) / SCALE][(ptr->player.x + (x * PLAYER_SPACE)) / SCALE] == '0')
-        ptr->player.x +=  x;
+    check_player_move(ptr, y, x);
 }
 
 void go_down(t_ptr *ptr)
@@ -107,12 +112,9 @@ void go_down(t_ptr *ptr)
     long long y;
     long long x;
 
-    y = sin(ptr->player.angle) * PLAYER_SPEED;
-    x = cos(ptr->player.angle) * PLAYER_SPEED;
-    if (ptr->map2d[(ptr->player.y) / SCALE][(ptr->player.x - (x * PLAYER_SPACE)) / SCALE] == '0')
-        ptr->player.x -=  x;
-    if (ptr->map2d[(ptr->player.y - (y * PLAYER_SPACE)) / SCALE][(ptr->player.x) / SCALE] == '0')
-        ptr->player.y -=  y;
+    y = -sin(ptr->player.angle) * PLAYER_SPEED;
+    x = -cos(ptr->player.angle) * PLAYER_SPEED;
+    check_player_move(ptr, y, x);
 }
 
 void go_left(t_ptr *ptr)
@@ -120,12 +122,9 @@ void go_left(t_ptr *ptr)
     long long y;
     long long x;
 
-    y = sin(ptr->player.angle + NINETY_DEGREE) * PLAYER_SPEED;
-    x = cos(ptr->player.angle + NINETY_DEGREE) * PLAYER_SPEED;
-    if (ptr->map2d[(ptr->player.y) / SCALE][(ptr->player.x - (x * PLAYER_SPACE)) / SCALE] == '0')
-        ptr->player.x -=  x;
-    if (ptr->map2d[(ptr->player.y - (y * PLAYER_SPACE)) / SCALE][(ptr->player.x) / SCALE] == '0')
-        ptr->player.y -=  y;
+    y = -sin(ptr->player.angle + NINETY_DEGREE) * PLAYER_SPEED;
+    x = -cos(ptr->player.angle + NINETY_DEGREE) * PLAYER_SPEED;
+    check_player_move(ptr, y, x);
 }
 
 void right_angle(t_ptr *ptr)

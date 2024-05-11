@@ -13,12 +13,12 @@ int init_img_yx(t_ptr *ptr, t_point next, int *img_y, int *img_x, int y)
         h = ptr->texture.no_h;
     }
     if (next.face == BLEU)
-        {
+    {
         w = ptr->texture.so_w;
         h = ptr->texture.so_h;
     }
     if (next.face == GREEN)
-        {
+    {
         w = ptr->texture.we_w;
         h = ptr->texture.we_h;
     }
@@ -27,8 +27,15 @@ int init_img_yx(t_ptr *ptr, t_point next, int *img_y, int *img_x, int y)
         w = ptr->texture.ea_w;
         h = ptr->texture.ea_h;
     }
+    if (next.face == DOOR_H || next.face == DOOR_W)
+    {
+        w = ptr->texture.d_w;
+        h = ptr->texture.d_h;
+    }
+    // else
+    //     puts("AA");
 
-    if (next.face == GREEN || next.face == GRAY)
+    if (next.face == GREEN || next.face == GRAY || next.face == DOOR_W)
         *img_x = (next.y - (long long)next.y / SCALE * SCALE) * w / SCALE;
     else
         *img_x = (next.x - (long long)next.x / SCALE * SCALE) * w / SCALE;
@@ -61,6 +68,8 @@ int get_pixel_color(t_ptr *ptr, t_point next, size_t y)
         dst = ptr->texture.we_img.addr + (img_y * ptr->texture.we_img.line_length + img_x * (ptr->texture.we_img.bits_per_pixel / 8));
     if (next.face == GRAY)
         dst = ptr->texture.ea_img.addr + (img_y * ptr->texture.ea_img.line_length + img_x * (ptr->texture.ea_img.bits_per_pixel / 8));
+    if (next.face == DOOR_H || next.face == DOOR_W)
+        dst = ptr->texture.d_img.addr + (img_y * ptr->texture.d_img.line_length + img_x * (ptr->texture.d_img.bits_per_pixel / 8));
     return (*(int*)dst);
 }
 
@@ -88,9 +97,8 @@ void    create_square(t_ptr *ptr, double ray_l, size_t x, t_point next)
     next.first_point_in_wall = dy;
     while (y < (WIDTH / 2 + constss) + (ray_l / 2) && y < WIDTH)
     {
-        color = GREEN;
+        // color = next.face;
         color = get_pixel_color(ptr, next, (size_t)y);
-
         if (!(color == -1 || x < 0 || x > HEIGHT || y < 0 || y > WIDTH))
             my_mlx_pixel_put(&ptr->img3d, x, y, color);
         y++;

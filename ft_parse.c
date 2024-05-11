@@ -311,16 +311,19 @@ void    check_valide_map(t_ptr *ptr)
         {
             if (ptr->map2d[y][x] == '0' && check_valid_map(ptr, y, x))
                 exit(ft_error(ptr, "Invalid map: map is not closed by wall (1)\n", check_valid_map(ptr, y, x)));
-            else if (ptr->map2d[y][x] && ptr->map2d[y][x] != '0' && ptr->map2d[y][x] != '1' && ptr->map2d[y][x] != ' '  && ptr->map2d[y][x] != 'X')
-            {
-                printf("%c\n", ptr->map2d[y][x]);
-                exit(ft_error(ptr, "Invalid map: contain invalid character!\n", check_valid_map(ptr, y, x)));
-            }
-            else if (ptr->map2d[y][x] == 'X')
+            // else if (ptr->map2d[y][x] && ptr->map2d[y][x] != '0' && ptr->map2d[y][x] != '1' && ptr->map2d[y][x] != ' '  && ptr->map2d[y][x] != 'X' && ptr->map2d[y][x] != 'D')
+            if (ptr->map2d[y][x] == 'X')
             {
                 ft_init_obunga_position(ptr, y, x);
                 ptr->map2d[y][x] = '0';
                 n++;
+            }
+            else if (ptr->map2d[y][x] == 'D')
+            {}
+            else if (ptr->map2d[y][x] && ptr->map2d[y][x] != '0' && ptr->map2d[y][x] != '1' && ptr->map2d[y][x] != ' ')
+            {
+                printf("%c\n", ptr->map2d[y][x]);
+                exit(ft_error(ptr, "Invalid map: contain invalid character!\n", check_valid_map(ptr, y, x)));
             }
             x++;
         }

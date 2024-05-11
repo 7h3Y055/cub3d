@@ -20,20 +20,20 @@ int handle_input(t_ptr *ptr)
         left_argle(ptr);
     if (ptr->keys[E])
         destroy_all(ptr);
-    if (ptr->keys[7])
-    {
-        if (ptr->jump < 1500)
-            ptr->jump += 200;
-        else
-            ptr->keys[7] = 0; 
-    }
-    else
-    {
-        if (ptr->jump > 0)
-            ptr->jump -= 100;
-        else
-            ptr->jump = 0;
-    }
+    // if (ptr->keys[E])
+    // {
+    //     if (ptr->jump < 1500)
+    //         ptr->jump += 200;
+    //     else
+    //         ptr->keys[7] = 0; 
+    // }
+    // else
+    // {
+    //     if (ptr->jump > 0)
+    //         ptr->jump -= 100;
+    //     else
+    //         ptr->jump = 0;
+    // }
 	return (0);
 }
 
@@ -152,23 +152,57 @@ void obunga_move(t_ptr *ptr)
         ptr->obunga.x +=  x;
 }
 
+
+void    move_angle_with_mouse(t_ptr *ptr)
+{
+    int y;
+    int x;
+    static int last_p = HEIGHT / 2;
+    double n;
+
+    mlx_mouse_get_pos(ptr->win.mlx, ptr->win3d, &x, &y);
+    n = abs(x -  last_p);
+
+    if (x != last_p && x >= 0 && x < HEIGHT)
+    {
+        if (x > last_p)
+        {
+            ptr->player.angle += PI * (n - 0) / (HEIGHT - 0) + 0;
+            // printf("right : %d\n", n);
+        }
+        else
+        {
+            ptr->player.angle -= PI * (n - 0) / (HEIGHT - 0) + 0;
+            // printf("left : %d\n", n);
+        }
+        last_p = x;
+    }
+
+    fflush(stdout);
+
+}
+
+
 int render_loop(t_ptr *ptr)
 {
+    // printf("%d\n", ptr.);
     handle_input(ptr);
     if (DEBUG)
     {
         create_map(ptr);
         put_player_to_image(&ptr->win.img, ptr->player);
-        put_obunga_to_image(&ptr->win.img, ptr->obunga);
+        // put_obunga_to_image(&ptr->win.img, ptr->obunga);
         mlx_put_image_to_window(ptr->win.mlx, ptr->win.win, ptr->win.img.img, 0, 0);
     }
 	put_arrow(ptr);
     put_rays(ptr);
     obunga_move(ptr);
+    move_angle_with_mouse(ptr);
     check_player_death(ptr);
     mlx_put_image_to_window(ptr->win.mlx, ptr->win3d, ptr->img3d.img, 0, 0);
 	return (0);
 }
+
 
 int main(int argc, char const **argv)
 {
@@ -178,6 +212,7 @@ int main(int argc, char const **argv)
 
 	init_mlx(&ptr);
 
+    
     mlx_loop_hook(ptr.win.mlx, render_loop, &ptr);
     // render_loop(&ptr);
     mlx_hook(ptr.win3d, DestroyNotify, ButtonPressMask, destroy_all, &ptr);

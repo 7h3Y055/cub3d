@@ -146,9 +146,9 @@ void obunga_move(t_ptr *ptr)
     
     y = -sin(ptr->obunga.angle) * ENEMY_SPEED;
     x = -cos(ptr->obunga.angle) * ENEMY_SPEED;
-    if (ptr->map2d[((int)ptr->obunga.y + (y * ENEMY_SPACE)) / SCALE][((int)ptr->obunga.x) / SCALE] == '0')
+    if (ptr->map2d[((int)ptr->obunga.y + (y * ENEMY_SPACE)) / SCALE][((int)ptr->obunga.x) / SCALE] == '0' || ptr->map2d[((int)ptr->obunga.y + (y * ENEMY_SPACE)) / SCALE][((int)ptr->obunga.x) / SCALE] == 'O')
         ptr->obunga.y +=  y;
-    if (ptr->map2d[((int)ptr->obunga.y) / SCALE][((int)ptr->obunga.x + (x * ENEMY_SPACE)) / SCALE] == '0')
+    if (ptr->map2d[((int)ptr->obunga.y) / SCALE][((int)ptr->obunga.x + (x * ENEMY_SPACE)) / SCALE] == '0' || ptr->map2d[((int)ptr->obunga.y) / SCALE][((int)ptr->obunga.x + (x * ENEMY_SPACE)) / SCALE] == '0')
         ptr->obunga.x +=  x;
 }
 
@@ -173,7 +173,6 @@ void    move_angle_with_mouse(t_ptr *ptr)
 
 int render_loop(t_ptr *ptr)
 {
-    // printf("%d\n", ptr.);
     handle_input(ptr);
     if (DEBUG)
     {

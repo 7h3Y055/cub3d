@@ -9,8 +9,8 @@ CFLAGS    = #-g3 -fsanitize=address #-Wall  #-Werror -Wextra
 MLX_FLAGS = -lXext -lX11 -lm
 CC        = cc
 
-# MLX_FLAGS = -lmlx -framework OpenGL -framework AppKit
-# MAC_FLAGS = -L /Users/mezzine/.brew/lib/X11/locale/common
+MAC_FLAGS = -L /Users/mezzine/.brew/lib/X11/locale/common
+MLX_FLAGS = -lmlx -framework OpenGL -framework AppKit
 
 all:$(NAME)
 

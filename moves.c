@@ -76,6 +76,8 @@ int key_released(int keycode, t_ptr *ptr) {
 //         ptr->keys[R] = 0;
 //     if (keycode == ESC_M)
 //         ptr->keys[E] = 0;
+//     if (keycode == F_M)
+//         ptr->keys[O] = 0;
 //     return 0;
 // }
 

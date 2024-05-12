@@ -467,7 +467,7 @@ void	init_mlx(t_ptr *ptr)
 		ptr->win.img.addr = mlx_get_data_addr(ptr->win.img.img, &ptr->win.img.bits_per_pixel, &ptr->win.img.line_length, &ptr->win.img.endian);
 	}
 
-	ptr->minimap.img = mlx_new_image(ptr->win.mlx, MAP_SIZE, MAP_SIZE);
+	ptr->minimap.img = mlx_new_image(ptr->win.mlx, MAP_H, MAP_W);
 	ptr->minimap.addr = mlx_get_data_addr(ptr->minimap.img, &ptr->minimap.bits_per_pixel, &ptr->minimap.line_length,
 				&ptr->minimap.endian);
 

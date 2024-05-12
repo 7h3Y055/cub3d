@@ -34,10 +34,11 @@
 
 #define DEBUG   0
 #define DEBUG_SCALE   10
-#define SCALE_P 4
+#define SCALE_P 2
 // #define PLAYER_SPEED 100000
 
-#define MAP_SIZE   WIDTH / 4
+#define MAP_H   HEIGHT / 4
+#define MAP_W   WIDTH / 4
 #define MAP_SCALE   10
 
 #define ENEMY_SPACE 30
@@ -48,7 +49,7 @@
 #define PI 3.141592653589793
 // #define SCALE 1000000
 #define SCALE 100
-#define ENEMY_SPEED 3
+#define ENEMY_SPEED 8
 // #define SCALE 25
 #define PLAYER_SPEED 10
 // #define ROTATION_SPEED 0.019

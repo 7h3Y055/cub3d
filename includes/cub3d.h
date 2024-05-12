@@ -34,8 +34,11 @@
 
 #define DEBUG   0
 #define DEBUG_SCALE   10
-#define SCALE_P 2
+#define SCALE_P 4
 // #define PLAYER_SPEED 100000
+
+#define MAP_SIZE   WIDTH / 4
+#define MAP_SCALE   10
 
 #define ENEMY_SPACE 30
 #define PLAYER_SPACE 3
@@ -59,6 +62,7 @@
 #define S_M       1
 #define A_M       0
 #define P_M       35
+#define F_M       3
 
 #define RIGHT_M   124
 #define LEFT_M    123
@@ -180,6 +184,7 @@ typedef struct s_ptr
     t_parse parse;
     t_win   win;
 	t_img_data img3d;
+    t_img_data minimap;
 	void 	*win3d;
     t_player player;
     t_obunga obunga;
@@ -210,6 +215,9 @@ void    put_obunga_to_img(t_ptr *ptr);
 void	create_map(t_ptr *ptr);
 void	put_player_to_image(t_img_data *img, t_player player);
 void	init_mlx(t_ptr *ptr);
+
+int	color_unit_pixel(char map_unit);
+
 void	render_map(t_ptr ptr);
 void	put_arrow(t_ptr *ptr);
 void	my_mlx_pixel_put(t_img_data *img, int x, int y, int color);

@@ -397,25 +397,25 @@ void	put_player_to_image(t_img_data *img, t_player player)
 	double y_max;
 
 
-	y = ((double)player.y / SCALE * DEBUG_SCALE) - SCALE_P;
-	x_max = ((double)player.x / SCALE * DEBUG_SCALE) + SCALE_P;
-	y_max = ((double)player.y / SCALE * DEBUG_SCALE) + SCALE_P;
-	while (y <= y_max)
+	y = ((double)player.y / SCALE * MAP_SCALE) - SCALE_P;
+	x_max = ((double)player.x / SCALE * MAP_SCALE) + SCALE_P;
+	y_max = ((double)player.y / SCALE * MAP_SCALE) + SCALE_P;
+	while (y < y_max)
 	{
-		x = ((double)player.x / SCALE * DEBUG_SCALE) - SCALE_P;
-		while (x <= x_max)
+		x = ((double)player.x / SCALE * MAP_SCALE) - SCALE_P;
+		while (x < x_max)
 		{
 			my_mlx_pixel_put(img, x, y, RED);
 			x++;
 		}
 		y++;
 	}
-	n = 1;
-	while (n < 20)
-	{
-		my_mlx_pixel_put(img, ((double)player.x / SCALE * DEBUG_SCALE) + (cos((double)player.angle) * n), ((double)player.y / SCALE * DEBUG_SCALE) + (sin((double)player.angle) * n), RED);
-		n++;
-	}
+	// n = 1;
+	// while (n < 20)
+	// {
+	// 	my_mlx_pixel_put(img, ((double)player.x / SCALE * MAP_SCALE) + (cos((double)player.angle) * n), ((double)player.y / SCALE * DEBUG_SCALE) + (sin((double)player.angle) * n), RED);
+	// 	n++;
+	// }
 }
 
 void init_images(t_ptr *ptr)
@@ -466,6 +466,10 @@ void	init_mlx(t_ptr *ptr)
 		ptr->win.img.img = mlx_new_image(ptr->win.mlx, ptr->parse.x * DEBUG_SCALE, ptr->parse.y * DEBUG_SCALE);
 		ptr->win.img.addr = mlx_get_data_addr(ptr->win.img.img, &ptr->win.img.bits_per_pixel, &ptr->win.img.line_length, &ptr->win.img.endian);
 	}
+
+	ptr->minimap.img = mlx_new_image(ptr->win.mlx, MAP_SIZE, MAP_SIZE);
+	ptr->minimap.addr = mlx_get_data_addr(ptr->minimap.img, &ptr->minimap.bits_per_pixel, &ptr->minimap.line_length,
+				&ptr->minimap.endian);
 
 
 	ptr->win3d = mlx_new_window(ptr->win.mlx, HEIGHT, WIDTH, "Cub3D map3D");

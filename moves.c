@@ -54,8 +54,10 @@ int key_released(int keycode, t_ptr *ptr) {
 //         ptr->keys[R] = 1;
 //     if (keycode == ESC_M)
 //         ptr->keys[E] = 1;
-//     if (keycode == ESP_M && ptr->jump == 0)
-//         ptr->keys[7] = 1;
+//     if (keycode == F_M)
+//         ptr->keys[O] = 1;
+//     // if (keycode == ESP_M && ptr->jump == 0)
+//     //     ptr->keys[7] = 1;
 //     return 0;
 // }
 

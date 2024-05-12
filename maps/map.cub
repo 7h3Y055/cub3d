@@ -1,13 +1,17 @@
-      NO ./textures/brick-wall_.xpm
-EA ./textures/EA.xpm
-        SO ./textures/SO.xpm
-	WE ./textures/WE.xpm
-		C 0,0,0
+NO ./textures/brick-wall_.xpm
+SO ./textures/brick-wall_.xpm
+EA ./textures/brick-wall_.xpm
+WE ./textures/brick-wall_.xpm
 
 
 
 
-F 44,110,73
+EN ./resources/nextbots/Obunga.xpm
+
+
+
+C 171, 199, 216   
+F 186, 128, 74
 
 1111111111111111111111111
 1000000000110000000000001

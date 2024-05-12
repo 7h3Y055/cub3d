@@ -37,29 +37,29 @@ int handle_input(t_ptr *ptr)
 	return (0);
 }
 
-void	put_obunga_to_image(t_img_data *img, t_obunga obunga)
-{
-	double x;
-	double y;
-	double n;
-	double x_max;
-	double y_max;
+// void	put_obunga_to_image(t_img_data *img, t_obunga obunga)
+// {
+// 	double x;
+// 	double y;
+// 	double n;
+// 	double x_max;
+// 	double y_max;
 
 
-	y = ((double)obunga.y / SCALE * DEBUG_SCALE) - SCALE_P;
-	x_max = ((double)obunga.x / SCALE * DEBUG_SCALE) + SCALE_P;
-	y_max = ((double)obunga.y / SCALE * DEBUG_SCALE) + SCALE_P;
-	while (y <= y_max)
-	{
-		x = ((double)obunga.x / SCALE * DEBUG_SCALE) - SCALE_P;
-		while (x <= x_max)
-		{
-			my_mlx_pixel_put(img, x, y, BLACK);
-			x++;
-		}
-		y++;
-	}
-}
+// 	y = ((double)obunga.y / SCALE * DEBUG_SCALE) - SCALE_P;
+// 	x_max = ((double)obunga.x / SCALE * DEBUG_SCALE) + SCALE_P;
+// 	y_max = ((double)obunga.y / SCALE * DEBUG_SCALE) + SCALE_P;
+// 	while (y <= y_max)
+// 	{
+// 		x = ((double)obunga.x / SCALE * DEBUG_SCALE) - SCALE_P;
+// 		while (x <= x_max)
+// 		{
+// 			my_mlx_pixel_put(img, x, y, BLACK);
+// 			x++;
+// 		}
+// 		y++;
+// 	}
+// }
 
 size_t scaleBetween(size_t unscaledNum, size_t minAllowed, size_t maxAllowed, size_t min, size_t max) {
   return (maxAllowed - minAllowed) * (unscaledNum - min) / (max - min) + minAllowed;
@@ -131,10 +131,39 @@ void    put_obunga_to_img(t_ptr *ptr)
     // exit(0);
 }
 
+int check_wall_obunga(t_ptr *ptr, size_t n)
+{
+    double y;
+    double x;
+
+    x = ptr->obunga.x + -cos(ptr->obunga.angle) * n;
+    y = ptr->obunga.y + -sin(ptr->obunga.angle) * n;
+    if (ptr->map2d[(long long)(y / SCALE)][(long long)(x / SCALE)] == '1')
+        return (1);
+    x = ptr->obunga.x + -cos(ptr->obunga.angle + 0.2) * n;
+    y = ptr->obunga.y + -sin(ptr->obunga.angle + 0.2) * n;
+    if (ptr->map2d[(long long)(y / SCALE)][(long long)(x / SCALE)] == '1')
+        return (1);
+    x = ptr->obunga.x + -cos(ptr->obunga.angle - 0.2) * n;
+    y = ptr->obunga.y + -sin(ptr->obunga.angle - 0.2) * n;
+    if (ptr->map2d[(long long)(y / SCALE)][(long long)(x / SCALE)] == '1')
+        return (1);
+    return (0);
+}
+
 void check_player_death(t_ptr *ptr)
 {
+    size_t n;
+
     if (distance(*ptr, ptr->flgas.tmp, 1) < SCALE)
     {
+        n = 0;
+        while (n < distance(*ptr, ptr->flgas.tmp, 1))
+        {
+            if (check_wall_obunga(ptr, n))
+                return ;
+            n++;
+        }        
         exit(ft_error(ptr, "DEATH!\n", 0));
     }
 }
@@ -148,7 +177,7 @@ void obunga_move(t_ptr *ptr)
     x = -cos(ptr->obunga.angle) * ENEMY_SPEED;
     if (ptr->map2d[((int)ptr->obunga.y + (y * ENEMY_SPACE)) / SCALE][((int)ptr->obunga.x) / SCALE] == '0' || ptr->map2d[((int)ptr->obunga.y + (y * ENEMY_SPACE)) / SCALE][((int)ptr->obunga.x) / SCALE] == 'O')
         ptr->obunga.y +=  y;
-    if (ptr->map2d[((int)ptr->obunga.y) / SCALE][((int)ptr->obunga.x + (x * ENEMY_SPACE)) / SCALE] == '0' || ptr->map2d[((int)ptr->obunga.y) / SCALE][((int)ptr->obunga.x + (x * ENEMY_SPACE)) / SCALE] == '0')
+    if (ptr->map2d[((int)ptr->obunga.y) / SCALE][((int)ptr->obunga.x + (x * ENEMY_SPACE)) / SCALE] == '0' || ptr->map2d[((int)ptr->obunga.y) / SCALE][((int)ptr->obunga.x + (x * ENEMY_SPACE)) / SCALE] == 'O')
         ptr->obunga.x +=  x;
 }
 
@@ -160,7 +189,7 @@ void    move_angle_with_mouse(t_ptr *ptr)
     static int last_p = HEIGHT / 2;
     double n;
 
-    // mlx_mouse_get_pos(ptr->win.mlx, ptr->win3d, &x, &y);
+    mlx_mouse_get_pos(ptr->win.mlx, ptr->win3d, &x, &y);
     n = abs(x -  last_p);
     if (x > last_p)
         ptr->player.angle += PI * (n - 0) / (HEIGHT - 0) + 0;
@@ -239,20 +268,13 @@ void    put_minimap(t_ptr *ptr)
 int render_loop(t_ptr *ptr)
 {
     handle_input(ptr);
-    if (DEBUG)
-    {
-        create_map(ptr);
-        put_player_to_image(&ptr->win.img, ptr->player);
-        // put_obunga_to_image(&ptr->win.img, ptr->obunga);
-        mlx_put_image_to_window(ptr->win.mlx, ptr->win.win, ptr->win.img.img, 0, 0);
-    }
 	put_arrow(ptr);
     put_rays(ptr);
     obunga_move(ptr);
     move_angle_with_mouse(ptr);
-    check_player_death(ptr);
     mlx_put_image_to_window(ptr->win.mlx, ptr->win3d, ptr->img3d.img, 0, 0);
     put_minimap(ptr);
+    check_player_death(ptr);
 	return (0);
 }
 

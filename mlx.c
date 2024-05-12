@@ -32,32 +32,32 @@ double	distance(t_ptr ptr, t_point next, int flag)
 		return (sqrt((ptr.player.x - next.x) * (ptr.player.x - next.x) + (ptr.player.y - next.y) * (ptr.player.y - next.y)));
 }
 
-void x(t_ptr *ptr, t_point *next, double angle)
-{
-	long long i = 1;
-	long long d = distance(*ptr, *next, 0);
-	t_point a;
+// void x(t_ptr *ptr, t_point *next, double angle)
+// {
+// 	long long i = 1;
+// 	long long d = distance(*ptr, *next, 0);
+// 	t_point a;
 
-	if (!exeed_map(ptr, *next))
-	{
-		my_mlx_pixel_put(&ptr->win.img, (double)next->x / SCALE * DEBUG_SCALE, (double)next->y / SCALE * DEBUG_SCALE, RED);
-		my_mlx_pixel_put(&ptr->win.img, (double)next->x / SCALE * DEBUG_SCALE + 1, (double)next->y / SCALE * DEBUG_SCALE, RED);
-		my_mlx_pixel_put(&ptr->win.img, (double)next->x / SCALE * DEBUG_SCALE - 1, (double)next->y / SCALE * DEBUG_SCALE, RED);
-		my_mlx_pixel_put(&ptr->win.img, (double)next->x / SCALE * DEBUG_SCALE, (double)next->y / SCALE * DEBUG_SCALE - 1, RED);
-		my_mlx_pixel_put(&ptr->win.img, (double)next->x / SCALE * DEBUG_SCALE, (double)next->y / SCALE * DEBUG_SCALE + 1, RED);
-	}
-	// i = 1;
-	// while (i < d && !exeed_map(ptr, *next))
-	// {
-	// 	next->x = ptr->player.x + (cos(angle) * i);
-	// 	next->y = ptr->player.y + (sin(angle) * i);
-	// 	my_mlx_pixel_put(&ptr->win.img, next->x, next->y, GREAN);
-	// 	i++;
-	// }
+// 	if (!exeed_map(ptr, *next))
+// 	{
+// 		my_mlx_pixel_put(&ptr->win.img, (double)next->x / SCALE * DEBUG_SCALE, (double)next->y / SCALE * DEBUG_SCALE, RED);
+// 		my_mlx_pixel_put(&ptr->win.img, (double)next->x / SCALE * DEBUG_SCALE + 1, (double)next->y / SCALE * DEBUG_SCALE, RED);
+// 		my_mlx_pixel_put(&ptr->win.img, (double)next->x / SCALE * DEBUG_SCALE - 1, (double)next->y / SCALE * DEBUG_SCALE, RED);
+// 		my_mlx_pixel_put(&ptr->win.img, (double)next->x / SCALE * DEBUG_SCALE, (double)next->y / SCALE * DEBUG_SCALE - 1, RED);
+// 		my_mlx_pixel_put(&ptr->win.img, (double)next->x / SCALE * DEBUG_SCALE, (double)next->y / SCALE * DEBUG_SCALE + 1, RED);
+// 	}
+// 	// i = 1;
+// 	// while (i < d && !exeed_map(ptr, *next))
+// 	// {
+// 	// 	next->x = ptr->player.x + (cos(angle) * i);
+// 	// 	next->y = ptr->player.y + (sin(angle) * i);
+// 	// 	my_mlx_pixel_put(&ptr->win.img, next->x, next->y, GREAN);
+// 	// 	i++;
+// 	// }
 
 
 
-}
+// }
 
 void	init_param_y(t_ptr *ptr, t_point *next, t_point *a, double angle)
 {
@@ -315,8 +315,6 @@ void	put_arrow(t_ptr *ptr)
 	while (c < HEIGHT)
 	{
 		ptr->rays[c].next = ray(ptr, a, c);
-		if (DEBUG)
-			x(ptr, &ptr->rays[c].next, a);
 		xx = ptr->player.angle - a;
 		if (xx < 0)
 			xx += RAD;
@@ -367,26 +365,26 @@ int	color_unit_pixel(char map_unit)
 		return (0);
 }
 
-void	create_map(t_ptr *ptr)
-{
-	int	x;
-	int	y;
+// void	create_map(t_ptr *ptr)
+// {
+// 	int	x;
+// 	int	y;
 
-	y = 0;
-	while (y < ptr->parse.y * DEBUG_SCALE)
-	{
-		x = 0;
-		while (x < ptr->parse.x * DEBUG_SCALE)
-		{
-			if (x % DEBUG_SCALE != 0 && y % DEBUG_SCALE != 0)
-				my_mlx_pixel_put(&ptr->win.img, x, y, color_unit_pixel(ptr->map2d[y / DEBUG_SCALE][x / DEBUG_SCALE]));
-			else
-				my_mlx_pixel_put(&ptr->win.img, x, y, GRAY);
-			x++;
-		}
-		y++;
-	}
-}
+// 	y = 0;
+// 	while (y < ptr->parse.y * DEBUG_SCALE)
+// 	{
+// 		x = 0;
+// 		while (x < ptr->parse.x * DEBUG_SCALE)
+// 		{
+// 			if (x % DEBUG_SCALE != 0 && y % DEBUG_SCALE != 0)
+// 				my_mlx_pixel_put(&ptr->win.img, x, y, color_unit_pixel(ptr->map2d[y / DEBUG_SCALE][x / DEBUG_SCALE]));
+// 			else
+// 				my_mlx_pixel_put(&ptr->win.img, x, y, GRAY);
+// 			x++;
+// 		}
+// 		y++;
+// 	}
+// }
 
 void	put_player_to_image(t_img_data *img, t_player player)
 {
@@ -459,13 +457,6 @@ void	init_mlx(t_ptr *ptr)
 
 	// printf("W:%d\n", ptr->texture.no_w);
 	// printf("H:%d\n", ptr->texture.no_h);
-
-	if (DEBUG)
-	{
-		ptr->win.win = mlx_new_window(ptr->win.mlx, ptr->parse.x * DEBUG_SCALE, ptr->parse.y * DEBUG_SCALE, "Cub3D map2d");
-		ptr->win.img.img = mlx_new_image(ptr->win.mlx, ptr->parse.x * DEBUG_SCALE, ptr->parse.y * DEBUG_SCALE);
-		ptr->win.img.addr = mlx_get_data_addr(ptr->win.img.img, &ptr->win.img.bits_per_pixel, &ptr->win.img.line_length, &ptr->win.img.endian);
-	}
 
 	ptr->minimap.img = mlx_new_image(ptr->win.mlx, MAP_H, MAP_W);
 	ptr->minimap.addr = mlx_get_data_addr(ptr->minimap.img, &ptr->minimap.bits_per_pixel, &ptr->minimap.line_length,

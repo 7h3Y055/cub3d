@@ -41,7 +41,7 @@
 #define MAP_W   WIDTH / 4
 #define MAP_SCALE   10
 
-#define ENEMY_SPACE 30
+#define ENEMY_SPACE 15
 #define PLAYER_SPACE 3
 
 #define RAD 6.2831853072

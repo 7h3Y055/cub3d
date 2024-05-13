@@ -232,7 +232,7 @@ void	init_mlx(t_ptr *ptr);
 
 int	color_unit_pixel(char map_unit);
 void	jump_init(t_ptr *ptr);
-
+int destroy_all(t_ptr *ptr);
 void	render_map(t_ptr ptr);
 void	put_arrow(t_ptr *ptr);
 void	my_mlx_pixel_put(t_img_data *img, int x, int y, int color);

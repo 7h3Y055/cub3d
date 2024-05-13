@@ -91,7 +91,8 @@ void    create_square(t_ptr *ptr, double ray_l, size_t x, t_point next)
 
     while (y < dy)
     {
-        my_mlx_pixel_put(&ptr->img3d, x, y, rgb2int(ptr->parse.ceiling[0], ptr->parse.ceiling[1], ptr->parse.ceiling[2]));
+        if (y >= 0 && y <= WIDTH && x >= 0 && x <= HEIGHT)
+            my_mlx_pixel_put(&ptr->img3d, x, y, rgb2int(ptr->parse.ceiling[0], ptr->parse.ceiling[1], ptr->parse.ceiling[2]));
         y++;
     }
 

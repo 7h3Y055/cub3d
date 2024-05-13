@@ -203,11 +203,18 @@ void    move_angle_with_mouse(t_ptr *ptr)
     int ay;
 
     mlx_mouse_get_pos(ptr->win.mlx, ptr->win3d, &x, &y);
+    if (x < 0)
+        ptr->player.angle = fix_rad_overflow(ptr->player.angle - 0.07);
+    if (x > HEIGHT)
+        ptr->player.angle = fix_rad_overflow(ptr->player.angle + 0.07);
+
+
     ax = abs(x -  last_px);
     ay = abs(y -  last_py);
-    if (x > last_px)
+
+    if (x > last_px && x >= 0 && x <= HEIGHT)
         ptr->player.angle += PI * (ax - 0) / (HEIGHT - 0) + 0;
-    else
+    else if (x >= 0 && x <= HEIGHT)
         ptr->player.angle -= PI * (ax - 0) / (HEIGHT - 0) + 0;
 
     if (y > last_py) // DOWN
@@ -232,7 +239,7 @@ void    put_minimap(t_ptr *ptr)
 {
     int	x;
 	int	y;
-    int	x_map = ((int)ptr->player.x / SCALE) * MAP_SCALE - MAP_H / 2;
+    int	x_map = ((double)ptr->player.x / SCALE) * MAP_SCALE - MAP_H / 2;
 	int	y_map = ((double)ptr->player.y / SCALE) * MAP_SCALE - MAP_W / 2;
 
     ft_bzero(ptr->minimap.addr, MAP_H * MAP_W * ptr->minimap.bits_per_pixel / 8);

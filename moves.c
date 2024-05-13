@@ -21,6 +21,8 @@ int key_pressed(int keycode, t_ptr *ptr) {
         ptr->keys[9] = 1;
     if (keycode == XK_Down)
         ptr->keys[10] = 1;
+    if (keycode == XK_Escape)
+        destroy_all(ptr);
 
     return 0;
 }

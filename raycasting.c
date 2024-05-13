@@ -83,8 +83,10 @@ void    create_square(t_ptr *ptr, double ray_l, size_t x, t_point next)
     double  constss;
 
     ray_l =  (SCALE * HEIGHT) / ray_l;
-    constss = scaleBetween(ptr->jump * ray_l, 0, 200, 0, WIDTH * HEIGHT);
-    dy =  (WIDTH / 2 + constss) - (ray_l / 2);
+    if (ptr->jumps.consts < 0)
+        ptr->jumps.consts = 0;
+    ptr->jumps.consts = scaleBetween(ptr->jumps.jump_stats * ray_l, 0, 200, 0, WIDTH * HEIGHT) + ptr->updown;
+    dy =  (WIDTH / 2 + ptr->jumps.consts) - (ray_l / 2);
     y = 0;
 
     while (y < dy)
@@ -95,7 +97,7 @@ void    create_square(t_ptr *ptr, double ray_l, size_t x, t_point next)
 
     next.ray_l = ray_l;
     next.first_point_in_wall = dy;
-    while (y < (WIDTH / 2 + constss) + (ray_l / 2) && y < WIDTH)
+    while (y < (WIDTH / 2 + ptr->jumps.consts) + (ray_l / 2) && y < WIDTH)
     {
         // color = next.face;
         color = get_pixel_color(ptr, next, (size_t)y);

@@ -56,8 +56,12 @@ int key_released(int keycode, t_ptr *ptr) {
 //         ptr->keys[E] = 1;
 //     if (keycode == F_M)
 //         ptr->keys[O] = 1;
-//     // if (keycode == ESP_M && ptr->jump == 0)
-//     //     ptr->keys[7] = 1;
+//     if (keycode == ESP_M && ptr->jumps.jump_stats == 0)
+//         ptr->keys[ES] = 1;
+//     if (keycode == UP_M)
+//         ptr->keys[9] = 1;
+//     if (keycode == DOWN_M)
+//         ptr->keys[10] = 1;
 //     return 0;
 // }
 
@@ -78,6 +82,10 @@ int key_released(int keycode, t_ptr *ptr) {
 //         ptr->keys[E] = 0;
 //     if (keycode == F_M)
 //         ptr->keys[O] = 0;
+//     if (keycode == UP_M)
+//         ptr->keys[9] = 0;
+//     if (keycode == DOWN_M)
+//         ptr->keys[10] = 0;
 //     return 0;
 // }
 

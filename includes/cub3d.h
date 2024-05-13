@@ -49,7 +49,7 @@
 #define PI 3.141592653589793
 // #define SCALE 1000000
 #define SCALE 100
-#define ENEMY_SPEED 8
+#define ENEMY_SPEED 4
 // #define SCALE 25
 #define PLAYER_SPEED 10
 // #define ROTATION_SPEED 0.019
@@ -67,6 +67,8 @@
 
 #define RIGHT_M   124
 #define LEFT_M    123
+#define UP_M    126
+#define DOWN_M    125
 #define ESC_M    53
 #define ESP_M    49
 
@@ -78,6 +80,7 @@
 #define R 5
 #define E 6
 #define O 7
+#define ES 8
 
 typedef struct s_point
 {
@@ -179,6 +182,15 @@ typedef struct s_flags
     t_point tmp;
 } t_flags;
 
+typedef struct  s_jumps
+{
+    int jump_stats;
+    int jump_hight;
+    int jump_speedup;
+    int jump_speeddown;
+    int consts;
+}   t_jumps;
+
 typedef struct s_ptr
 {
     t_rays  *rays;
@@ -189,8 +201,9 @@ typedef struct s_ptr
 	void 	*win3d;
     t_player player;
     t_obunga obunga;
-    int     keys[8];
-    double  jump;
+    int     keys[11];
+    t_jumps  jumps;
+    int        updown;
     t_texture texture;
     char **map2d;
     int     start;
@@ -218,6 +231,7 @@ void	put_player_to_image(t_img_data *img, t_player player);
 void	init_mlx(t_ptr *ptr);
 
 int	color_unit_pixel(char map_unit);
+void	jump_init(t_ptr *ptr);
 
 void	render_map(t_ptr ptr);
 void	put_arrow(t_ptr *ptr);

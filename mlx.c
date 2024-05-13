@@ -444,6 +444,14 @@ void init_images(t_ptr *ptr)
 		exit(ft_error(ptr, "Error in images2", 1));
 }
 
+void	jump_init(t_ptr *ptr)
+{
+	ptr->jumps.jump_hight = 2000;
+	ptr->jumps.jump_speeddown = 100;
+	ptr->jumps.jump_speedup = 200;
+	ptr->jumps.jump_stats = 0;
+}
+
 void	init_mlx(t_ptr *ptr)
 {
 	ptr->win.mlx = mlx_init();
@@ -451,6 +459,8 @@ void	init_mlx(t_ptr *ptr)
 
 
 	init_images(ptr);
+
+	jump_init(ptr);
 
 	ptr->rays = malloc(sizeof(t_rays)  * HEIGHT);
 

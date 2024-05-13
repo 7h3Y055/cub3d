@@ -4,6 +4,28 @@ int destroy_all(t_ptr *ptr)
 {
     exit(0);
 }
+
+void    jump(t_ptr *ptr)
+{
+    if (ptr->keys[ES])
+    {
+        if (ptr->jumps.jump_stats < ptr->jumps.jump_hight)
+        {
+            ptr->jumps.jump_stats += ptr->jumps.jump_speedup;
+            ptr->jumps.jump_speedup -= 10;
+        }
+        else
+            ptr->keys[ES] = 0; 
+    }
+    else
+    {
+        if (ptr->jumps.jump_stats > 0)
+            ptr->jumps.jump_stats -= ptr->jumps.jump_speeddown;
+        else
+            jump_init(ptr);
+    }
+}
+
 int handle_input(t_ptr *ptr)
 {
     if (ptr->keys[W])
@@ -20,20 +42,11 @@ int handle_input(t_ptr *ptr)
         left_argle(ptr);
     if (ptr->keys[E])
         destroy_all(ptr);
-    // if (ptr->keys[E])
-    // {
-    //     if (ptr->jump < 1500)
-    //         ptr->jump += 200;
-    //     else
-    //         ptr->keys[7] = 0; 
-    // }
-    // else
-    // {
-    //     if (ptr->jump > 0)
-    //         ptr->jump -= 100;
-    //     else
-    //         ptr->jump = 0;
-    // }
+    jump(ptr);
+    if (ptr->keys[9] && ptr->updown < 300)
+		ptr->updown += 10;
+    if (ptr->keys[10] && ptr->updown > 0)
+		ptr->updown -= 10;
 	return (0);
 }
 
@@ -99,27 +112,26 @@ int get_obunga_color(t_ptr *ptr, size_t y, size_t x, size_t first_point_y, size_
 
 void    put_obunga_to_img(t_ptr *ptr)
 {
-    int color ;
+    int color;
     int y;
     int x;
     int consts;
     int dst;
-    double constss;
 
     if (ptr->obunga.dst == 0)
         return;
     consts = (SCALE * WIDTH) / ptr->obunga.dst;
     dst =  (SCALE * HEIGHT) / ptr->obunga.dst;
-    constss = scaleBetween(ptr->jump * dst, 0, 200, 0, WIDTH * HEIGHT);
+    ptr->jumps.consts = scaleBetween(ptr->jumps.jump_stats * dst, 0, 200, 0, WIDTH * HEIGHT) +  + ptr->updown;
     x = ptr->obunga.img_x - consts;
     while (x < (int)ptr->obunga.img_x + consts)
     {
-        y = WIDTH / 2 + constss - dst / 2;
-        while (y < (WIDTH / 2 + constss) + (dst) / 2 && y < WIDTH)
+        y = WIDTH / 2 + ptr->jumps.consts - dst / 2;
+        while (y < (WIDTH / 2 + ptr->jumps.consts) + (dst) / 2 && y < WIDTH)
         {
             if (x < HEIGHT && x > 0 && y > 0 && y < WIDTH)
             {
-                color = get_obunga_color(ptr, y - constss, x, WIDTH / 2 - dst / 2, ptr->obunga.img_x - consts, (WIDTH / 2) + (dst) / 2 , ptr->obunga.img_x + consts);
+                color = get_obunga_color(ptr, y - ptr->jumps.consts, x, WIDTH / 2 - dst / 2, ptr->obunga.img_x - consts, (WIDTH / 2) + (dst) / 2 , ptr->obunga.img_x + consts);
                 if (color >= 0)
                     my_mlx_pixel_put(&ptr->img3d, x, y, color);
 
@@ -128,7 +140,6 @@ void    put_obunga_to_img(t_ptr *ptr)
         }
         x++;
     }
-    // exit(0);
 }
 
 int check_wall_obunga(t_ptr *ptr, size_t n)
@@ -189,7 +200,7 @@ void    move_angle_with_mouse(t_ptr *ptr)
     static int last_p = HEIGHT / 2;
     double n;
 
-    mlx_mouse_get_pos(ptr->win.mlx, ptr->win3d, &x, &y);
+    // mlx_mouse_get_pos(ptr->win.mlx, ptr->win3d, &x, &y);
     n = abs(x -  last_p);
     if (x > last_p)
         ptr->player.angle += PI * (n - 0) / (HEIGHT - 0) + 0;
@@ -289,7 +300,6 @@ int main(int argc, char const **argv)
 
     
     mlx_loop_hook(ptr.win.mlx, render_loop, &ptr);
-    // render_loop(&ptr);
     mlx_hook(ptr.win3d, DestroyNotify, ButtonPressMask, destroy_all, &ptr);
     mlx_hook(ptr.win3d, KeyPress, KeyPressMask, key_pressed, &ptr);
     mlx_hook(ptr.win3d, KeyRelease, KeyReleaseMask, key_released, &ptr);

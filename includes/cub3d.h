@@ -197,7 +197,6 @@ typedef struct s_ptr
     t_parse parse;
     t_win   win;
 	t_img_data img3d;
-    t_img_data minimap;
 	void 	*win3d;
     t_player player;
     t_obunga obunga;

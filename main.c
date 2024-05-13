@@ -15,7 +15,10 @@ void    jump(t_ptr *ptr)
             ptr->jumps.jump_speedup -= 10;
         }
         else
-            ptr->keys[ES] = 0; 
+        {
+            ptr->keys[ES] = 0;
+            ptr->jumps.jump_speedup = 200;
+        }
     }
     else
     {
@@ -242,31 +245,28 @@ void    put_minimap(t_ptr *ptr)
     int	x_map = ((double)ptr->player.x / SCALE) * MAP_SCALE - MAP_H / 2;
 	int	y_map = ((double)ptr->player.y / SCALE) * MAP_SCALE - MAP_W / 2;
 
-    ft_bzero(ptr->minimap.addr, MAP_H * MAP_W * ptr->minimap.bits_per_pixel / 8);
-	y = 0;
+	y = 5;
 	while (y < MAP_W)
 	{
-		x = 0;
+		x = 5;
 		while (x < MAP_H)
 		{
             if (x + x_map >=  0 && x + x_map < ptr->parse.x * MAP_SCALE
                 && y + y_map >= 0 && y + y_map < ptr->parse.y * MAP_SCALE)
             {
                 if ((x + x_map) % MAP_SCALE != 0 && (y + y_map) % MAP_SCALE != 0)
-                    my_mlx_pixel_put(&ptr->minimap, x, y
+                    my_mlx_pixel_put(&ptr->img3d, x, y
                         , color_unit_pixel(ptr->map2d[(y + y_map) / MAP_SCALE][(x + x_map) / MAP_SCALE]));
                 else
-                    my_mlx_pixel_put(&ptr->minimap, x, y, GRAY);
+                    my_mlx_pixel_put(&ptr->img3d, x, y, GRAY);
             }
             else
-                my_mlx_pixel_put(&ptr->minimap, x, y, BLACK);
+                my_mlx_pixel_put(&ptr->img3d, x, y, BLACK);
 			x++;
 		}
 		y++;
 	}
     //put player
-    my_mlx_pixel_put(&ptr->minimap, (double)ptr->player.x / SCALE * MAP_SCALE - x_map
-        ,(double)ptr->player.y / SCALE * MAP_SCALE - y_map, RED);
     {
         double x;
         double y;
@@ -283,7 +283,7 @@ void    put_minimap(t_ptr *ptr)
             x = (double)ptr->player.x / SCALE * MAP_SCALE - x_map - SCALE_P;
             while (x < x_max)
             {
-                my_mlx_pixel_put(&ptr->minimap, x, y, RED);
+                my_mlx_pixel_put(&ptr->img3d, x, y, RED);
                 x++;
             }
             y++;
@@ -294,11 +294,10 @@ void    put_minimap(t_ptr *ptr)
     int n = 1;
 	while (n < 20)
 	{
-		my_mlx_pixel_put(&ptr->minimap, ((double)ptr->player.x / SCALE * MAP_SCALE - x_map) + (cos((double)ptr->player.angle) * n)
+		my_mlx_pixel_put(&ptr->img3d, ((double)ptr->player.x / SCALE * MAP_SCALE - x_map) + (cos((double)ptr->player.angle) * n)
             , ((double)(double)ptr->player.y / SCALE * MAP_SCALE - y_map) + (sin((double)ptr->player.angle) * n), RED);
 		n++;
 	}
-    mlx_put_image_to_window(ptr->win.mlx, ptr->win3d, ptr->minimap.img, 5, 5);
 }
 
 int render_loop(t_ptr *ptr)
@@ -308,9 +307,9 @@ int render_loop(t_ptr *ptr)
     put_rays(ptr);
     obunga_move(ptr);
     move_angle_with_mouse(ptr);
+    put_minimap(ptr);
     mlx_put_image_to_window(ptr->win.mlx, ptr->win3d, ptr->img3d.img, 0, 0);
     check_player_death(ptr);
-    put_minimap(ptr);
 	return (0);
 }
 

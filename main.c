@@ -204,9 +204,9 @@ void    move_angle_with_mouse(t_ptr *ptr)
 
     mlx_mouse_get_pos(ptr->win.mlx, ptr->win3d, &x, &y);
     if (x < 0)
-        ptr->player.angle = fix_rad_overflow(ptr->player.angle - 0.07);
+        ptr->player.angle = fix_rad_overflow(ptr->player.angle - 0.03);
     if (x > HEIGHT)
-        ptr->player.angle = fix_rad_overflow(ptr->player.angle + 0.07);
+        ptr->player.angle = fix_rad_overflow(ptr->player.angle + 0.03);
 
 
     ax = abs(x -  last_px);
@@ -309,8 +309,8 @@ int render_loop(t_ptr *ptr)
     obunga_move(ptr);
     move_angle_with_mouse(ptr);
     mlx_put_image_to_window(ptr->win.mlx, ptr->win3d, ptr->img3d.img, 0, 0);
-    put_minimap(ptr);
     check_player_death(ptr);
+    put_minimap(ptr);
 	return (0);
 }
 

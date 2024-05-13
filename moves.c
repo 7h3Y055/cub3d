@@ -15,9 +15,13 @@ int key_pressed(int keycode, t_ptr *ptr) {
         ptr->keys[R] = 1;
     if (keycode == XK_f)
         ptr->keys[O] = 1;
-    // if (keycode == XK_space && ptr->jump == 0)
-    //     ptr->keys[E] = 1;
-    
+    if (keycode == XK_space && ptr->jumps.jump_stats == 0)
+        ptr->keys[ES] = 1;
+    if (keycode == XK_Up)
+        ptr->keys[9] = 1;
+    if (keycode == XK_Down)
+        ptr->keys[10] = 1;
+
     return 0;
 }
 
@@ -36,6 +40,10 @@ int key_released(int keycode, t_ptr *ptr) {
         ptr->keys[R] = 0;
     if (keycode == XK_f)
         ptr->keys[O] = 0;
+    if (keycode == XK_Up)
+        ptr->keys[9] = 0;
+    if (keycode == XK_Down)
+        ptr->keys[10] = 0;
     return 0;
 }
 

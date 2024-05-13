@@ -45,7 +45,7 @@ int handle_input(t_ptr *ptr)
     jump(ptr);
     if (ptr->keys[9] && ptr->updown < 300)
 		ptr->updown += 10;
-    if (ptr->keys[10] && ptr->updown > 0)
+    if (ptr->keys[10] && ptr->updown >= -300)
 		ptr->updown -= 10;
 	return (0);
 }
@@ -197,16 +197,34 @@ void    move_angle_with_mouse(t_ptr *ptr)
 {
     int y;
     int x;
-    static int last_p = HEIGHT / 2;
-    double n;
+    static int last_px = HEIGHT / 2;
+    static int last_py = WIDTH / 2;
+    int ax;
+    int ay;
 
-    // mlx_mouse_get_pos(ptr->win.mlx, ptr->win3d, &x, &y);
-    n = abs(x -  last_p);
-    if (x > last_p)
-        ptr->player.angle += PI * (n - 0) / (HEIGHT - 0) + 0;
+    mlx_mouse_get_pos(ptr->win.mlx, ptr->win3d, &x, &y);
+    ax = abs(x -  last_px);
+    ay = abs(y -  last_py);
+    if (x > last_px)
+        ptr->player.angle += PI * (ax - 0) / (HEIGHT - 0) + 0;
     else
-        ptr->player.angle -= PI * (n - 0) / (HEIGHT - 0) + 0;
-    last_p = x;
+        ptr->player.angle -= PI * (ax - 0) / (HEIGHT - 0) + 0;
+
+    if (y > last_py) // DOWN
+    {
+        if (ptr->updown + ay > -300)
+        {
+            ptr->updown -= ay;
+        }
+    }
+    else // UP
+    {
+        if (ptr->updown - ay <= 300)
+            ptr->updown += ay;
+    }
+        
+    last_px = x;
+    last_py = y;
 
 }
 
@@ -214,7 +232,7 @@ void    put_minimap(t_ptr *ptr)
 {
     int	x;
 	int	y;
-    int	x_map = ((double)ptr->player.x / SCALE) * MAP_SCALE - MAP_H / 2;
+    int	x_map = ((int)ptr->player.x / SCALE) * MAP_SCALE - MAP_H / 2;
 	int	y_map = ((double)ptr->player.y / SCALE) * MAP_SCALE - MAP_W / 2;
 
     ft_bzero(ptr->minimap.addr, MAP_H * MAP_W * ptr->minimap.bits_per_pixel / 8);

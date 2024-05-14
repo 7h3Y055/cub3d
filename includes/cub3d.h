@@ -242,6 +242,12 @@ double fix_rad_overflow(double a);
 int key_pressed(int keycode, t_ptr *ptr);
 int key_released(int keycode, t_ptr *ptr);
 size_t scaleBetween(size_t unscaledNum, size_t minAllowed, size_t maxAllowed, size_t min, size_t max);
+void obunga_move(t_ptr *ptr);
+void check_player_death(t_ptr *ptr);
+int handle_input(t_ptr *ptr);
+int check_wall_obunga(t_ptr *ptr, size_t n);
+void    jump(t_ptr *ptr);
+int get_obunga_color(t_ptr *ptr, size_t y, size_t x, size_t first_point_y, size_t first_point_x, size_t max_y, size_t max_x);
 
 int rgb2int(int r, int g, int b);
 

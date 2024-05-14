@@ -1,10 +1,5 @@
 #include "cub3d.h"
 
-int destroy_all(t_ptr *ptr)
-{
-    exit(0);
-}
-
 void    jump(t_ptr *ptr)
 {
     if (ptr->keys[ES])
@@ -29,173 +24,6 @@ void    jump(t_ptr *ptr)
     }
 }
 
-int handle_input(t_ptr *ptr)
-{
-    if (ptr->keys[W])
-        go_up(ptr);
-    if (ptr->keys[A])
-        go_left(ptr);
-    if (ptr->keys[S])
-        go_down(ptr);
-    if (ptr->keys[D])
-        go_right(ptr);
-    if (ptr->keys[R])
-        right_angle(ptr);
-    if (ptr->keys[L])
-        left_argle(ptr);
-    if (ptr->keys[E])
-        destroy_all(ptr);
-    jump(ptr);
-    if (ptr->keys[9] && ptr->updown < 300)
-		ptr->updown += 10;
-    if (ptr->keys[10] && ptr->updown >= -300)
-		ptr->updown -= 10;
-	return (0);
-}
-
-// void	put_obunga_to_image(t_img_data *img, t_obunga obunga)
-// {
-// 	double x;
-// 	double y;
-// 	double n;
-// 	double x_max;
-// 	double y_max;
-
-
-// 	y = ((double)obunga.y / SCALE * DEBUG_SCALE) - SCALE_P;
-// 	x_max = ((double)obunga.x / SCALE * DEBUG_SCALE) + SCALE_P;
-// 	y_max = ((double)obunga.y / SCALE * DEBUG_SCALE) + SCALE_P;
-// 	while (y <= y_max)
-// 	{
-// 		x = ((double)obunga.x / SCALE * DEBUG_SCALE) - SCALE_P;
-// 		while (x <= x_max)
-// 		{
-// 			my_mlx_pixel_put(img, x, y, BLACK);
-// 			x++;
-// 		}
-// 		y++;
-// 	}
-// }
-
-size_t scaleBetween(size_t unscaledNum, size_t minAllowed, size_t maxAllowed, size_t min, size_t max) {
-  return (maxAllowed - minAllowed) * (unscaledNum - min) / (max - min) + minAllowed;
-}
-
-int get_obunga_color(t_ptr *ptr, size_t y, size_t x, size_t first_point_y, size_t first_point_x, size_t max_y, size_t max_x)
-{
-    char *dst;
-    int img_y;
-    int img_x;
-
-    static int n;
-    
-
-    // img_y = ((y - first_point_y) * (ptr->obunga.img_w / SCALE));
-    // img_x = ((x - first_point_x) * (ptr->obunga.img_h / SCALE));
-
-    img_y = scaleBetween(y, 0, ptr->obunga.img_w, first_point_y, max_y);
-    img_x = scaleBetween(x, 0, ptr->obunga.img_h, first_point_x, max_x);
-
-
-    // if (n == 1 && img_x == 0 && img_y == 0)
-    //     return -1;
-    // if (img_x == 0 && img_y == 0)
-    // {
-    //     printf("%d %d\n", y == first_point_y, x == first_point_x);
-    // }
-    // return(rgb2int(ptr->parse.floor[0], ptr->parse.floor[1], ptr->parse.floor[2]));
-
-    dst = ptr->obunga.img.addr + (img_y * ptr->obunga.img.line_length + img_x * (ptr->obunga.img.bits_per_pixel / 8));
-
-    // printf("%d\n", *(int*)dst);
-    // exit(0);
-
-    return (*(int*)dst);
-}
-
-void    put_obunga_to_img(t_ptr *ptr)
-{
-    int color;
-    int y;
-    int x;
-    int consts;
-    int dst;
-
-    if (ptr->obunga.dst == 0)
-        return;
-    consts = (SCALE * WIDTH) / ptr->obunga.dst;
-    dst =  (SCALE * HEIGHT) / ptr->obunga.dst;
-    ptr->jumps.consts = scaleBetween(ptr->jumps.jump_stats * dst, 0, 200, 0, WIDTH * HEIGHT) +  + ptr->updown;
-    x = ptr->obunga.img_x - consts;
-    while (x < (int)ptr->obunga.img_x + consts)
-    {
-        y = WIDTH / 2 + ptr->jumps.consts - dst / 2;
-        while (y < (WIDTH / 2 + ptr->jumps.consts) + (dst) / 2 && y < WIDTH)
-        {
-            if (x < HEIGHT && x > 0 && y > 0 && y < WIDTH)
-            {
-                color = get_obunga_color(ptr, y - ptr->jumps.consts, x, WIDTH / 2 - dst / 2, ptr->obunga.img_x - consts, (WIDTH / 2) + (dst) / 2 , ptr->obunga.img_x + consts);
-                if (color >= 0)
-                    my_mlx_pixel_put(&ptr->img3d, x, y, color);
-
-            }
-            y++;
-        }
-        x++;
-    }
-}
-
-int check_wall_obunga(t_ptr *ptr, size_t n)
-{
-    double y;
-    double x;
-
-    x = ptr->obunga.x + -cos(ptr->obunga.angle) * n;
-    y = ptr->obunga.y + -sin(ptr->obunga.angle) * n;
-    if (ptr->map2d[(long long)(y / SCALE)][(long long)(x / SCALE)] == '1')
-        return (1);
-    x = ptr->obunga.x + -cos(ptr->obunga.angle + 0.2) * n;
-    y = ptr->obunga.y + -sin(ptr->obunga.angle + 0.2) * n;
-    if (ptr->map2d[(long long)(y / SCALE)][(long long)(x / SCALE)] == '1')
-        return (1);
-    x = ptr->obunga.x + -cos(ptr->obunga.angle - 0.2) * n;
-    y = ptr->obunga.y + -sin(ptr->obunga.angle - 0.2) * n;
-    if (ptr->map2d[(long long)(y / SCALE)][(long long)(x / SCALE)] == '1')
-        return (1);
-    return (0);
-}
-
-void check_player_death(t_ptr *ptr)
-{
-    size_t n;
-
-    if (distance(*ptr, ptr->flgas.tmp, 1) < SCALE)
-    {
-        n = 0;
-        while (n < distance(*ptr, ptr->flgas.tmp, 1))
-        {
-            if (check_wall_obunga(ptr, n))
-                return ;
-            n++;
-        }        
-        exit(ft_error(ptr, "DEATH!\n", 0));
-    }
-}
-
-void obunga_move(t_ptr *ptr)
-{
-    long long y;
-    long long x;
-    
-    y = -sin(ptr->obunga.angle) * ENEMY_SPEED;
-    x = -cos(ptr->obunga.angle) * ENEMY_SPEED;
-    if (ptr->map2d[((int)ptr->obunga.y + (y * ENEMY_SPACE)) / SCALE][((int)ptr->obunga.x) / SCALE] == '0' || ptr->map2d[((int)ptr->obunga.y + (y * ENEMY_SPACE)) / SCALE][((int)ptr->obunga.x) / SCALE] == 'O')
-        ptr->obunga.y +=  y;
-    if (ptr->map2d[((int)ptr->obunga.y) / SCALE][((int)ptr->obunga.x + (x * ENEMY_SPACE)) / SCALE] == '0' || ptr->map2d[((int)ptr->obunga.y) / SCALE][((int)ptr->obunga.x + (x * ENEMY_SPACE)) / SCALE] == 'O')
-        ptr->obunga.x +=  x;
-}
-
-
 void    move_angle_with_mouse(t_ptr *ptr)
 {
     int y;
@@ -210,32 +38,16 @@ void    move_angle_with_mouse(t_ptr *ptr)
         ptr->player.angle = fix_rad_overflow(ptr->player.angle - 0.03);
     if (x > HEIGHT)
         ptr->player.angle = fix_rad_overflow(ptr->player.angle + 0.03);
-
-
-    ax = abs(x -  last_px);
-    ay = abs(y -  last_py);
-
     if (x > last_px && x >= 0 && x <= HEIGHT)
-        ptr->player.angle += PI * (ax - 0) / (HEIGHT - 0) + 0;
+        ptr->player.angle += PI * (abs(x -  last_px) - 0) / (HEIGHT - 0) + 0;
     else if (x >= 0 && x <= HEIGHT)
-        ptr->player.angle -= PI * (ax - 0) / (HEIGHT - 0) + 0;
-
-    if (y > last_py) // DOWN
-    {
-        if (ptr->updown + ay > -300)
-        {
-            ptr->updown -= ay;
-        }
-    }
-    else // UP
-    {
-        if (ptr->updown - ay <= 300)
-            ptr->updown += ay;
-    }
-        
+        ptr->player.angle -= PI * (abs(x -  last_px) - 0) / (HEIGHT - 0) + 0;
+    if (y > last_py && ptr->updown + abs(y -  last_py) > -300)
+            ptr->updown -= abs(y -  last_py);
+    else if (ptr->updown - abs(y -  last_py) <= 300)
+            ptr->updown += abs(y -  last_py);
     last_px = x;
     last_py = y;
-
 }
 
 

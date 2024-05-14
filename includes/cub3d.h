@@ -229,6 +229,23 @@ void	create_map(t_ptr *ptr);
 void	put_player_to_image(t_img_data *img, t_player player);
 void	init_mlx(t_ptr *ptr);
 
+void    ft_init(t_ptr *ptr, int fd);
+int    ft_open(t_ptr *ptr, char const *path);
+void    check_extention(t_ptr *ptr, char const **argv);
+char *get_texture_path(t_ptr *ptr, char *str);
+
+
+
+int skip_comma(char *str, int i);
+int skip_digit(t_ptr *ptr, char *str, int i);
+int ft_just_whitespaces(char *str, int i);
+int    ft_init_texture(t_ptr *ptr, char *str);
+
+
+
+
+
+
 int	color_unit_pixel(char map_unit);
 void	jump_init(t_ptr *ptr);
 int destroy_all(t_ptr *ptr);

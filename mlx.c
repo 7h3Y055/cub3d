@@ -195,7 +195,6 @@ void init_images(t_ptr *ptr)
 	ptr->texture.d_img.img = mlx_xpm_file_to_image(ptr->win.mlx, "./resources/doors/c.xpm", &ptr->texture.d_w, &ptr->texture.d_h);
 	if (!ptr->texture.we_img.img || !ptr->texture.no_img.img || !ptr->texture.so_img.img || !ptr->texture.ea_img.img || !ptr->obunga.img.img || !ptr->texture.d_img.img)
 		exit(ft_error(ptr, "Error in images\n", 1));
-	printf("%d,%d\n", ptr->obunga.img_w , ptr->obunga.img_h);
 	if (ptr->obunga.img_w == 441 && ptr->obunga.img_h == 441)
 		exit(ft_error(ptr, "Error in obunga image\n", 1));
 

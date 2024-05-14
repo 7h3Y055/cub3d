@@ -64,6 +64,7 @@ void    put_obunga_to_img(t_ptr *ptr)
         }
         x++;
     }
+    printf("%d,%d\n", y, x);
 }
 
 int get_obunga_color(t_ptr *ptr, size_t y, size_t x, size_t first_point_y, size_t first_point_x, size_t max_y, size_t max_x)

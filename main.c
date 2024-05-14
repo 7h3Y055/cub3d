@@ -238,67 +238,6 @@ void    move_angle_with_mouse(t_ptr *ptr)
 
 }
 
-void    put_minimap(t_ptr *ptr)
-{
-    int	x;
-	int	y;
-    int	x_map = ((double)ptr->player.x / SCALE) * MAP_SCALE - MAP_H / 2;
-	int	y_map = ((double)ptr->player.y / SCALE) * MAP_SCALE - MAP_W / 2;
-
-	y = 5;
-	while (y < MAP_W)
-	{
-		x = 5;
-		while (x < MAP_H)
-		{
-            if (x + x_map >=  0 && x + x_map < ptr->parse.x * MAP_SCALE
-                && y + y_map >= 0 && y + y_map < ptr->parse.y * MAP_SCALE)
-            {
-                if ((x + x_map) % MAP_SCALE != 0 && (y + y_map) % MAP_SCALE != 0)
-                    my_mlx_pixel_put(&ptr->img3d, x, y
-                        , color_unit_pixel(ptr->map2d[(y + y_map) / MAP_SCALE][(x + x_map) / MAP_SCALE]));
-                else
-                    my_mlx_pixel_put(&ptr->img3d, x, y, GRAY);
-            }
-            else
-                my_mlx_pixel_put(&ptr->img3d, x, y, BLACK);
-			x++;
-		}
-		y++;
-	}
-    //put player
-    {
-        double x;
-        double y;
-        double n;
-        double x_max;
-        double y_max;
-
-
-        y = (double)ptr->player.y / SCALE * MAP_SCALE - y_map - SCALE_P;
-        x_max = (double)ptr->player.x / SCALE * MAP_SCALE - x_map + SCALE_P;
-        y_max = (double)ptr->player.y / SCALE * MAP_SCALE - y_map + SCALE_P;
-        while (y < y_max)
-        {
-            x = (double)ptr->player.x / SCALE * MAP_SCALE - x_map - SCALE_P;
-            while (x < x_max)
-            {
-                my_mlx_pixel_put(&ptr->img3d, x, y, RED);
-                x++;
-            }
-            y++;
-        }
-
-    }
-    //put arrow
-    int n = 1;
-	while (n < 20)
-	{
-		my_mlx_pixel_put(&ptr->img3d, ((double)ptr->player.x / SCALE * MAP_SCALE - x_map) + (cos((double)ptr->player.angle) * n)
-            , ((double)(double)ptr->player.y / SCALE * MAP_SCALE - y_map) + (sin((double)ptr->player.angle) * n), RED);
-		n++;
-	}
-}
 
 int render_loop(t_ptr *ptr)
 {
@@ -319,16 +258,11 @@ int main(int argc, char const **argv)
     t_ptr	ptr;
 
     ft_parse(&ptr, argc, argv);
-
 	init_mlx(&ptr);
-
-    
     mlx_loop_hook(ptr.win.mlx, render_loop, &ptr);
     mlx_hook(ptr.win3d, DestroyNotify, ButtonPressMask, destroy_all, &ptr);
     mlx_hook(ptr.win3d, KeyPress, KeyPressMask, key_pressed, &ptr);
     mlx_hook(ptr.win3d, KeyRelease, KeyReleaseMask, key_released, &ptr);
-
-
 	mlx_loop(ptr.win.mlx);
 	return (0);
 }

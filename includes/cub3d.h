@@ -234,6 +234,7 @@ void	jump_init(t_ptr *ptr);
 int destroy_all(t_ptr *ptr);
 void	render_map(t_ptr ptr);
 void	put_arrow(t_ptr *ptr);
+void    put_minimap(t_ptr *ptr);
 void	my_mlx_pixel_put(t_img_data *img, int x, int y, int color);
 void    create_square(t_ptr *ptr, double ray_l, size_t x, t_point);
 void midle_line(t_ptr *ptr);

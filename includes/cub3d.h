@@ -250,7 +250,7 @@ void	init_param_x(t_ptr *ptr, t_point *next, t_point *a, double angle);
 void	init_param_y(t_ptr *ptr, t_point *next, t_point *a, double angle);
 double calculate_incrementation();
 
-
+void check_player_move(t_ptr *ptr, long long y, long long x);
 
 int	color_unit_pixel(char map_unit);
 void	jump_init(t_ptr *ptr);

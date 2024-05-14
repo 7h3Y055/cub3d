@@ -1,130 +1,79 @@
 #include "cub3d.h"
 
-int init_img_yx(t_ptr *ptr, t_point next, int *img_y, int *img_x, int y)
+
+t_point	ray(t_ptr *ptr, double angle, int c)
 {
+	t_point	next;
+	t_point	nexty;
+	t_point	nextx;
+	t_point	ax;
+	t_point	ay;
 
-    int w;
-    int h;
+	init_param_y(ptr, &nexty, &ay, angle);
+	init_param_x(ptr, &nextx, &ax, angle);
+	while (1)
+	{
+		if (distance(*ptr, nexty, 0) > distance(*ptr, nextx, 0))
+		{
+			next = nextx;
+			if (ptr->map2d[(int)next.y / SCALE][(int)next.x / SCALE] == 'D')
+				next.face = DOOR_W;
+			else if (check_wall(ptr, nextx) && ((angle < PI / 2 && angle >= 0) || (angle > PI + PI / 2 && angle <= RAD)))
+				next.face = GRAY;
+			else if (check_wall(ptr, nextx))
+				next.face = GREEN;
+			nextx.x += ax.x;
+			nextx.y += ax.y;
+		}
+		else if (distance(*ptr, nexty, 0) < distance(*ptr, nextx, 0))
+		{
+			next = nexty;
+			if (ptr->map2d[(int)next.y / SCALE][(int)next.x / SCALE] == 'D')
+				next.face = DOOR_H;
+			else if (check_wall(ptr, nexty) && angle > PI && angle < RAD)
+				next.face = WHITE;
+			else if (check_wall(ptr, nexty))
+				next.face = BLEU;
+			nexty.x += ay.x;
+			nexty.y += ay.y;
+		}
+		if (c == HEIGHT / 2 && ptr->map2d[(long long)next.y / SCALE][(long long)next.x / SCALE] == 'O' && ptr->keys[O] &&  distance(*ptr, next, 0) < SCALE * 3)
+		{
+			ptr->keys[O] = 0;
+			ptr->map2d[(long long)next.y / SCALE][(long long)next.x / SCALE] = 'D';
+		}
+		if (check_wall(ptr, next))	
+			break ;
+	}
+	if (c == HEIGHT / 2 && (next.face == DOOR_H || next.face == DOOR_W) && ptr->keys[O] && distance(*ptr, next, 0) < SCALE * 3)
+	{
+			ptr->keys[O] = 0;
+		ptr->map2d[(int)next.y / SCALE][(int)next.x / SCALE] = 'O';
 
+	}
+	init_obunga(ptr, &next, angle, c);
+	return (next);
+}
 
-    if (next.face == WHITE)
-    {
-        w = ptr->texture.no_w;
-        h = ptr->texture.no_h;
-    }
-    if (next.face == BLEU)
-    {
-        w = ptr->texture.so_w;
-        h = ptr->texture.so_h;
-    }
-    if (next.face == GREEN)
-    {
-        w = ptr->texture.we_w;
-        h = ptr->texture.we_h;
-    }
-    if (next.face == GRAY)
-        {
-        w = ptr->texture.ea_w;
-        h = ptr->texture.ea_h;
-    }
-    if (next.face == DOOR_H || next.face == DOOR_W)
-    {
-        w = ptr->texture.d_w;
-        h = ptr->texture.d_h;
-    }
-    // else
-    //     puts("AA");
+void	raycasting(t_ptr *ptr)
+{
+	double	a = fix_rad_overflow(ptr->player.angle - d2rad(EYE_ANGLE / 2));
+	size_t c = 0;
+	double xx;
+	double	n;
 
-    if (next.face == GREEN || next.face == GRAY || next.face == DOOR_W)
-        *img_x = (next.y - (long long)next.y / SCALE * SCALE) * w / SCALE;
-    else
-        *img_x = (next.x - (long long)next.x / SCALE * SCALE) * w / SCALE;
-
-    *img_y = (y - next.first_point_in_wall) * (h / next.ray_l);
-    
-    if (*img_y < 0 || *img_y >= h || *img_x < 0 || *img_x >= w)
-        return (-1);
-    return (0);
+	while (c < HEIGHT)
+	{
+		ptr->rays[c].next = ray(ptr, a, c);
+		xx = ptr->player.angle - a;
+		if (xx < 0)
+			xx += RAD;
+		if (xx > RAD)
+			xx -= RAD;
+		ptr->rays[c].n = distance(*ptr, ptr->rays[c].next, 0) * cos(xx);
+		c++;
+		a = fix_rad_overflow(a + calculate_incrementation());
+	}
 }
 
 
-int get_pixel_color(t_ptr *ptr, t_point next, size_t y)
-{
-
-    char *dst;
-    int img_y;
-    int img_x;
-
-    
-    if (init_img_yx(ptr, next, &img_y, &img_x, y) == -1)
-        return(rgb2int(ptr->parse.floor[0], ptr->parse.floor[1], ptr->parse.floor[2]));
-
-
-    if (next.face == WHITE)
-        dst = ptr->texture.no_img.addr + (img_y * ptr->texture.no_img.line_length + img_x * (ptr->texture.no_img.bits_per_pixel / 8));
-    if (next.face == BLEU)
-        dst = ptr->texture.so_img.addr + (img_y * ptr->texture.so_img.line_length + img_x * (ptr->texture.so_img.bits_per_pixel / 8));
-    if (next.face == GREEN)
-        dst = ptr->texture.we_img.addr + (img_y * ptr->texture.we_img.line_length + img_x * (ptr->texture.we_img.bits_per_pixel / 8));
-    if (next.face == GRAY)
-        dst = ptr->texture.ea_img.addr + (img_y * ptr->texture.ea_img.line_length + img_x * (ptr->texture.ea_img.bits_per_pixel / 8));
-    if (next.face == DOOR_H || next.face == DOOR_W)
-        dst = ptr->texture.d_img.addr + (img_y * ptr->texture.d_img.line_length + img_x * (ptr->texture.d_img.bits_per_pixel / 8));
-    return (*(int*)dst);
-}
-
-
-
-void    create_square(t_ptr *ptr, double ray_l, size_t x, t_point next)
-{
-    double  y;
-    double  dy;
-    int color;
-    double  constss;
-
-    ray_l =  (SCALE * HEIGHT) / ray_l;
-    // if (ptr->jumps.jump_stats < 0)
-    //     ptr->jumps.jump_stats = 0;
-    ptr->jumps.consts = scaleBetween(ptr->jumps.jump_stats * ray_l, 0, 200, 0, WIDTH * HEIGHT) + ptr->updown;
-    dy =  (WIDTH / 2 + ptr->jumps.consts) - (ray_l / 2);
-    y = 0;
-
-    while (y < dy)
-    {
-        if (y >= 0 && y <= WIDTH && x >= 0 && x <= HEIGHT)
-            my_mlx_pixel_put(&ptr->img3d, x, y, rgb2int(ptr->parse.ceiling[0], ptr->parse.ceiling[1], ptr->parse.ceiling[2]));
-        y++;
-    }
-
-    next.ray_l = ray_l;
-    next.first_point_in_wall = dy;
-    while (y < (WIDTH / 2 + ptr->jumps.consts) + (ray_l / 2) && y < WIDTH)
-    {
-        // color = next.face;
-        color = get_pixel_color(ptr, next, (size_t)y);
-        if (!(color == -1 || x < 0 || x > HEIGHT || y < 0 || y > WIDTH))
-            my_mlx_pixel_put(&ptr->img3d, x, y, color);
-        y++;
-    }
-
-    while (y < WIDTH)
-    {
-        my_mlx_pixel_put(&ptr->img3d, x, y, rgb2int(ptr->parse.floor[0], ptr->parse.floor[1], ptr->parse.floor[2]));
-        y++;
-    }
-}
-
-void midle_line(t_ptr *ptr)
-{
-    t_img_data img = ptr->img3d;
-    size_t      x;
-    size_t      y;
-
-    y = WIDTH / 2;
-    x = 0;
-    while (x < HEIGHT)
-    {
-        my_mlx_pixel_put(&img, x, y, 0xFF0000);
-        x++;
-    }
-}

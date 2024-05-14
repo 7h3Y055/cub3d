@@ -242,7 +242,13 @@ int ft_just_whitespaces(char *str, int i);
 int    ft_init_texture(t_ptr *ptr, char *str);
 
 
-
+int btw_range(double a, double min, double max);
+double d2rad(double d);
+void init_obunga(t_ptr *ptr,t_point *next, double p_angle, int c);
+int check_wall(t_ptr *ptr, t_point point);
+void	init_param_x(t_ptr *ptr, t_point *next, t_point *a, double angle);
+void	init_param_y(t_ptr *ptr, t_point *next, t_point *a, double angle);
+double calculate_incrementation();
 
 
 
@@ -250,7 +256,7 @@ int	color_unit_pixel(char map_unit);
 void	jump_init(t_ptr *ptr);
 int destroy_all(t_ptr *ptr);
 void	render_map(t_ptr ptr);
-void	put_arrow(t_ptr *ptr);
+void	raycasting(t_ptr *ptr);
 void    put_minimap(t_ptr *ptr);
 void	my_mlx_pixel_put(t_img_data *img, int x, int y, int color);
 void    create_square(t_ptr *ptr, double ray_l, size_t x, t_point);

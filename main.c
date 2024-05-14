@@ -54,7 +54,7 @@ void    move_angle_with_mouse(t_ptr *ptr)
 int render_loop(t_ptr *ptr)
 {
     handle_input(ptr);
-	put_arrow(ptr);
+	raycasting(ptr);
     put_rays(ptr);
     obunga_move(ptr);
     move_angle_with_mouse(ptr);

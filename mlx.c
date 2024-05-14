@@ -1,64 +1,5 @@
 #include "cub3d.h"
 
-void	my_mlx_pixel_put(t_img_data *img, int x, int y, int color)
-{
-	char	*dst;
-
-	dst = img->addr + (y * img->line_length + x * (img->bits_per_pixel / 8));
-	*(unsigned int*)dst = color;
-}
-
-double d2rad(double d)
-{
-	return (d * PI/180);
-}
-
-int	exeed_map(t_ptr *ptr, t_point p)
-{
-	if (p.x >= ptr->parse.x * SCALE || p.y >= ptr->parse.y * SCALE
-		|| p.x < 0 || p.y < 0)
-		{
-			// puts("w9f");	
-		return (1);
-		}
-	return (0);
-}
-
-double	distance(t_ptr ptr, t_point next, int flag)
-{
-	if (flag)
-		return (sqrt((ptr.player.x - ptr.obunga.x) * (ptr.player.x - ptr.obunga.x) + (ptr.player.y - ptr.obunga.y) * (ptr.player.y - ptr.obunga.y)));
-	else
-		return (sqrt((ptr.player.x - next.x) * (ptr.player.x - next.x) + (ptr.player.y - next.y) * (ptr.player.y - next.y)));
-}
-
-// void x(t_ptr *ptr, t_point *next, double angle)
-// {
-// 	long long i = 1;
-// 	long long d = distance(*ptr, *next, 0);
-// 	t_point a;
-
-// 	if (!exeed_map(ptr, *next))
-// 	{
-// 		my_mlx_pixel_put(&ptr->win.img, (double)next->x / SCALE * DEBUG_SCALE, (double)next->y / SCALE * DEBUG_SCALE, RED);
-// 		my_mlx_pixel_put(&ptr->win.img, (double)next->x / SCALE * DEBUG_SCALE + 1, (double)next->y / SCALE * DEBUG_SCALE, RED);
-// 		my_mlx_pixel_put(&ptr->win.img, (double)next->x / SCALE * DEBUG_SCALE - 1, (double)next->y / SCALE * DEBUG_SCALE, RED);
-// 		my_mlx_pixel_put(&ptr->win.img, (double)next->x / SCALE * DEBUG_SCALE, (double)next->y / SCALE * DEBUG_SCALE - 1, RED);
-// 		my_mlx_pixel_put(&ptr->win.img, (double)next->x / SCALE * DEBUG_SCALE, (double)next->y / SCALE * DEBUG_SCALE + 1, RED);
-// 	}
-// 	// i = 1;
-// 	// while (i < d && !exeed_map(ptr, *next))
-// 	// {
-// 	// 	next->x = ptr->player.x + (cos(angle) * i);
-// 	// 	next->y = ptr->player.y + (sin(angle) * i);
-// 	// 	my_mlx_pixel_put(&ptr->win.img, next->x, next->y, GREAN);
-// 	// 	i++;
-// 	// }
-
-
-
-// }
-
 void	init_param_y(t_ptr *ptr, t_point *next, t_point *a, double angle)
 {
 	if (angle > PI && angle < RAD)
@@ -159,45 +100,8 @@ void	init_param_x(t_ptr *ptr, t_point *next, t_point *a, double angle)
 }
 
 
-int check_wall(t_ptr *ptr, t_point point)
-{
-	if (exeed_map(ptr, point) || ptr->map2d[(long long)point.y / SCALE][(long long)point.x / SCALE] == '1' || ptr->map2d[(long long)point.y / SCALE][(long long)point.x / SCALE] == 'D')
-		return (1);
-	return (0);
-}
-
-double calculate_incrementation()
-{
-	return (d2rad(1. / ((double)HEIGHT / EYE_ANGLE)));
-	// return (0.00081812308687);
-}
 
 
-int check_obunga_angle(t_ptr *ptr, double o_angle, double p_angle)
-{
-	double	a = fix_rad_overflow(p_angle + calculate_incrementation() / 2);
-	double	b = fix_rad_overflow(p_angle - calculate_incrementation() / 2);
-
-	if (o_angle <= fix_rad_overflow(p_angle + calculate_incrementation() / 2) && o_angle > fix_rad_overflow(p_angle - calculate_incrementation() / 2))
-		return (1);
-	return (0);
-}
-
-
-int btw_range(double a, double min, double max)
-{
-	if (max > min)
-	{
-		if (a >= min && a <= max)
-			return (1);
-	}
-	else
-	{
-		if ((a >= min && a <= RAD) || (a >= 0 && a <= max))
-			return (1);
-	}
-	return (0);
-}
 
 void init_obunga(t_ptr *ptr,t_point *next, double p_angle, int c)
 {
@@ -232,102 +136,6 @@ void init_obunga(t_ptr *ptr,t_point *next, double p_angle, int c)
 
 }
 
-t_point	ray(t_ptr *ptr, double angle, int c)
-{
-	t_point	next;
-	t_point	nexty;
-	t_point	nextx;
-	t_point	ax;
-	t_point	ay;
-
-	init_param_y(ptr, &nexty, &ay, angle);
-	init_param_x(ptr, &nextx, &ax, angle);
-	while (1)
-	{
-		if (distance(*ptr, nexty, 0) > distance(*ptr, nextx, 0))
-		{
-			next = nextx;
-			if (ptr->map2d[(int)next.y / SCALE][(int)next.x / SCALE] == 'D')
-				next.face = DOOR_W;
-			else if (check_wall(ptr, nextx) && ((angle < PI / 2 && angle >= 0) || (angle > PI + PI / 2 && angle <= RAD)))
-				next.face = GRAY;
-			else if (check_wall(ptr, nextx))
-				next.face = GREEN;
-			nextx.x += ax.x;
-			nextx.y += ax.y;
-		}
-		else if (distance(*ptr, nexty, 0) < distance(*ptr, nextx, 0))
-		{
-			next = nexty;
-			if (ptr->map2d[(int)next.y / SCALE][(int)next.x / SCALE] == 'D')
-				next.face = DOOR_H;
-			else if (check_wall(ptr, nexty) && angle > PI && angle < RAD)
-				next.face = WHITE;
-			else if (check_wall(ptr, nexty))
-				next.face = BLEU;
-			nexty.x += ay.x;
-			nexty.y += ay.y;
-		}
-		if (c == HEIGHT / 2 && ptr->map2d[(long long)next.y / SCALE][(long long)next.x / SCALE] == 'O' && ptr->keys[O] &&  distance(*ptr, next, 0) < SCALE * 3)
-		{
-			ptr->keys[O] = 0;
-			ptr->map2d[(long long)next.y / SCALE][(long long)next.x / SCALE] = 'D';
-		}
-		if (check_wall(ptr, next))	
-			break ;
-	}
-
-
-
-	if (c == HEIGHT / 2 && (next.face == DOOR_H || next.face == DOOR_W) && ptr->keys[O] && distance(*ptr, next, 0) < SCALE * 3)
-	{
-			ptr->keys[O] = 0;
-		ptr->map2d[(int)next.y / SCALE][(int)next.x / SCALE] = 'O';
-
-	}
-	// if (door && ptr->keys[O] && distance(*ptr, next, 0) < SCALE * 3)
-	// {
-	// 	// puts("S");
-	// 	ptr->map2d[(long long)next.y / SCALE][(long long)next.x / SCALE] = 'D';
-	// }
-
-
-	init_obunga(ptr, &next, angle, c);
-	return (next);
-}
-
-double fix_rad_overflow(double a)
-{
-	a = a - (int)(a / RAD) * RAD;
-	if (a < 0)
-		a = RAD + a;
-	return (a);
-}
-
-void	put_arrow(t_ptr *ptr)
-{
-	double	a = fix_rad_overflow(ptr->player.angle - d2rad(EYE_ANGLE / 2));
-	size_t c = 0;
-	// t_point		next;
-	double xx;
-	double	n;
-
-	while (c < HEIGHT)
-	{
-		ptr->rays[c].next = ray(ptr, a, c);
-		xx = ptr->player.angle - a;
-		if (xx < 0)
-			xx += RAD;
-		if (xx > RAD)
-			xx -= RAD;
-		ptr->rays[c].n = distance(*ptr, ptr->rays[c].next, 0) * cos(xx);
-		
-		// create_square(ptr, n, c,next);
-		c++;
-		a = fix_rad_overflow(a + calculate_incrementation());
-	}
-}
-
 
 void	put_rays(t_ptr *ptr)
 {
@@ -352,39 +160,6 @@ void	put_rays(t_ptr *ptr)
 	}
 }
 
-int	color_unit_pixel(char map_unit)
-{
-	if (map_unit == '1')
-		return (0x002177);
-	else if (map_unit == '0')
-		return (0xffffff);
-	else if (map_unit == 'D')
-		return (RED);
-	else if (map_unit == 'O')
-		return (BLEU);
-		return (0);
-}
-
-// void	create_map(t_ptr *ptr)
-// {
-// 	int	x;
-// 	int	y;
-
-// 	y = 0;
-// 	while (y < ptr->parse.y * DEBUG_SCALE)
-// 	{
-// 		x = 0;
-// 		while (x < ptr->parse.x * DEBUG_SCALE)
-// 		{
-// 			if (x % DEBUG_SCALE != 0 && y % DEBUG_SCALE != 0)
-// 				my_mlx_pixel_put(&ptr->win.img, x, y, color_unit_pixel(ptr->map2d[y / DEBUG_SCALE][x / DEBUG_SCALE]));
-// 			else
-// 				my_mlx_pixel_put(&ptr->win.img, x, y, GRAY);
-// 			x++;
-// 		}
-// 		y++;
-// 	}
-// }
 
 void	put_player_to_image(t_img_data *img, t_player player)
 {
@@ -408,12 +183,6 @@ void	put_player_to_image(t_img_data *img, t_player player)
 		}
 		y++;
 	}
-	// n = 1;
-	// while (n < 20)
-	// {
-	// 	my_mlx_pixel_put(img, ((double)player.x / SCALE * MAP_SCALE) + (cos((double)player.angle) * n), ((double)player.y / SCALE * DEBUG_SCALE) + (sin((double)player.angle) * n), RED);
-	// 	n++;
-	// }
 }
 
 void init_images(t_ptr *ptr)
@@ -455,22 +224,10 @@ void	jump_init(t_ptr *ptr)
 void	init_mlx(t_ptr *ptr)
 {
 	ptr->win.mlx = mlx_init();
-
-
-
 	init_images(ptr);
-
 	jump_init(ptr);
-
 	ptr->rays = malloc(sizeof(t_rays)  * HEIGHT);
-
-
-	// printf("W:%d\n", ptr->texture.no_w);
-	// printf("H:%d\n", ptr->texture.no_h);
-
 	ptr->win3d = mlx_new_window(ptr->win.mlx, HEIGHT, WIDTH, "Cub3D map3D");
-
 	ptr->img3d.img = mlx_new_image(ptr->win.mlx,HEIGHT ,WIDTH);
-	ptr->img3d.addr = mlx_get_data_addr(ptr->img3d.img, &ptr->img3d.bits_per_pixel, &ptr->img3d.line_length,
-				&ptr->img3d.endian);
+	ptr->img3d.addr = mlx_get_data_addr(ptr->img3d.img, &ptr->img3d.bits_per_pixel, &ptr->img3d.line_length, &ptr->img3d.endian);
 }

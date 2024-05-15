@@ -12,10 +12,20 @@ t_point	ray(t_ptr *ptr, double angle, int c)
 	init_param_x(ptr, &nextx, &ax, angle);
 	while (1)
 	{
+		if (c == HEIGHT / 2 && ptr->map2d[(long long)next.y
+			/ SCALE][(long long)next.x / SCALE] == 'O' && ptr->keys[O]
+			&& distance(*ptr, next, 0) < SCALE * 3)
+		{
+			ptr->keys[O] = 0;
+			if (!((long long)(ptr->obunga.y / SCALE) == (long long)(next.y / SCALE)
+				&& (long long)(ptr->obunga.x / SCALE) == (long long)(next.x / SCALE)))
+				ptr->map2d[(long long)(next.y / SCALE)][(long long)(next.x
+					/ SCALE)] = 'D';
+		}
 		if (distance(*ptr, nexty, 0) > distance(*ptr, nextx, 0))
 		{
 			next = nextx;
-			if (ptr->map2d[(int)next.y / SCALE][(int)next.x / SCALE] == 'D')
+			if (ptr->map2d[(long long)next.y / SCALE][(long long)next.x / SCALE] == 'D')
 				next.face = DOOR_W;
 			else if (check_wall(ptr, nextx) && ((angle < PI / 2 && angle >= 0)
 					|| (angle > PI + PI / 2 && angle <= RAD)))
@@ -28,7 +38,7 @@ t_point	ray(t_ptr *ptr, double angle, int c)
 		else if (distance(*ptr, nexty, 0) < distance(*ptr, nextx, 0))
 		{
 			next = nexty;
-			if (ptr->map2d[(int)next.y / SCALE][(int)next.x / SCALE] == 'D')
+			if (ptr->map2d[(long long)next.y / SCALE][(long long)next.x / SCALE] == 'D')
 				next.face = DOOR_H;
 			else if (check_wall(ptr, nexty) && angle > PI && angle < RAD)
 				next.face = WHITE;
@@ -37,16 +47,6 @@ t_point	ray(t_ptr *ptr, double angle, int c)
 			nexty.x += ay.x;
 			nexty.y += ay.y;
 		}
-		if (c == HEIGHT / 2 && ptr->map2d[(long long)next.y
-			/ SCALE][(long long)next.x / SCALE] == 'O' && ptr->keys[O]
-			&& distance(*ptr, next, 0) < SCALE * 3)
-		{
-			ptr->keys[O] = 0;
-			if (ptr->obunga.y / SCALE != (long long)next.y / SCALE
-				&& ptr->obunga.x / SCALE != (long long)next.x / SCALE)
-				ptr->map2d[(long long)next.y / SCALE][(long long)next.x
-					/ SCALE] = 'D';
-		}
 		if (check_wall(ptr, next))
 			break ;
 	}
@@ -54,7 +54,7 @@ t_point	ray(t_ptr *ptr, double angle, int c)
 		&& ptr->keys[O] && distance(*ptr, next, 0) < SCALE * 3)
 	{
 		ptr->keys[O] = 0;
-		ptr->map2d[(int)next.y / SCALE][(int)next.x / SCALE] = 'O';
+		ptr->map2d[(long long)(next.y / SCALE)][(long long)(next.x / SCALE)] = 'O';
 	}
 	init_obunga(ptr, &next, angle, c);
 	return (next);

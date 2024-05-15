@@ -6,7 +6,7 @@
 /*   By: ybouchma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 18:12:36 by ybouchma          #+#    #+#             */
-/*   Updated: 2024/05/14 18:23:42 by ybouchma         ###   ########.fr       */
+/*   Updated: 2024/05/15 12:17:29 by ybouchma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,8 @@ int	ft_init_map2d_help(t_ptr *ptr, char c, int *y, int *x)
 {
 	if (!c || c == '\n')
 	{
-		while (x < ptr->parse.x - 1)
-			ptr->map2d[*y][*x++] = ' ';
+		while (*x < ptr->parse.x - 1)
+			ptr->map2d[*y][(*x)++] = ' ';
 		*x = 0;
 		(*y)++;
 		if (!c)
@@ -43,8 +43,8 @@ int	ft_init_map2d_help(t_ptr *ptr, char c, int *y, int *x)
 		ptr->map2d[*y][(*x)++] = c;
 	else
 	{
-		n++;
-		ft_init_player_position(ptr, y, x, c);
+		ptr->flgas.n_p++;
+		ft_init_player_position(ptr, *y, *x, c);
 		ptr->map2d[*y][(*x)++] = '0';
 	}
 	return (0);
@@ -55,9 +55,7 @@ void	ft_init_map2d(t_ptr *ptr, char *str)
 	int	i;
 	int	y;
 	int	x;
-	int	n;
 
-	n = 0;
 	i = 0;
 	y = 0;
 	x = 0;
@@ -69,7 +67,7 @@ void	ft_init_map2d(t_ptr *ptr, char *str)
 			break;
 		i++;
 	}
-	if (n == 0 || n > 1)
+	if (ptr->flgas.n_p == 0 || ptr->flgas.n_p > 1)
 		exit(ft_error(ptr, "Invalid map:\
 less or more than one player starting point (N or E or S or W)\n", 1));
 	y = 0;

@@ -180,6 +180,7 @@ t_texture;
 typedef struct s_flags
 {
     t_point tmp;
+    int     n_p;
 } t_flags;
 
 typedef struct  s_jumps

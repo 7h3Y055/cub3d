@@ -73,6 +73,7 @@ void	ft_parse(t_ptr *ptr, int argc, char const **argv)
 	int	fd;
 
 	ft_bzero(ptr, sizeof(t_ptr));
+	ft_bzero(&ptr->flgas, sizeof(t_flags));
 	ptr->start = 1;
 	if (argc != 2)
 		exit(ft_error(ptr, "need one parameter have path of map\n", 1));

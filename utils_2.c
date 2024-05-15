@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils_2.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ybouchma <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/05/15 12:35:13 by ybouchma          #+#    #+#             */
+/*   Updated: 2024/05/15 12:36:16 by ybouchma         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
 
 void	my_mlx_pixel_put(t_img_data *img, int x, int y, int color)
@@ -35,9 +47,9 @@ double	distance(t_ptr ptr, t_point next, int flag)
 int	check_wall(t_ptr *ptr, t_point point)
 {
 	if (exeed_map(ptr, point) || ptr->map2d[(long long)(point.y
-		/ SCALE)][(long long)(point.x / SCALE)] == '1'
+			/ SCALE)][(long long)(point.x / SCALE)] == '1'
 		|| ptr->map2d[(long long)(point.y / SCALE)][(long long)(point.x
-		/ SCALE)] == 'D')
+			/ SCALE)] == 'D')
 		return (1);
 	return (0);
 }

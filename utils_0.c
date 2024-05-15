@@ -8,8 +8,12 @@ int	rgb2int(int r, int g, int b)
 int	ft_error(t_ptr *ptr, char *str, int n)
 {
 	(void)ptr;
-	ft_putstr_fd("[cub3d]: ", 2);
-	ft_putstr_fd(str, 2);
+	if (n)
+	{
+		ft_putstr_fd("Error\n[cub3d]: ", 2);
+		ft_putstr_fd(str, 2);
+		ft_putstr_fd("\n", 2);
+	}
 	return (n);
 }
 
@@ -61,6 +65,7 @@ void	check_player_death(t_ptr *ptr)
 				return ;
 			n++;
 		}
-		exit(ft_error(ptr, "DEATH!\n", 0));
+		ft_putstr_fd("\n[Cub3d] DEATH\n\n", 1);
+		exit(ft_error(ptr, NULL, 0));
 	}
 }

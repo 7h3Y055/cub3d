@@ -6,7 +6,7 @@
 /*   By: ybouchma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 18:04:56 by ybouchma          #+#    #+#             */
-/*   Updated: 2024/05/14 18:05:00 by ybouchma         ###   ########.fr       */
+/*   Updated: 2024/05/15 13:01:15 by ybouchma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	check_extention(t_ptr *ptr, char const **argv)
 {
 	if ((!ft_strchr(argv[1], '.') || ft_strrchr(argv[1], '.') == argv[1])
 		|| ft_strcmp(ft_strrchr(argv[1], '.'), ".cub") != 0)
-		exit(ft_error(ptr, "file name is not .cub extention!\n", 1));
+		exit(ft_error(ptr, "file name is not .cub extention!", 1));
 }
 
 int	ft_open(t_ptr *ptr, char const *path)
@@ -51,7 +51,7 @@ char	*get_texture_path(t_ptr *ptr, char *str)
 	while (ft_isspace(str[i]))
 		i++;
 	if (str[i])
-		exit(ft_error(ptr, "Error1\n", 1));
+		exit(ft_error(ptr, "invalid texture path", 1));
 	path = ft_strndup(&str[tmp_i], i - tmp_i - 1);
 	return (path);
 }
@@ -77,7 +77,7 @@ int	skip_digit(t_ptr *ptr, char *str, int i)
 			i++;
 	}
 	else
-		exit(ft_error(ptr, "Error3\n", 1));
+		exit(ft_error(ptr, "Error3", 1));
 	while (ft_isspace(str[i]))
 		i++;
 	return (i);

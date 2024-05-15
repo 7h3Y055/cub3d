@@ -6,7 +6,7 @@
 /*   By: ybouchma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 18:12:36 by ybouchma          #+#    #+#             */
-/*   Updated: 2024/05/15 12:29:44 by ybouchma         ###   ########.fr       */
+/*   Updated: 2024/05/15 13:01:32 by ybouchma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ void	ft_init_map2d(t_ptr *ptr, char *str)
 	}
 	if (ptr->flgas.n_p == 0 || ptr->flgas.n_p > 1)
 		exit(ft_error(ptr, "Invalid map:\
-less or more than one player starting point (N or E or S or W)\n", 1));
+less or more than one player starting point (N or E or S or W)", 1));
 	y = 0;
 	ptr->map2d[ptr->parse.y] = NULL;
 }

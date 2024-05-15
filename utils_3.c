@@ -6,7 +6,7 @@
 /*   By: ybouchma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 12:36:47 by ybouchma          #+#    #+#             */
-/*   Updated: 2024/05/15 12:37:04 by ybouchma         ###   ########.fr       */
+/*   Updated: 2024/05/15 13:01:54 by ybouchma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,6 @@ void	valid_color(t_ptr *ptr, int *color)
 	if (color[0] > 255 || color[1] > 255 || color[2] > 255)
 	{
 		free(color);
-		exit(ft_error(ptr, "Error5\n", 1));
+		exit(ft_error(ptr, "invalid color", 1));
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: ybouchma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 12:19:44 by ybouchma          #+#    #+#             */
-/*   Updated: 2024/05/15 12:28:23 by ybouchma         ###   ########.fr       */
+/*   Updated: 2024/05/15 12:56:20 by ybouchma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	check_valide_map_helper(t_ptr *ptr, int y, int x, int *n)
 {
 	if (ptr->map2d[y][x] == '0' && check_valid_map(ptr, y, x))
 		exit(ft_error(ptr,
-				"Invalid map: map is not closed by wall (1)\n",
+				"Invalid map: map is not closed by wall (1)",
 				check_valid_map(ptr, y, x)));
 	if (ptr->map2d[y][x] == 'X')
 	{
@@ -51,13 +51,13 @@ void	check_valide_map_helper(t_ptr *ptr, int y, int x, int *n)
 		if (!((ptr->map2d[y][x - 1] == '1' && ptr->map2d[y][x
 				+ 1] == '1') || (ptr->map2d[y - 1][x] == '1'
 					&& ptr->map2d[y + 1][x] == '1')))
-			exit(ft_error(ptr, "door error\n", 1));
+			exit(ft_error(ptr, "Door", 1));
 	}
 	else if (ptr->map2d[y][x] && ptr->map2d[y][x] != '0'
 		&& ptr->map2d[y][x] != '1' && ptr->map2d[y][x] != ' ')
 	{
 		printf("%c\n", ptr->map2d[y][x]);
-		exit(ft_error(ptr, "Invalid map: contain invalid character!\n",
+		exit(ft_error(ptr, "Invalid map: contain invalid character!",
 				check_valid_map(ptr, y, x)));
 	}
 }
@@ -82,7 +82,7 @@ void	check_valide_map(t_ptr *ptr)
 	}
 	if (n > 1)
 		exit(ft_error(ptr,
-				"Invalid map: more than one enemy starting point (X)\n", 1));
+				"Invalid map: more than one enemy starting point (X)", 1));
 }
 
 void	ft_parse(t_ptr *ptr, int argc, char const **argv)
@@ -93,7 +93,7 @@ void	ft_parse(t_ptr *ptr, int argc, char const **argv)
 	ft_bzero(&ptr->flgas, sizeof(t_flags));
 	ptr->start = 1;
 	if (argc != 2)
-		exit(ft_error(ptr, "need one parameter have path of map\n", 1));
+		exit(ft_error(ptr, "need one parameter have path of map", 1));
 	check_extention(ptr, argv);
 	fd = ft_open(ptr, argv[1]);
 	ft_init(ptr, fd);

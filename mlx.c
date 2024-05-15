@@ -202,9 +202,9 @@ void	init_images(t_ptr *ptr)
 	if (!ptr->texture.we_img.img || !ptr->texture.no_img.img
 		|| !ptr->texture.so_img.img || !ptr->texture.ea_img.img
 		|| !ptr->obunga.img.img || !ptr->texture.d_img.img)
-		exit(ft_error(ptr, "Error in images\n", 1));
+		exit(ft_error(ptr, "images", 1));
 	if (ptr->obunga.img_w == 441 && ptr->obunga.img_h == 441)
-		exit(ft_error(ptr, "Error in obunga image\n", 1));
+		exit(ft_error(ptr, "obunga image", 1));
 	ptr->texture.no_img.addr = mlx_get_data_addr(ptr->texture.no_img.img,
 			&ptr->texture.no_img.bits_per_pixel,
 			&ptr->texture.no_img.line_length, &ptr->texture.no_img.endian);
@@ -226,7 +226,7 @@ void	init_images(t_ptr *ptr)
 	if (!ptr->texture.ea_img.addr || !ptr->texture.no_img.addr
 		|| !ptr->texture.so_img.addr || !ptr->texture.we_img.addr
 		|| !ptr->obunga.img.addr || !ptr->texture.d_img.addr)
-		exit(ft_error(ptr, "Error in images2", 1));
+		exit(ft_error(ptr, "images", 1));
 }
 
 void	jump_init(t_ptr *ptr)

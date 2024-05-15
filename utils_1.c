@@ -1,9 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils_1.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ybouchma <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/05/15 12:33:54 by ybouchma          #+#    #+#             */
+/*   Updated: 2024/05/15 12:34:59 by ybouchma         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
 
 double	calculate_incrementation(void)
 {
 	return (d2rad(1. / ((double)HEIGHT / EYE_ANGLE)));
-	// return (0.00081812308687);
 }
 
 int	check_obunga_angle(t_ptr *ptr, double o_angle, double p_angle)
@@ -36,11 +47,12 @@ int	btw_range(double a, double min, double max)
 
 double	fix_rad_overflow(double a)
 {
-	a = a - (int)(a / RAD) * RAD;
+	a = a - (int)(a / RAD) *RAD;
 	if (a < 0)
 		a = RAD + a;
 	return (a);
 }
+
 int	color_unit_pixel(char map_unit)
 {
 	if (map_unit == '1')

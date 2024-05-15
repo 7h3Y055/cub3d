@@ -7,7 +7,7 @@ int	rgb2int(int r, int g, int b)
 
 int	ft_error(t_ptr *ptr, char *str, int n)
 {
-	(void)ptr; // free all memory allocation
+	(void)ptr;
 	ft_putstr_fd("[cub3d]: ", 2);
 	ft_putstr_fd(str, 2);
 	return (n);
@@ -18,8 +18,7 @@ int	destroy_all(t_ptr *ptr)
 	exit(0);
 }
 
-size_t	scaleBetween(size_t unscaledNum, size_t minAllowed, size_t maxAllowed,
-		size_t min, size_t max)
+size_t	scaleBetween(size_t unscaledNum, size_t minAllowed, size_t maxAllowed, size_t min, size_t max)
 {
 	return ((maxAllowed - minAllowed) * (unscaledNum - min) / (max - min)
 		+ minAllowed);

@@ -34,10 +34,10 @@ double	distance(t_ptr ptr, t_point next, int flag)
 
 int	check_wall(t_ptr *ptr, t_point point)
 {
-	if (exeed_map(ptr, point) || ptr->map2d[(long long)point.y
-		/ SCALE][(long long)point.x / SCALE] == '1'
-		|| ptr->map2d[(long long)point.y / SCALE][(long long)point.x
-		/ SCALE] == 'D')
+	if (exeed_map(ptr, point) || ptr->map2d[(long long)(point.y
+		/ SCALE)][(long long)(point.x / SCALE)] == '1'
+		|| ptr->map2d[(long long)(point.y / SCALE)][(long long)(point.x
+		/ SCALE)] == 'D')
 		return (1);
 	return (0);
 }

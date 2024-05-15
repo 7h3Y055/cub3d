@@ -6,7 +6,7 @@
 /*   By: ybouchma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 18:12:36 by ybouchma          #+#    #+#             */
-/*   Updated: 2024/05/15 12:21:02 by ybouchma         ###   ########.fr       */
+/*   Updated: 2024/05/15 12:29:44 by ybouchma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ void	ft_init_player_position(t_ptr *ptr, int y, int x, char c)
 	else if (c == 'W')
 		ptr->player.angle = PI;
 }
-
 
 int	ft_init_map2d_help(t_ptr *ptr, char c, int *y, int *x)
 {
@@ -64,7 +63,7 @@ void	ft_init_map2d(t_ptr *ptr, char *str)
 	while (ptr->map2d[y])
 	{
 		if (ft_init_map2d_help(ptr, str[i], &y, &x))
-			break;
+			break ;
 		i++;
 	}
 	if (ptr->flgas.n_p == 0 || ptr->flgas.n_p > 1)

@@ -32,6 +32,7 @@
 		"limits": "c",
 		"ratio": "c",
 		"random": "c",
-		"valarray": "c"
+		"valarray": "c",
+		"sstream": "c"
 	}
 }

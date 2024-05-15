@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_parse_utils_1.c                                 :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ybouchma <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/05/14 18:05:11 by ybouchma          #+#    #+#             */
+/*   Updated: 2024/05/14 18:12:26 by ybouchma         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
 
 int	check_valide_color(t_ptr *ptr, char *str)
@@ -38,13 +50,10 @@ int	*get_color(t_ptr *ptr, char *str)
 	color[1] = ft_atoi(&tmp[1]);
 	*tmp = 0;
 	color[0] = ft_atoi(&str[i]);
-	if (color[0] > 255 || color[1] > 255 || color[2] > 255)
-	{
-		free(color);
-		exit(ft_error(ptr, "Error5\n", 1));
-	}
+	valid_color(ptr, color);
 	return (color);
 }
+
 int	ft_just_whitespaces(char *str, int i)
 {
 	if (!str[i])
@@ -55,6 +64,7 @@ int	ft_just_whitespaces(char *str, int i)
 		return (1);
 	return (0);
 }
+
 int	ft_init_texture(t_ptr *ptr, char *str)
 {
 	int	i;
@@ -79,16 +89,14 @@ int	ft_init_texture(t_ptr *ptr, char *str)
 	else if (ft_just_whitespaces(str, i))
 		return (0);
 	else if (str[i] && str[i] != '\n')
-	{
 		exit(ft_error(ptr, "Error2\n", 1));
-	}
 	return (1);
 }
 
 char	**allocate_memory_for_map2d(t_ptr *ptr, int y, int x)
 {
-	int i;
-	char **map2d;
+	int		i;
+	char	**map2d;
 
 	i = 0;
 	map2d = ft_calloc(sizeof(char *), (y + 1));

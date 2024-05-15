@@ -249,6 +249,7 @@ int check_wall(t_ptr *ptr, t_point point);
 void	init_param_x(t_ptr *ptr, t_point *next, t_point *a, double angle);
 void	init_param_y(t_ptr *ptr, t_point *next, t_point *a, double angle);
 double calculate_incrementation();
+void	valid_color(t_ptr *ptr, int *color);
 
 void check_player_move(t_ptr *ptr, long long y, long long x);
 

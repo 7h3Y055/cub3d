@@ -1,5 +1,5 @@
 NAME      = cub3d
-SRCS      = ft_parse.c  ft_parse_utils_0.c  ft_parse_utils_1.c  ft_parse_utils_2.c  main.c  minimap.c  mlx.c  moves.c moves_0.c  obunga.c  raycasting.c  tmp.c  utils_0.c  utils_1.c  utils_2.c
+SRCS      = ft_parse.c  ft_parse_utils_0.c  ft_parse_utils_1.c  ft_parse_utils_2.c  main.c  minimap.c  mlx.c  moves.c moves_0.c  obunga.c  raycasting.c  tmp.c  utils_0.c  utils_1.c  utils_2.c utils_3.c
 OBJS      = $(SRCS:.c=.o)
 INC       = ./includes
 LIBFT_DIR = ./lib/libft

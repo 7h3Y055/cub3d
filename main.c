@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ybouchma <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/05/14 18:04:15 by ybouchma          #+#    #+#             */
+/*   Updated: 2024/05/14 18:04:18 by ybouchma         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
 
 void	jump(t_ptr *ptr)
@@ -30,8 +42,6 @@ void	move_angle_with_mouse(t_ptr *ptr)
 	int			x;
 	static int	last_px = HEIGHT / 2;
 	static int	last_py = WIDTH / 2;
-	int			ax;
-	int			ay;
 
 	mlx_mouse_get_pos(ptr->win.mlx, ptr->win3d, &x, &y);
 	if (x < 0)

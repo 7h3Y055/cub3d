@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_parse_utils_2.c                                 :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ybouchma <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/05/14 18:12:36 by ybouchma          #+#    #+#             */
+/*   Updated: 2024/05/14 18:23:42 by ybouchma         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
 
 void	ft_init_player_position(t_ptr *ptr, int y, int x, char c)
@@ -12,6 +24,30 @@ void	ft_init_player_position(t_ptr *ptr, int y, int x, char c)
 		ptr->player.angle = 0;
 	else if (c == 'W')
 		ptr->player.angle = PI;
+}
+
+
+int	ft_init_map2d_help(t_ptr *ptr, char c, int *y, int *x)
+{
+	if (!c || c == '\n')
+	{
+		while (x < ptr->parse.x - 1)
+			ptr->map2d[*y][*x++] = ' ';
+		*x = 0;
+		(*y)++;
+		if (!c)
+			return (1);
+	}
+	else if (c != 'N' && c != 'S' && c != 'W'
+		&& c != 'E')
+		ptr->map2d[*y][(*x)++] = c;
+	else
+	{
+		n++;
+		ft_init_player_position(ptr, y, x, c);
+		ptr->map2d[*y][(*x)++] = '0';
+	}
+	return (0);
 }
 
 void	ft_init_map2d(t_ptr *ptr, char *str)
@@ -29,30 +65,13 @@ void	ft_init_map2d(t_ptr *ptr, char *str)
 			+ 1);
 	while (ptr->map2d[y])
 	{
-		if (!str[i] || str[i] == '\n')
-		{
-			while (x < ptr->parse.x - 1)
-				ptr->map2d[y][x++] = ' ';
-			x = 0;
-			y++;
-			if (!str[i])
-				break ;
-		}
-		else if (str[i] != 'N' && str[i] != 'S' && str[i] != 'W'
-			&& str[i] != 'E')
-			ptr->map2d[y][x++] = str[i];
-		else
-		{
-			n++;
-			ft_init_player_position(ptr, y, x, str[i]);
-			ptr->map2d[y][x++] = '0';
-		}
+		if (ft_init_map2d_help(ptr, str[i], &y, &x))
+			break;
 		i++;
 	}
 	if (n == 0 || n > 1)
-		exit(ft_error(ptr,
-				"Invalid map: less or more than one player starting point (N or E or S or W)\n",
-				1));
+		exit(ft_error(ptr, "Invalid map:\
+less or more than one player starting point (N or E or S or W)\n", 1));
 	y = 0;
 	ptr->map2d[ptr->parse.y] = NULL;
 }

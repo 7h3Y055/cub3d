@@ -235,13 +235,18 @@ int    ft_open(t_ptr *ptr, char const *path);
 void    check_extention(t_ptr *ptr, char const **argv);
 char *get_texture_path(t_ptr *ptr, char *str);
 
-
+char	*get_image_color(t_ptr *ptr, t_point next, int img_x, int img_y);
+void	init_obunga_angle(t_ptr *ptr);
 
 int skip_comma(char *str, int i);
 int skip_digit(t_ptr *ptr, char *str, int i);
 int ft_just_whitespaces(char *str, int i);
 int    ft_init_texture(t_ptr *ptr, char *str);
 
+void	init_param_y_up(t_ptr *ptr, t_point *next, t_point *a, double angle);
+void	init_param_y_down(t_ptr *ptr, t_point *next, t_point *a, double angle);
+void	init_param_x_right(t_ptr *ptr, t_point *next, t_point *a, double angle);
+void	init_param_x_left(t_ptr *ptr, t_point *next, t_point *a, double angle);
 
 int btw_range(double a, double min, double max);
 double d2rad(double d);
@@ -251,6 +256,8 @@ void	init_param_x(t_ptr *ptr, t_point *next, t_point *a, double angle);
 void	init_param_y(t_ptr *ptr, t_point *next, t_point *a, double angle);
 double calculate_incrementation();
 void	valid_color(t_ptr *ptr, int *color);
+
+int	get_pixel_color(t_ptr *ptr, t_point next, size_t y);
 
 void check_player_move(t_ptr *ptr, long long y, long long x);
 

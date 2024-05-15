@@ -203,8 +203,9 @@ void	init_images(t_ptr *ptr)
 		|| !ptr->texture.so_img.img || !ptr->texture.ea_img.img
 		|| !ptr->obunga.img.img || !ptr->texture.d_img.img)
 		exit(ft_error(ptr, "images", 1));
-	if (ptr->obunga.img_w == 441 && ptr->obunga.img_h == 441)
-		exit(ft_error(ptr, "obunga image", 1));
+	printf("%d, %d\n", ptr->obunga.img_w, ptr->obunga.img_h);
+	if (!(ptr->obunga.img_w == 441 && ptr->obunga.img_h == 440))
+		exit(ft_error(ptr, "image size (441x440)", 1));
 	ptr->texture.no_img.addr = mlx_get_data_addr(ptr->texture.no_img.img,
 			&ptr->texture.no_img.bits_per_pixel,
 			&ptr->texture.no_img.line_length, &ptr->texture.no_img.endian);

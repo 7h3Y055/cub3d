@@ -6,7 +6,7 @@ INC       = ./includes
 LIBFT_DIR = ./lib/libft
 LIBFT     = ./lib/libft/libft.a
 GNL		  = lib/gnl/get_next_line.c lib/gnl/get_next_line_utils.c
-CFLAGS    = -Wall -Werror -Wextra
+CFLAGS    = -Wall -Werror -Wextra #-fsanitize=address -g
 MLX_FLAGS = -lXext -lX11 -lm
 CC        = cc
 

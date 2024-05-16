@@ -6,7 +6,7 @@
 /*   By: ybouchma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 12:33:54 by ybouchma          #+#    #+#             */
-/*   Updated: 2024/05/15 12:34:59 by ybouchma         ###   ########.fr       */
+/*   Updated: 2024/05/16 16:38:30 by ybouchma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int	btw_range(double a, double min, double max)
 
 double	fix_rad_overflow(double a)
 {
-	a = a - (int)(a / RAD) * RAD;
+	a = a - (int)(a / RAD) *RAD;
 	if (a < 0)
 		a = RAD + a;
 	return (a);

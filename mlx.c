@@ -6,7 +6,7 @@
 /*   By: ybouchma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 14:47:14 by ybouchma          #+#    #+#             */
-/*   Updated: 2024/05/16 16:23:40 by ybouchma         ###   ########.fr       */
+/*   Updated: 2024/05/16 16:34:28 by ybouchma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,10 @@ void	init_param_y(t_ptr *ptr, t_point *next, t_point *a, double angle)
 {
 	if (angle > PI && angle < RAD)
 		init_param_y_up(ptr, next, a, angle);
-	else if (angle < PI && angle > 0) // puts("down");
+	else if (angle < PI && angle > 0)
 		init_param_y_down(ptr, next, a, angle);
-	else //<----- ----->
+	else
 	{
-		// to do
 		next->x = ptr->parse.x * SCALE;
 		next->y = ptr->parse.y * SCALE;
 		a->x = ptr->parse.x * SCALE;
@@ -67,9 +66,7 @@ void	init_obunga(t_ptr *ptr, t_point *next, double p_angle, int c)
 			ptr->obunga.dst = distance(*ptr, ptr->flgas.tmp, 1);
 		}
 		else
-		{
 			ptr->obunga.dst = 0;
-		}
 	}
 }
 

@@ -6,7 +6,7 @@
 /*   By: ybouchma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 12:36:47 by ybouchma          #+#    #+#             */
-/*   Updated: 2024/05/15 13:01:54 by ybouchma         ###   ########.fr       */
+/*   Updated: 2024/05/16 16:38:40 by ybouchma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,4 +19,9 @@ void	valid_color(t_ptr *ptr, int *color)
 		free(color);
 		exit(ft_error(ptr, "invalid color", 1));
 	}
+}
+
+int	destroy_all(t_ptr *ptr)
+{
+	exit(0);
 }

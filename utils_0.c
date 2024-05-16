@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils_0.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ybouchma <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/05/16 16:37:20 by ybouchma          #+#    #+#             */
+/*   Updated: 2024/05/16 16:37:34 by ybouchma         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
 
 int	rgb2int(int r, int g, int b)
@@ -15,11 +27,6 @@ int	ft_error(t_ptr *ptr, char *str, int n)
 		ft_putstr_fd("\n", 2);
 	}
 	return (n);
-}
-
-int	destroy_all(t_ptr *ptr)
-{
-	exit(0);
 }
 
 size_t	scalebetween(size_t unscaledNum, size_t maxAllowed, size_t min,

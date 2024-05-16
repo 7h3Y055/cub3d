@@ -6,7 +6,7 @@
 /*   By: ybouchma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 14:44:40 by ybouchma          #+#    #+#             */
-/*   Updated: 2024/05/16 14:44:41 by ybouchma         ###   ########.fr       */
+/*   Updated: 2024/05/16 16:31:32 by ybouchma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,21 +14,21 @@
 
 void	init_param_y_up(t_ptr *ptr, t_point *next, t_point *a, double angle)
 {
-	if (angle > PI + PI / 2) // puts("up rigth");
+	if (angle > PI + PI / 2)
 	{
 		next->y = ptr->player.y / SCALE * SCALE - MAGIC_NUMBER;
 		next->x = ptr->player.x + (ptr->player.y - next->y) / tan(RAD - angle);
 		a->y = -SCALE;
 		a->x = SCALE / tan(RAD - angle);
 	}
-	else if (angle < PI + PI / 2) // puts("up left");
+	else if (angle < PI + PI / 2)
 	{
 		next->y = ptr->player.y / SCALE * SCALE - MAGIC_NUMBER;
 		next->x = ptr->player.x + (ptr->player.y - next->y) / tan(RAD - angle);
 		a->y = -SCALE;
 		a->x = a->y / tan(angle - PI);
 	}
-	else // up
+	else
 	{
 		next->y = ptr->player.y / SCALE * SCALE - MAGIC_NUMBER;
 		next->x = ptr->player.x;
@@ -39,21 +39,21 @@ void	init_param_y_up(t_ptr *ptr, t_point *next, t_point *a, double angle)
 
 void	init_param_y_down(t_ptr *ptr, t_point *next, t_point *a, double angle)
 {
-	if (angle < PI / 2) // puts("down rigth");
+	if (angle < PI / 2)
 	{
 		next->y = ptr->player.y / SCALE * SCALE + SCALE;
 		next->x = ptr->player.x + (next->y - ptr->player.y) / tan(angle);
 		a->y = SCALE;
 		a->x = a->y / tan(angle);
 	}
-	else if (angle > PI / 2) // puts("down left");
+	else if (angle > PI / 2)
 	{
 		next->y = ptr->player.y / SCALE * SCALE + SCALE;
 		next->x = ptr->player.x + (next->y - ptr->player.y) / tan(angle);
 		a->y = SCALE;
 		a->x = -a->y / tan(PI - angle);
 	}
-	else // puts("down");
+	else
 	{
 		next->y = ptr->player.y / SCALE * SCALE + SCALE;
 		next->x = ptr->player.x;
@@ -64,14 +64,14 @@ void	init_param_y_down(t_ptr *ptr, t_point *next, t_point *a, double angle)
 
 void	init_param_x_right(t_ptr *ptr, t_point *next, t_point *a, double angle)
 {
-	if (angle > PI + PI / 2) // puts("RIGHT UP");
+	if (angle > PI + PI / 2)
 	{
 		next->x = ptr->player.x / SCALE * SCALE + SCALE;
 		next->y = ptr->player.y - (next->x - ptr->player.x) * tan(RAD - angle);
 		a->x = SCALE;
 		a->y = -SCALE * tan(RAD - angle);
 	}
-	else if (angle < PI / 2) // puts("RIGHT DOWN");
+	else if (angle < PI / 2)
 	{
 		next->x = ptr->player.x / SCALE * SCALE + SCALE;
 		next->y = ptr->player.y + (next->x - ptr->player.x) * tan(angle);
@@ -82,14 +82,14 @@ void	init_param_x_right(t_ptr *ptr, t_point *next, t_point *a, double angle)
 
 void	init_param_x_left(t_ptr *ptr, t_point *next, t_point *a, double angle)
 {
-	if (angle > PI / 2 && angle <= PI) // puts("LEFT down");
+	if (angle > PI / 2 && angle <= PI)
 	{
 		next->x = ptr->player.x / SCALE * SCALE - MAGIC_NUMBER;
 		next->y = ptr->player.y + tan(PI - angle) * (ptr->player.x - next->x);
 		a->x = -SCALE;
 		a->y = SCALE * tan(PI - angle);
 	}
-	else if (angle > PI && angle < PI + PI / 2) // puts("LEFT UP");
+	else if (angle > PI && angle < PI + PI / 2)
 	{
 		next->x = ptr->player.x / SCALE * SCALE - MAGIC_NUMBER;
 		next->y = ptr->player.y - (ptr->player.x - next->x) * tan(angle - PI);

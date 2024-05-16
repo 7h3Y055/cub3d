@@ -6,7 +6,7 @@
 /*   By: ybouchma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 14:43:14 by ybouchma          #+#    #+#             */
-/*   Updated: 2024/05/16 16:29:13 by ybouchma         ###   ########.fr       */
+/*   Updated: 2024/05/16 16:35:25 by ybouchma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,13 +85,12 @@ char	*get_image_color(t_ptr *ptr, t_point next, int img_x, int img_y)
 
 int	get_pixel_color(t_ptr *ptr, t_point next, size_t y)
 {
-	int img_y;
-	int img_x;
+	int	img_y;
+	int	img_x;
 
 	ptr->flgas.y = y;
 	if (init_img_yx(ptr, next, &img_y, &img_x) == -1)
 		return (rgb2int(ptr->parse.floor[0], ptr->parse.floor[1],
 				ptr->parse.floor[2]));
-
 	return (*(int *)get_image_color(ptr, next, img_x, img_y));
 }

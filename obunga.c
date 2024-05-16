@@ -6,7 +6,7 @@
 /*   By: ybouchma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 14:48:05 by ybouchma          #+#    #+#             */
-/*   Updated: 2024/05/16 15:48:00 by ybouchma         ###   ########.fr       */
+/*   Updated: 2024/05/16 16:36:58 by ybouchma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	obunga_move(t_ptr *ptr)
 	y = -sin(ptr->obunga.angle) * ENEMY_SPEED;
 	x = -cos(ptr->obunga.angle) * ENEMY_SPEED;
 	if (ptr->map2d[((int)ptr->obunga.y + (y * ENEMY_SPACE))
-		/ SCALE][((int)ptr->obunga.x) / SCALE] == '0'
+			/ SCALE][((int)ptr->obunga.x) / SCALE] == '0'
 		|| ptr->map2d[((int)ptr->obunga.y + (y * ENEMY_SPACE))
 		/ SCALE][((int)ptr->obunga.x) / SCALE] == 'O')
 		ptr->obunga.y += y;
@@ -62,10 +62,6 @@ void	put_obunga_to_img_helper(t_ptr *ptr, int y, int x, int dst)
 		ptr->flgas.dst = dst;
 		ptr->flgas.consts = consts;
 		color = get_obunga_color(ptr, y - ptr->jumps.consts, x);
-		// , WIDTH / 2 - dst / 2 //first_point_y
-		// , ptr->obunga.img_x - consts //first_point_x
-		// , (WIDTH / 2) + (dst) / 2 //max_y
-		// , ptr->obunga.img_x + consts); //max_x
 		if (color >= 0)
 			my_mlx_pixel_put(&ptr->img3d, x, y, color);
 	}
@@ -112,5 +108,5 @@ int	get_obunga_color(t_ptr *ptr, size_t y, size_t x)
 	img_x = scalebetween(x, ptr->obunga.img_h, first_point_x, ptr->obunga.img_x
 			+ ptr->flgas.consts);
 	return (*(int *)(ptr->obunga.img.addr + (img_y * ptr->obunga.img.line_length
-				+ img_x * (ptr->obunga.img.bits_per_pixel / 8))));
+			+ img_x * (ptr->obunga.img.bits_per_pixel / 8))));
 }

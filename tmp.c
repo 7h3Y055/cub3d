@@ -30,7 +30,7 @@ void	create_square(t_ptr *ptr, double ray_l, size_t x, t_point next)
 	double	constss;
 
 	ray_l = (SCALE * HEIGHT) / ray_l;
-	ptr->jumps.consts = scaleBetween(ptr->jumps.jump_stats * ray_l, 0, 200, 0,
+	ptr->jumps.consts = scalebetween(ptr->jumps.jump_stats * ray_l, 200, 0,
 			WIDTH * HEIGHT) + ptr->updown;
 	dy = (WIDTH / 2 + ptr->jumps.consts) - (ray_l / 2);
 	y = 0;

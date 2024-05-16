@@ -22,10 +22,9 @@ int	destroy_all(t_ptr *ptr)
 	exit(0);
 }
 
-size_t	scaleBetween(size_t unscaledNum, size_t minAllowed, size_t maxAllowed, size_t min, size_t max)
+size_t	scalebetween(size_t unscaledNum, size_t maxAllowed, size_t min, size_t max)
 {
-	return ((maxAllowed - minAllowed) * (unscaledNum - min) / (max - min)
-		+ minAllowed);
+	return ((maxAllowed) * (unscaledNum - min) / (max - min));
 }
 
 int	handle_input(t_ptr *ptr)

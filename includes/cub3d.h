@@ -273,7 +273,7 @@ void midle_line(t_ptr *ptr);
 double fix_rad_overflow(double a);
 int key_pressed(int keycode, t_ptr *ptr);
 int key_released(int keycode, t_ptr *ptr);
-size_t scaleBetween(size_t unscaledNum, size_t minAllowed, size_t maxAllowed, size_t min, size_t max);
+size_t scalebetween(size_t unscaledNum, size_t maxAllowed, size_t min, size_t max);
 void obunga_move(t_ptr *ptr);
 void check_player_death(t_ptr *ptr);
 int handle_input(t_ptr *ptr);

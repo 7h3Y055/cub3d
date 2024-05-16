@@ -51,7 +51,7 @@ void	put_obunga_to_img(t_ptr *ptr)
 		return ;
 	consts = (SCALE * WIDTH) / ptr->obunga.dst;
 	dst = (SCALE * HEIGHT) / ptr->obunga.dst;
-	ptr->jumps.consts = scaleBetween(ptr->jumps.jump_stats * dst, 0, 200, 0,
+	ptr->jumps.consts = scalebetween(ptr->jumps.jump_stats * dst, 200, 0,
 			WIDTH * HEIGHT) + +ptr->updown;
 	x = ptr->obunga.img_x - consts;
 	while (x < (int)ptr->obunga.img_x + consts)
@@ -81,8 +81,8 @@ int	get_obunga_color(t_ptr *ptr, size_t y, size_t x, size_t first_point_y,
 	int			img_x;
 	static int	n;
 
-	img_y = scaleBetween(y, 0, ptr->obunga.img_w, first_point_y, max_y);
-	img_x = scaleBetween(x, 0, ptr->obunga.img_h, first_point_x, max_x);
+	img_y = scalebetween(y, ptr->obunga.img_w, first_point_y, max_y);
+	img_x = scalebetween(x, ptr->obunga.img_h, first_point_x, max_x);
 	dst = ptr->obunga.img.addr + (img_y * ptr->obunga.img.line_length + img_x
 			* (ptr->obunga.img.bits_per_pixel / 8));
 	return (*(int *)dst);

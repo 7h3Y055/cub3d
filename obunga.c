@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   obunga.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ybouchma <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/05/16 14:48:05 by ybouchma          #+#    #+#             */
+/*   Updated: 2024/05/16 15:48:00 by ybouchma         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
 
 int	check_wall_obunga(t_ptr *ptr, size_t n)
@@ -28,7 +40,7 @@ void	obunga_move(t_ptr *ptr)
 	y = -sin(ptr->obunga.angle) * ENEMY_SPEED;
 	x = -cos(ptr->obunga.angle) * ENEMY_SPEED;
 	if (ptr->map2d[((int)ptr->obunga.y + (y * ENEMY_SPACE))
-		/ SCALE][((int)ptr->obunga.x) / SCALE] == '0'
+			/ SCALE][((int)ptr->obunga.x) / SCALE] == '0'
 		|| ptr->map2d[((int)ptr->obunga.y + (y * ENEMY_SPACE))
 		/ SCALE][((int)ptr->obunga.x) / SCALE] == 'O')
 		ptr->obunga.y += y;
@@ -37,6 +49,26 @@ void	obunga_move(t_ptr *ptr)
 		|| ptr->map2d[((int)ptr->obunga.y) / SCALE][((int)ptr->obunga.x + (x
 				* ENEMY_SPACE)) / SCALE] == 'O')
 		ptr->obunga.x += x;
+}
+
+void	put_obunga_to_img_helper(t_ptr *ptr, int y, int x, int dst)
+{
+	int	color;
+	int	consts;
+
+	consts = (SCALE * WIDTH) / ptr->obunga.dst;
+	if (x < HEIGHT && x > 0 && y > 0 && y < WIDTH)
+	{
+		ptr->flgas.dst = dst;
+		ptr->flgas.consts = consts;
+		color = get_obunga_color(ptr, y - ptr->jumps.consts, x);
+		// , WIDTH / 2 - dst / 2 //first_point_y
+		// , ptr->obunga.img_x - consts //first_point_x
+		// , (WIDTH / 2) + (dst) / 2 //max_y
+		// , ptr->obunga.img_x + consts); //max_x
+		if (color >= 0)
+			my_mlx_pixel_put(&ptr->img3d, x, y, color);
+	}
 }
 
 void	put_obunga_to_img(t_ptr *ptr)
@@ -51,39 +83,34 @@ void	put_obunga_to_img(t_ptr *ptr)
 		return ;
 	consts = (SCALE * WIDTH) / ptr->obunga.dst;
 	dst = (SCALE * HEIGHT) / ptr->obunga.dst;
-	ptr->jumps.consts = scalebetween(ptr->jumps.jump_stats * dst, 200, 0,
-			WIDTH * HEIGHT) + +ptr->updown;
+	ptr->jumps.consts = scalebetween(ptr->jumps.jump_stats * dst, 200, 0, WIDTH
+			* HEIGHT) + +ptr->updown;
 	x = ptr->obunga.img_x - consts;
 	while (x < (int)ptr->obunga.img_x + consts)
 	{
 		y = WIDTH / 2 + ptr->jumps.consts - dst / 2;
 		while (y < (WIDTH / 2 + ptr->jumps.consts) + (dst) / 2 && y < WIDTH)
 		{
-			if (x < HEIGHT && x > 0 && y > 0 && y < WIDTH)
-			{
-				color = get_obunga_color(ptr, y - ptr->jumps.consts, x, WIDTH
-						/ 2 - dst / 2, ptr->obunga.img_x - consts, (WIDTH / 2)
-						+ (dst) / 2, ptr->obunga.img_x + consts);
-				if (color >= 0)
-					my_mlx_pixel_put(&ptr->img3d, x, y, color);
-			}
+			put_obunga_to_img_helper(ptr, y, x, dst);
 			y++;
 		}
 		x++;
 	}
 }
 
-int	get_obunga_color(t_ptr *ptr, size_t y, size_t x, size_t first_point_y,
-		size_t first_point_x, size_t max_y, size_t max_x)
+int	get_obunga_color(t_ptr *ptr, size_t y, size_t x)
 {
-	char		*dst;
-	int			img_y;
-	int			img_x;
-	static int	n;
+	size_t	first_point_y;
+	size_t	first_point_x;
+	int		img_y;
+	int		img_x;
 
-	img_y = scalebetween(y, ptr->obunga.img_w, first_point_y, max_y);
-	img_x = scalebetween(x, ptr->obunga.img_h, first_point_x, max_x);
-	dst = ptr->obunga.img.addr + (img_y * ptr->obunga.img.line_length + img_x
-			* (ptr->obunga.img.bits_per_pixel / 8));
-	return (*(int *)dst);
+	first_point_y = WIDTH / 2 - ptr->flgas.dst / 2;
+	first_point_x = ptr->obunga.img_x - ptr->flgas.consts;
+	img_y = scalebetween(y, ptr->obunga.img_w, first_point_y, (WIDTH / 2)
+			+ (ptr->flgas.dst) / 2);
+	img_x = scalebetween(x, ptr->obunga.img_h, first_point_x, ptr->obunga.img_x
+			+ ptr->flgas.consts);
+	return (*(int *)(ptr->obunga.img.addr + (img_y * ptr->obunga.img.line_length
+			+ img_x * (ptr->obunga.img.bits_per_pixel / 8))));
 }

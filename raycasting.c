@@ -1,60 +1,82 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   raycasting.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ybouchma <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/05/16 16:24:23 by ybouchma          #+#    #+#             */
+/*   Updated: 2024/05/16 16:24:46 by ybouchma         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
+
+t_point	ea_we(t_ptr *ptr, t_flags *nextx, double angle)
+{
+	t_point	next;
+
+	next = nextx->next;
+	if (ptr->map2d[(long long)next.y / SCALE][(long long)next.x / SCALE] == 'D')
+		next.face = DOOR_W;
+	else if (check_wall(ptr, next) && ((angle < PI / 2 && angle >= 0)
+			|| (angle > PI + PI / 2 && angle <= RAD)))
+		next.face = GRAY;
+	else if (check_wall(ptr, next))
+		next.face = GREEN;
+	nextx->next.x += nextx->a.x;
+	nextx->next.y += nextx->a.y;
+	return (next);
+}
+
+t_point	no_so(t_ptr *ptr, t_flags *nexty, double angle)
+{
+	t_point	next;
+
+	next = nexty->next;
+	if (ptr->map2d[(long long)next.y / SCALE][(long long)next.x / SCALE] == 'D')
+		next.face = DOOR_H;
+	else if (check_wall(ptr, next) && angle > PI && angle < RAD)
+		next.face = WHITE;
+	else if (check_wall(ptr, next))
+		next.face = BLEU;
+	nexty->next.x += nexty->a.x;
+	nexty->next.y += nexty->a.y;
+	return (next);
+}
+
+t_point	distance_y_x(t_ptr *ptr, t_flags *nexty, t_flags *nextx, double angle)
+{
+	if (distance(*ptr, nexty->next, 0) > distance(*ptr, nextx->next, 0))
+		return (ea_we(ptr, nextx, angle));
+	else if (distance(*ptr, nexty->next, 0) < distance(*ptr, nextx->next, 0))
+		return (no_so(ptr, nexty, angle));
+}
 
 t_point	ray(t_ptr *ptr, double angle, int c)
 {
 	t_point	next;
-	t_point	nexty;
-	t_point	nextx;
-	t_point	ax;
-	t_point	ay;
+	t_flags	nexty;
+	t_flags	nextx;
 
-	init_param_y(ptr, &nexty, &ay, angle);
-	init_param_x(ptr, &nextx, &ax, angle);
+	init_param_y(ptr, &nexty.next, &nexty.a, angle);
+	init_param_x(ptr, &nextx.next, &nextx.a, angle);
 	while (1)
 	{
 		if (c == HEIGHT / 2 && ptr->map2d[(long long)next.y
-			/ SCALE][(long long)next.x / SCALE] == 'O' && ptr->keys[O]
+				/ SCALE][(long long)next.x / SCALE] == 'O' && ptr->keys[O]
 			&& distance(*ptr, next, 0) < SCALE * 3)
 		{
 			ptr->keys[O] = 0;
-			if (!((long long)(ptr->obunga.y / SCALE) == (long long)(next.y / SCALE)
-				&& (long long)(ptr->obunga.x / SCALE) == (long long)(next.x / SCALE)))
+			if (!((long long)(ptr->obunga.y / SCALE) == (long long)(next.y
+				/ SCALE) && (long long)(ptr->obunga.x
+						/ SCALE) == (long long)(next.x / SCALE)))
 				ptr->map2d[(long long)(next.y / SCALE)][(long long)(next.x
-					/ SCALE)] = 'D';
+						/ SCALE)] = 'D';
 		}
-		if (distance(*ptr, nexty, 0) > distance(*ptr, nextx, 0))
-		{
-			next = nextx;
-			if (ptr->map2d[(long long)next.y / SCALE][(long long)next.x / SCALE] == 'D')
-				next.face = DOOR_W;
-			else if (check_wall(ptr, nextx) && ((angle < PI / 2 && angle >= 0)
-					|| (angle > PI + PI / 2 && angle <= RAD)))
-				next.face = GRAY;
-			else if (check_wall(ptr, nextx))
-				next.face = GREEN;
-			nextx.x += ax.x;
-			nextx.y += ax.y;
-		}
-		else if (distance(*ptr, nexty, 0) < distance(*ptr, nextx, 0))
-		{
-			next = nexty;
-			if (ptr->map2d[(long long)next.y / SCALE][(long long)next.x / SCALE] == 'D')
-				next.face = DOOR_H;
-			else if (check_wall(ptr, nexty) && angle > PI && angle < RAD)
-				next.face = WHITE;
-			else if (check_wall(ptr, nexty))
-				next.face = BLEU;
-			nexty.x += ay.x;
-			nexty.y += ay.y;
-		}
+		next = distance_y_x(ptr, &nexty, &nextx, angle);
 		if (check_wall(ptr, next))
 			break ;
-	}
-	if (c == HEIGHT / 2 && (next.face == DOOR_H || next.face == DOOR_W)
-		&& ptr->keys[O] && distance(*ptr, next, 0) < SCALE * 3)
-	{
-		ptr->keys[O] = 0;
-		ptr->map2d[(long long)(next.y / SCALE)][(long long)(next.x / SCALE)] = 'O';
 	}
 	init_obunga(ptr, &next, angle, c);
 	return (next);

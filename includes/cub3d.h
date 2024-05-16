@@ -82,6 +82,8 @@
 #define O 7
 #define ES 8
 
+struct s_point;
+
 typedef struct s_point
 {
 	double	x;
@@ -181,6 +183,11 @@ typedef struct s_flags
 {
     t_point tmp;
     int     n_p;
+    int dst;
+    int consts;
+    t_point a;
+    t_point next;
+    // t_point ay;
 } t_flags;
 
 typedef struct  s_jumps
@@ -279,7 +286,7 @@ void check_player_death(t_ptr *ptr);
 int handle_input(t_ptr *ptr);
 int check_wall_obunga(t_ptr *ptr, size_t n);
 void    jump(t_ptr *ptr);
-int get_obunga_color(t_ptr *ptr, size_t y, size_t x, size_t first_point_y, size_t first_point_x, size_t max_y, size_t max_x);
+int	get_obunga_color(t_ptr *ptr, size_t y, size_t x);
 
 int rgb2int(int r, int g, int b);
 

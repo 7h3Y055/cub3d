@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   mlx.c                                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ybouchma <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/05/16 14:47:14 by ybouchma          #+#    #+#             */
+/*   Updated: 2024/05/16 16:23:40 by ybouchma         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
 
 void	init_param_y(t_ptr *ptr, t_point *next, t_point *a, double angle)
@@ -33,14 +45,20 @@ void	init_param_x(t_ptr *ptr, t_point *next, t_point *a, double angle)
 
 void	init_obunga(t_ptr *ptr, t_point *next, double p_angle, int c)
 {
+	if (c == HEIGHT / 2 && (next->face == DOOR_H || next->face == DOOR_W)
+		&& ptr->keys[O] && distance(*ptr, *next, 0) < SCALE * 3)
+	{
+		ptr->keys[O] = 0;
+		ptr->map2d[(long long)(next->y / SCALE)][(long long)(next->x / SCALE)] = 'O';
+	}
 	init_obunga_angle(ptr);
-	if (!btw_range(ptr->obunga.angle, fix_rad_overflow(ptr->player.angle - d2rad(EYE_ANGLE
-					/ 2)), fix_rad_overflow(ptr->player.angle + d2rad(EYE_ANGLE
-					/ 2))))
+	if (!btw_range(ptr->obunga.angle, fix_rad_overflow(ptr->player.angle
+				- d2rad(EYE_ANGLE / 2)), fix_rad_overflow(ptr->player.angle
+				+ d2rad(EYE_ANGLE / 2))))
 		ptr->obunga.dst = 0;
-	if (btw_range(ptr->obunga.angle, fix_rad_overflow(p_angle - calculate_incrementation()
-				/ 2), fix_rad_overflow(p_angle + calculate_incrementation()
-				/ 2)))
+	if (btw_range(ptr->obunga.angle, fix_rad_overflow(p_angle
+				- calculate_incrementation() / 2), fix_rad_overflow(p_angle
+				+ calculate_incrementation() / 2)))
 	{
 		if (distance(*ptr, ptr->flgas.tmp, 1) < distance(*ptr, *next, 0))
 		{

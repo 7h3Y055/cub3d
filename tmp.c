@@ -1,6 +1,6 @@
 #include "cub3d.h"
 
-void	put_sky(t_ptr *ptr, double	dy, double *y, size_t x)
+void	put_sky(t_ptr *ptr, double dy, double *y, size_t x)
 {
 	*y = 0;
 	while (*y < dy)

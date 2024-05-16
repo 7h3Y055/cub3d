@@ -37,8 +37,7 @@ int	ft_init_map2d_help(t_ptr *ptr, char c, int *y, int *x)
 		if (!c)
 			return (1);
 	}
-	else if (c != 'N' && c != 'S' && c != 'W'
-		&& c != 'E')
+	else if (c != 'N' && c != 'S' && c != 'W' && c != 'E')
 		ptr->map2d[*y][(*x)++] = c;
 	else
 	{
@@ -67,8 +66,10 @@ void	ft_init_map2d(t_ptr *ptr, char *str)
 		i++;
 	}
 	if (ptr->flgas.n_p == 0 || ptr->flgas.n_p > 1)
-		exit(ft_error(ptr, "Invalid map:\
-less or more than one player starting point (N or E or S or W)", 1));
+		exit(ft_error(ptr,
+						"Invalid map:\
+less or more than one player starting point (N or E or S or W)",
+						1));
 	y = 0;
 	ptr->map2d[ptr->parse.y] = NULL;
 }

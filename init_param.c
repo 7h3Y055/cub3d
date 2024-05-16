@@ -17,16 +17,14 @@ void	init_param_y_up(t_ptr *ptr, t_point *next, t_point *a, double angle)
 	if (angle > PI + PI / 2) // puts("up rigth");
 	{
 		next->y = ptr->player.y / SCALE * SCALE - MAGIC_NUMBER;
-		next->x = ptr->player.x + (ptr->player.y - next->y) / tan(RAD
-				- angle);
+		next->x = ptr->player.x + (ptr->player.y - next->y) / tan(RAD - angle);
 		a->y = -SCALE;
 		a->x = SCALE / tan(RAD - angle);
 	}
 	else if (angle < PI + PI / 2) // puts("up left");
 	{
 		next->y = ptr->player.y / SCALE * SCALE - MAGIC_NUMBER;
-		next->x = ptr->player.x + (ptr->player.y - next->y) / tan(RAD
-				- angle);
+		next->x = ptr->player.x + (ptr->player.y - next->y) / tan(RAD - angle);
 		a->y = -SCALE;
 		a->x = a->y / tan(angle - PI);
 	}

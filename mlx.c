@@ -49,7 +49,8 @@ void	init_obunga(t_ptr *ptr, t_point *next, double p_angle, int c)
 		&& ptr->keys[O] && distance(*ptr, *next, 0) < SCALE * 3)
 	{
 		ptr->keys[O] = 0;
-		ptr->map2d[(long long)(next->y / SCALE)][(long long)(next->x / SCALE)] = 'O';
+		ptr->map2d[(long long)(next->y / SCALE)][(long long)(next->x
+				/ SCALE)] = 'O';
 	}
 	init_obunga_angle(ptr);
 	if (!btw_range(ptr->obunga.angle, fix_rad_overflow(ptr->player.angle

@@ -64,12 +64,12 @@ t_point	ray(t_ptr *ptr, double angle, int c)
 	while (1)
 	{
 		if (c == HEIGHT / 2 && ptr->map2d[(long long)next.y
-				/ SCALE][(long long)next.x / SCALE] == 'O' && ptr->keys[O]
+			/ SCALE][(long long)next.x / SCALE] == 'O' && ptr->keys[O]
 			&& distance(*ptr, next, 0) < SCALE * 3)
 		{
 			ptr->keys[O] = 0;
 			if (!((long long)(ptr->obunga.y / SCALE) == (long long)(next.y
-				/ SCALE) && (long long)(ptr->obunga.x
+						/ SCALE) && (long long)(ptr->obunga.x
 						/ SCALE) == (long long)(next.x / SCALE)))
 				ptr->map2d[(long long)(next.y / SCALE)][(long long)(next.x
 						/ SCALE)] = 'D';

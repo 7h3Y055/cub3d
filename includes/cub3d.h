@@ -184,6 +184,7 @@ typedef struct s_flags
     t_point tmp;
     int     n_p;
     int dst;
+    size_t y;
     int consts;
     t_point a;
     t_point next;

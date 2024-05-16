@@ -18,12 +18,12 @@ int	check_valid_map(t_ptr *ptr, int y, int x)
 			+ 1][x] == ' '))
 		return (1);
 	else if (y > 0 && (!ptr->map2d[y - 1] || (ptr->map2d[y - 1][x] == '\0'
-			|| ptr->map2d[y - 1][x] == ' ')))
+				|| ptr->map2d[y - 1][x] == ' ')))
 		return (2);
 	else if (ptr->map2d[y][x + 1] == '\0' || ptr->map2d[y][x + 1] == ' ')
 		return (3);
-	else if (x > 0 && (ptr->map2d[y][x - 1] == '\0' || ptr->map2d[y][
-		x - 1] == ' '))
+	else if (x > 0 && (ptr->map2d[y][x - 1] == '\0' || ptr->map2d[y][x
+			- 1] == ' '))
 		return (4);
 	return (0);
 }
@@ -37,8 +37,7 @@ void	ft_init_obunga_position(t_ptr *ptr, int y, int x)
 void	check_valide_map_helper(t_ptr *ptr, int y, int x, int *n)
 {
 	if (ptr->map2d[y][x] == '0' && check_valid_map(ptr, y, x))
-		exit(ft_error(ptr,
-				"Invalid map: map is not closed by wall (1)",
+		exit(ft_error(ptr, "Invalid map: map is not closed by wall (1)",
 				check_valid_map(ptr, y, x)));
 	if (ptr->map2d[y][x] == 'X')
 	{
@@ -48,9 +47,9 @@ void	check_valide_map_helper(t_ptr *ptr, int y, int x, int *n)
 	}
 	else if (ptr->map2d[y][x] == 'D')
 	{
-		if (!((ptr->map2d[y][x - 1] == '1' && ptr->map2d[y][x
-				+ 1] == '1') || (ptr->map2d[y - 1][x] == '1'
-					&& ptr->map2d[y + 1][x] == '1')))
+		if (!((ptr->map2d[y][x - 1] == '1' && ptr->map2d[y][x + 1] == '1')
+				|| (ptr->map2d[y - 1][x] == '1' && ptr->map2d[y
+					+ 1][x] == '1')))
 			exit(ft_error(ptr, "Door", 1));
 	}
 	else if (ptr->map2d[y][x] && ptr->map2d[y][x] != '0'

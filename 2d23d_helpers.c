@@ -6,13 +6,13 @@
 /*   By: ybouchma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 14:43:14 by ybouchma          #+#    #+#             */
-/*   Updated: 2024/05/16 14:43:16 by ybouchma         ###   ########.fr       */
+/*   Updated: 2024/05/16 16:29:13 by ybouchma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void	init_wh(t_ptr *ptr,  t_point next, int *w, int *h)
+void	init_wh(t_ptr *ptr, t_point next, int *w, int *h)
 {
 	if (next.face == WHITE)
 	{
@@ -41,7 +41,7 @@ void	init_wh(t_ptr *ptr,  t_point next, int *w, int *h)
 	}
 }
 
-int	init_img_yx(t_ptr *ptr, t_point next, int *img_y, int *img_x, int y)
+int	init_img_yx(t_ptr *ptr, t_point next, int *img_y, int *img_x)
 {
 	int	w;
 	int	h;
@@ -51,7 +51,7 @@ int	init_img_yx(t_ptr *ptr, t_point next, int *img_y, int *img_x, int y)
 		*img_x = (next.y - (long long)next.y / SCALE * SCALE) * w / SCALE;
 	else
 		*img_x = (next.x - (long long)next.x / SCALE * SCALE) * w / SCALE;
-	*img_y = (y - next.first_point_in_wall) * (h / next.ray_l);
+	*img_y = (ptr->flgas.y - next.first_point_in_wall) * (h / next.ray_l);
 	if (*img_y < 0 || *img_y >= h || *img_x < 0 || *img_x >= w)
 		return (-1);
 	return (0);
@@ -85,12 +85,13 @@ char	*get_image_color(t_ptr *ptr, t_point next, int img_x, int img_y)
 
 int	get_pixel_color(t_ptr *ptr, t_point next, size_t y)
 {
-	int		img_y;
-	int		img_x;
+	int img_y;
+	int img_x;
 
-	if (init_img_yx(ptr, next, &img_y, &img_x, y) == -1)
+	ptr->flgas.y = y;
+	if (init_img_yx(ptr, next, &img_y, &img_x) == -1)
 		return (rgb2int(ptr->parse.floor[0], ptr->parse.floor[1],
 				ptr->parse.floor[2]));
-	
+
 	return (*(int *)get_image_color(ptr, next, img_x, img_y));
 }

@@ -6,7 +6,7 @@
 /*   By: ybouchma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 16:24:23 by ybouchma          #+#    #+#             */
-/*   Updated: 2024/05/16 16:37:14 by ybouchma         ###   ########.fr       */
+/*   Updated: 2024/05/16 16:41:10 by ybouchma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ t_point	distance_y_x(t_ptr *ptr, t_flags *nexty, t_flags *nextx, double angle)
 		return (ea_we(ptr, nextx, angle));
 	else if (distance(*ptr, nexty->next, 0) < distance(*ptr, nextx->next, 0))
 		return (no_so(ptr, nexty, angle));
+	return (ptr->flgas.tmp);
 }
 
 t_point	ray(t_ptr *ptr, double angle, int c)
@@ -87,7 +88,6 @@ void	raycasting(t_ptr *ptr)
 	double	a;
 	size_t	c;
 	double	xx;
-	double	n;
 
 	a = fix_rad_overflow(ptr->player.angle - d2rad(EYE_ANGLE / 2));
 	c = 0;

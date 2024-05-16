@@ -6,7 +6,7 @@
 /*   By: ybouchma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 12:30:36 by ybouchma          #+#    #+#             */
-/*   Updated: 2024/05/15 12:30:38 by ybouchma         ###   ########.fr       */
+/*   Updated: 2024/05/16 16:40:38 by ybouchma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ void	put_palyer_to_minimap(t_ptr *ptr, int y_map, int x_map)
 {
 	double	x;
 	double	y;
-	double	n;
 	double	x_max;
 	double	y_max;
 

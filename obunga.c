@@ -6,7 +6,7 @@
 /*   By: ybouchma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 14:48:05 by ybouchma          #+#    #+#             */
-/*   Updated: 2024/05/16 16:36:58 by ybouchma         ###   ########.fr       */
+/*   Updated: 2024/05/16 16:41:03 by ybouchma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,6 @@ void	put_obunga_to_img_helper(t_ptr *ptr, int y, int x, int dst)
 
 void	put_obunga_to_img(t_ptr *ptr)
 {
-	int	color;
 	int	y;
 	int	x;
 	int	consts;

@@ -6,7 +6,7 @@
 /*   By: ybouchma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 14:47:14 by ybouchma          #+#    #+#             */
-/*   Updated: 2024/05/16 16:34:28 by ybouchma         ###   ########.fr       */
+/*   Updated: 2024/05/16 16:40:55 by ybouchma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,6 @@ void	put_player_to_image(t_img_data *img, t_player player)
 {
 	double	x;
 	double	y;
-	double	n;
 	double	x_max;
 	double	y_max;
 

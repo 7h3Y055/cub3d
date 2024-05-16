@@ -6,7 +6,7 @@
 /*   By: ybouchma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 12:33:54 by ybouchma          #+#    #+#             */
-/*   Updated: 2024/05/16 16:38:30 by ybouchma         ###   ########.fr       */
+/*   Updated: 2024/05/16 16:45:14 by ybouchma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,19 +15,6 @@
 double	calculate_incrementation(void)
 {
 	return (d2rad(1. / ((double)HEIGHT / EYE_ANGLE)));
-}
-
-int	check_obunga_angle(t_ptr *ptr, double o_angle, double p_angle)
-{
-	double	a;
-	double	b;
-
-	a = fix_rad_overflow(p_angle + calculate_incrementation() / 2);
-	b = fix_rad_overflow(p_angle - calculate_incrementation() / 2);
-	if (o_angle <= fix_rad_overflow(p_angle + calculate_incrementation() / 2)
-		&& o_angle > fix_rad_overflow(p_angle - calculate_incrementation() / 2))
-		return (1);
-	return (0);
 }
 
 int	btw_range(double a, double min, double max)

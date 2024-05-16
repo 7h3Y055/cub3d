@@ -6,7 +6,7 @@
 /*   By: ybouchma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 12:36:47 by ybouchma          #+#    #+#             */
-/*   Updated: 2024/05/16 16:38:40 by ybouchma         ###   ########.fr       */
+/*   Updated: 2024/05/16 16:45:26 by ybouchma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,5 +23,6 @@ void	valid_color(t_ptr *ptr, int *color)
 
 int	destroy_all(t_ptr *ptr)
 {
+	(void)ptr;
 	exit(0);
 }

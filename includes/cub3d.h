@@ -188,7 +188,6 @@ typedef struct s_flags
     int consts;
     t_point a;
     t_point next;
-    // t_point ay;
 } t_flags;
 
 typedef struct  s_jumps
@@ -205,8 +204,6 @@ typedef struct s_ptr
     t_rays  *rays;
     t_parse parse;
     t_win   win;
-	t_img_data img3d;
-	void 	*win3d;
     t_player player;
     t_obunga obunga;
     int     keys[11];

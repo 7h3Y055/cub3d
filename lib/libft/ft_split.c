@@ -15,7 +15,7 @@
 static size_t	splits_len(char const *s, char c);
 static int		ft_split_helper(char **strs, char const *s, char c);
 static size_t	world_len(char const *s, char c);
-static void		free_alloc(char **strs, int u);
+void			free_alloc(char **strs, int u);
 
 char	**ft_split(char const *s, char c)
 {
@@ -72,7 +72,7 @@ static int	ft_split_helper(char **strs, char const *s, char c)
 	return (0);
 }
 
-static void	free_alloc(char **strs, int u)
+void	free_alloc(char **strs, int u)
 {
 	while (u >= 0)
 	{

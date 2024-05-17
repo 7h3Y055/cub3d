@@ -19,7 +19,19 @@ int	rgb2int(int r, int g, int b)
 
 int	ft_error(t_ptr *ptr, char *str, int n)
 {
-	(void)ptr;
+	if (ptr->rays)
+		free(ptr->rays);
+	if (ptr->map2d)
+		free_alloc(ptr->map2d, ptr->parse.y + 2);
+	if (ptr->parse.ceiling)
+		free(ptr->parse.ceiling);
+	if (ptr->parse.floor)
+		free(ptr->parse.floor);
+	if (ptr->win.img.img)
+		mlx_destroy_image(ptr->win.mlx, ptr->win.img.img);
+	if (ptr->win.win)
+		mlx_destroy_window(ptr->win.mlx, ptr->win.win);
+	// if (ptr->win.mlx);//display
 	if (n)
 	{
 		ft_putstr_fd("Error\n[cub3d]: ", 2);

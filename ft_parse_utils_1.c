@@ -34,6 +34,8 @@ int	*get_color(t_ptr *ptr, char *str)
 	int		*color;
 
 	color = malloc(sizeof(int) * 3);
+	if (!color)
+		exit(ft_error(ptr, "malloc error", 1));
 	i = 0;
 	while (ft_isspace(str[i]))
 		i++;

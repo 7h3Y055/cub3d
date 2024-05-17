@@ -23,6 +23,5 @@ void	valid_color(t_ptr *ptr, int *color)
 
 int	destroy_all(t_ptr *ptr)
 {
-	(void)ptr;
-	exit(0);
+	exit(ft_error(ptr, NULL, 0));
 }

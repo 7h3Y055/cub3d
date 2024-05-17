@@ -71,6 +71,7 @@ void	ft_init_map2d(t_ptr *ptr, char *str)
 less or more than one player starting point (N or E or S or W)",
 				1));
 	y = 0;
+	free(ptr->map2d[ptr->parse.y]);//wtf
 	ptr->map2d[ptr->parse.y] = NULL;
 }
 
@@ -95,9 +96,9 @@ char	*ft_read_map(t_ptr *ptr, int fd)
 			tmp = ft_strjoin(buffer, line);
 			free(buffer);
 			buffer = tmp;
-			free(line);
 			ptr->parse.y++;
 		}
+		free(line);
 	}
 	return (buffer);
 }
@@ -118,4 +119,5 @@ void	ft_init(t_ptr *ptr, int fd)
 	}
 	line = ft_read_map(ptr, fd);
 	ft_init_map2d(ptr, line);
+	free(line);//wtf
 }

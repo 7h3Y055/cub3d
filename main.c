@@ -43,7 +43,7 @@ void	move_angle_with_mouse(t_ptr *ptr)
 	static int	last_px = HEIGHT / 2;
 	static int	last_py = WIDTH / 2;
 
-	mlx_mouse_get_pos(ptr->win.mlx, ptr->win3d, &x, &y);
+	mlx_mouse_get_pos(ptr->win.mlx, ptr->win.win, &x, &y);
 	if (x < 0)
 		ptr->player.angle = fix_rad_overflow(ptr->player.angle - 0.03);
 	if (x > HEIGHT)
@@ -68,7 +68,7 @@ int	render_loop(t_ptr *ptr)
 	put_rays(ptr);
 	move_angle_with_mouse(ptr);
 	put_minimap(ptr);
-	mlx_put_image_to_window(ptr->win.mlx, ptr->win3d, ptr->img3d.img, 0, 0);
+	mlx_put_image_to_window(ptr->win.mlx, ptr->win.win, ptr->win.img.img, 0, 0);
 	check_player_death(ptr);
 	return (0);
 }
@@ -80,9 +80,9 @@ int	main(int argc, char const **argv)
 	ft_parse(&ptr, argc, argv);
 	init_mlx(&ptr);
 	mlx_loop_hook(ptr.win.mlx, render_loop, &ptr);
-	mlx_hook(ptr.win3d, DestroyNotify, ButtonPressMask, destroy_all, &ptr);
-	mlx_hook(ptr.win3d, KeyPress, KeyPressMask, key_pressed, &ptr);
-	mlx_hook(ptr.win3d, KeyRelease, KeyReleaseMask, key_released, &ptr);
+	mlx_hook(ptr.win.win, DestroyNotify, ButtonPressMask, destroy_all, &ptr);
+	mlx_hook(ptr.win.win, KeyPress, KeyPressMask, key_pressed, &ptr);
+	mlx_hook(ptr.win.win, KeyRelease, KeyReleaseMask, key_released, &ptr);
 	mlx_loop(ptr.win.mlx);
 	return (0);
 }

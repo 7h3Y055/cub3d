@@ -63,7 +63,7 @@ void	put_obunga_to_img_helper(t_ptr *ptr, int y, int x, int dst)
 		ptr->flgas.consts = consts;
 		color = get_obunga_color(ptr, y - ptr->jumps.consts, x);
 		if (color >= 0)
-			my_mlx_pixel_put(&ptr->img3d, x, y, color);
+			my_mlx_pixel_put(&ptr->win.img, x, y, color);
 	}
 }
 

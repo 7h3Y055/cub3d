@@ -58,4 +58,5 @@ void	ft_putnbr_fd(int n, int fd);
 int		ft_isspace(int c);
 char	*ft_strndup(char *src, size_t n);
 char	*ft_strstr(char *haystack, char *needle);
+void	free_alloc(char **strs, int u);
 #endif

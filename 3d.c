@@ -18,7 +18,7 @@ void	put_sky(t_ptr *ptr, double dy, double *y, size_t x)
 	while (*y < dy)
 	{
 		if (*y >= 0 && *y <= WIDTH && x <= HEIGHT)
-			my_mlx_pixel_put(&ptr->img3d, x, *y, rgb2int(ptr->parse.ceiling[0],
+			my_mlx_pixel_put(&ptr->win.img, x, *y, rgb2int(ptr->parse.ceiling[0],
 					ptr->parse.ceiling[1], ptr->parse.ceiling[2]));
 		(*y)++;
 	}
@@ -28,7 +28,7 @@ void	put_floor(t_ptr *ptr, double y, size_t x)
 {
 	while (y < WIDTH)
 	{
-		my_mlx_pixel_put(&ptr->img3d, x, y, rgb2int(ptr->parse.floor[0],
+		my_mlx_pixel_put(&ptr->win.img, x, y, rgb2int(ptr->parse.floor[0],
 				ptr->parse.floor[1], ptr->parse.floor[2]));
 		y++;
 	}
@@ -52,7 +52,7 @@ void	create_square(t_ptr *ptr, double ray_l, size_t x, t_point next)
 	{
 		color = get_pixel_color(ptr, next, (size_t)y);
 		if (!(color == -1 || x > HEIGHT || y < 0 || y > WIDTH))
-			my_mlx_pixel_put(&ptr->img3d, x, y, color);
+			my_mlx_pixel_put(&ptr->win.img, x, y, color);
 		y++;
 	}
 	put_floor(ptr, y, x);

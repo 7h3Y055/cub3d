@@ -72,12 +72,16 @@ void	jump_init(t_ptr *ptr)
 void	init_mlx(t_ptr *ptr)
 {
 	ptr->win.mlx = mlx_init();
+	if (!ptr->win.mlx)
+		exit(ft_error(ptr, "mlx_init error", 1));
 	init_images(ptr);
 	jump_init(ptr);
 	ptr->rays = malloc(sizeof(t_rays) * HEIGHT);
-	ptr->win3d = mlx_new_window(ptr->win.mlx, HEIGHT, WIDTH, "Cub3D map3D");
-	ptr->img3d.img = mlx_new_image(ptr->win.mlx, HEIGHT, WIDTH);
-	ptr->img3d.addr = mlx_get_data_addr(ptr->img3d.img,
-			&ptr->img3d.bits_per_pixel, &ptr->img3d.line_length,
-			&ptr->img3d.endian);
+	if (!ptr->rays)
+		exit(ft_error(ptr, "malloc error", 1));
+	ptr->win.win = mlx_new_window(ptr->win.mlx, HEIGHT, WIDTH, "Cub3D map3D");
+	ptr->win.img.img = mlx_new_image(ptr->win.mlx, HEIGHT, WIDTH);
+	ptr->win.img.addr = mlx_get_data_addr(ptr->win.img.img,
+			&ptr->win.img.bits_per_pixel, &ptr->win.img.line_length,
+			&ptr->win.img.endian);
 }

@@ -6,7 +6,7 @@
 /*   By: ybouchma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 14:46:17 by ybouchma          #+#    #+#             */
-/*   Updated: 2024/05/16 14:46:18 by ybouchma         ###   ########.fr       */
+/*   Updated: 2024/05/17 09:35:26 by ybouchma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ void	init_mlx(t_ptr *ptr)
 		exit(ft_error(ptr, "mlx_init error", 1));
 	init_images(ptr);
 	jump_init(ptr);
-	ptr->rays = malloc(sizeof(t_rays) * HEIGHT);
+	ptr->rays = ft_calloc(sizeof(t_rays), HEIGHT);
 	if (!ptr->rays)
 		exit(ft_error(ptr, "malloc error", 1));
 	ptr->win.win = mlx_new_window(ptr->win.mlx, HEIGHT, WIDTH, "Cub3D map3D");

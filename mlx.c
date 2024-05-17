@@ -6,7 +6,7 @@
 /*   By: ybouchma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 14:47:14 by ybouchma          #+#    #+#             */
-/*   Updated: 2024/05/16 16:40:55 by ybouchma         ###   ########.fr       */
+/*   Updated: 2024/05/17 10:09:24 by ybouchma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	init_param_x(t_ptr *ptr, t_point *next, t_point *a, double angle)
 	}
 }
 
-void	init_obunga(t_ptr *ptr, t_point *next, double p_angle, int c)
+t_point	init_obunga(t_ptr *ptr, t_point *next, double p_angle, int c)
 {
 	if (c == HEIGHT / 2 && (next->face == DOOR_H || next->face == DOOR_W)
 		&& ptr->keys[O] && distance(*ptr, *next, 0) < SCALE * 3)
@@ -68,6 +68,7 @@ void	init_obunga(t_ptr *ptr, t_point *next, double p_angle, int c)
 		else
 			ptr->obunga.dst = 0;
 	}
+	return (*next);
 }
 
 void	put_rays(t_ptr *ptr)

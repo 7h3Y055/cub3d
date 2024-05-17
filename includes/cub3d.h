@@ -255,7 +255,7 @@ void	init_param_x_left(t_ptr *ptr, t_point *next, t_point *a, double angle);
 
 int btw_range(double a, double min, double max);
 double d2rad(double d);
-void init_obunga(t_ptr *ptr,t_point *next, double p_angle, int c);
+t_point init_obunga(t_ptr *ptr,t_point *next, double p_angle, int c);
 int check_wall(t_ptr *ptr, t_point point);
 void	init_param_x(t_ptr *ptr, t_point *next, t_point *a, double angle);
 void	init_param_y(t_ptr *ptr, t_point *next, t_point *a, double angle);

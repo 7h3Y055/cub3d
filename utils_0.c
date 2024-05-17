@@ -6,7 +6,7 @@
 /*   By: ybouchma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 16:37:20 by ybouchma          #+#    #+#             */
-/*   Updated: 2024/05/16 16:37:34 by ybouchma         ###   ########.fr       */
+/*   Updated: 2024/05/17 09:59:17 by ybouchma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,19 +19,34 @@ int	rgb2int(int r, int g, int b)
 
 int	ft_error(t_ptr *ptr, char *str, int n)
 {
-	if (ptr->rays)
-		free(ptr->rays);
-	if (ptr->map2d)
-		free_alloc(ptr->map2d, ptr->parse.y + 2);
-	if (ptr->parse.ceiling)
-		free(ptr->parse.ceiling);
-	if (ptr->parse.floor)
-		free(ptr->parse.floor);
+	free(ptr->parse.ea);
+	free(ptr->parse.no);
+	free(ptr->parse.so);
+	free(ptr->parse.we);
+	free(ptr->obunga.path);
+	free(ptr->rays);
+	free_alloc(ptr->map2d, ptr->parse.y + 2);
+	free(ptr->parse.ceiling);
+	free(ptr->parse.floor);
+	if (ptr->texture.d_img.img)
+		mlx_destroy_image(ptr->win.mlx, ptr->texture.d_img.img);
+	if (ptr->texture.we_img.img)
+		mlx_destroy_image(ptr->win.mlx, ptr->texture.we_img.img);
+	if (ptr->texture.no_img.img)
+		mlx_destroy_image(ptr->win.mlx, ptr->texture.no_img.img);
+	if (ptr->texture.so_img.img)
+		mlx_destroy_image(ptr->win.mlx, ptr->texture.so_img.img);
+	if (ptr->texture.ea_img.img)
+		mlx_destroy_image(ptr->win.mlx, ptr->texture.ea_img.img);
+	if (ptr->obunga.img.img)
+		mlx_destroy_image(ptr->win.mlx, ptr->obunga.img.img);
 	if (ptr->win.img.img)
 		mlx_destroy_image(ptr->win.mlx, ptr->win.img.img);
 	if (ptr->win.win)
 		mlx_destroy_window(ptr->win.mlx, ptr->win.win);
-	// if (ptr->win.mlx);//display
+	if (ptr->win.mlx)
+		mlx_destroy_display(ptr->win.mlx);
+	free(ptr->win.mlx);
 	if (n)
 	{
 		ft_putstr_fd("Error\n[cub3d]: ", 2);

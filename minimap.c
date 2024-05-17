@@ -41,8 +41,8 @@ void	put_player_angle_to_minimap(t_ptr *ptr, int y_map, int x_map)
 	n = 1;
 	while (n < 20)
 	{
-		my_mlx_pixel_put(&ptr->win.img, ((double)ptr->player.x / SCALE * MAP_SCALE
-				- x_map) + (cos((double)ptr->player.angle) * n),
+		my_mlx_pixel_put(&ptr->win.img, ((double)ptr->player.x / SCALE
+				* MAP_SCALE - x_map) + (cos((double)ptr->player.angle) * n),
 			((double)(double)ptr->player.y / SCALE * MAP_SCALE - y_map)
 			+ (sin((double)ptr->player.angle) * n), RED);
 		n++;
@@ -74,8 +74,8 @@ void	put_minimap(t_ptr *ptr)
 		{
 			if (x + x_map >= 0 && x + x_map < ptr->parse.x * MAP_SCALE && y
 				+ y_map >= 0 && y + y_map < ptr->parse.y * MAP_SCALE)
-				my_mlx_pixel_put(&ptr->win.img, x, y, return_color_to_minimap(ptr,
-						y + y_map, x + x_map));
+				my_mlx_pixel_put(&ptr->win.img, x, y,
+					return_color_to_minimap(ptr, y + y_map, x + x_map));
 			else
 				my_mlx_pixel_put(&ptr->win.img, x, y, BLACK);
 			x++;

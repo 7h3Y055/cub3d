@@ -34,7 +34,7 @@ int	btw_range(double a, double min, double max)
 
 double	fix_rad_overflow(double a)
 {
-	a = a - (int)(a / RAD) *RAD;
+	a = a - (int)(a / RAD) * RAD;
 	if (a < 0)
 		a = RAD + a;
 	return (a);

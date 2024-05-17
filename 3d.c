@@ -18,8 +18,9 @@ void	put_sky(t_ptr *ptr, double dy, double *y, size_t x)
 	while (*y < dy)
 	{
 		if (*y >= 0 && *y <= WIDTH && x <= HEIGHT)
-			my_mlx_pixel_put(&ptr->win.img, x, *y, rgb2int(ptr->parse.ceiling[0],
-					ptr->parse.ceiling[1], ptr->parse.ceiling[2]));
+			my_mlx_pixel_put(&ptr->win.img, x, *y,
+				rgb2int(ptr->parse.ceiling[0], ptr->parse.ceiling[1],
+					ptr->parse.ceiling[2]));
 		(*y)++;
 	}
 }

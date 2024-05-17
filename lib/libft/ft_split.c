@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oussama <oussama@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ybouchma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 17:57:09 by ybouchma          #+#    #+#             */
-/*   Updated: 2024/03/31 22:16:17 by oussama          ###   ########.fr       */
+/*   Updated: 2024/05/17 16:08:41 by ybouchma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,8 @@ static int	ft_split_helper(char **strs, char const *s, char c)
 
 void	free_alloc(char **strs, int u)
 {
+	if (!strs)
+		return ;
 	while (u >= 0)
 	{
 		free(strs[u]);

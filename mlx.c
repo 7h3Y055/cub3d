@@ -6,7 +6,7 @@
 /*   By: ybouchma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 14:47:14 by ybouchma          #+#    #+#             */
-/*   Updated: 2024/05/17 10:09:24 by ybouchma         ###   ########.fr       */
+/*   Updated: 2024/05/17 16:20:46 by ybouchma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,27 +91,5 @@ void	put_rays(t_ptr *ptr)
 				ptr->flgas.tmp, 1))
 			create_square(ptr, ptr->rays[c].n, c, ptr->rays[c].next);
 		c++;
-	}
-}
-
-void	put_player_to_image(t_img_data *img, t_player player)
-{
-	double	x;
-	double	y;
-	double	x_max;
-	double	y_max;
-
-	y = ((double)player.y / SCALE * MAP_SCALE) - SCALE_P;
-	x_max = ((double)player.x / SCALE * MAP_SCALE) + SCALE_P;
-	y_max = ((double)player.y / SCALE * MAP_SCALE) + SCALE_P;
-	while (y < y_max)
-	{
-		x = ((double)player.x / SCALE * MAP_SCALE) - SCALE_P;
-		while (x < x_max)
-		{
-			my_mlx_pixel_put(img, x, y, RED);
-			x++;
-		}
-		y++;
 	}
 }

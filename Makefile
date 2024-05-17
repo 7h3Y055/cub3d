@@ -6,7 +6,7 @@ INC       = ./includes
 LIBFT_DIR = ./lib/libft
 LIBFT     = ./lib/libft/libft.a
 GNL		  = lib/gnl/get_next_line.c lib/gnl/get_next_line_utils.c
-CFLAGS    = -Wall -Werror -Wextra -g -fsanitize=address
+CFLAGS    = -Wall -Werror -Wextra #-g -fsanitize=address
 MLX_FLAGS = -lXext -lX11 -lm
 CC        = cc
 
@@ -31,8 +31,4 @@ fclean:clean
 	make fclean -C $(LIBFT_DIR)
 	rm -f $(NAME)
 re:fclean all
-
-
-
-
 

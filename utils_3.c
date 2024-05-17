@@ -6,7 +6,7 @@
 /*   By: ybouchma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 12:36:47 by ybouchma          #+#    #+#             */
-/*   Updated: 2024/05/17 16:07:45 by ybouchma         ###   ########.fr       */
+/*   Updated: 2024/05/17 16:59:03 by ybouchma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ void	free_all(t_ptr *ptr)
 		mlx_destroy_window(ptr->win.mlx, ptr->win.win);
 	if (ptr->win.mlx)
 		mlx_destroy_display(ptr->win.mlx);
+	free(ptr->win.mlx);
 }
 
 void	valid_color(t_ptr *ptr, int *color)

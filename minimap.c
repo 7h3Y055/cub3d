@@ -6,7 +6,7 @@
 /*   By: ybouchma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 12:30:36 by ybouchma          #+#    #+#             */
-/*   Updated: 2024/05/16 16:40:38 by ybouchma         ###   ########.fr       */
+/*   Updated: 2024/05/17 16:19:47 by ybouchma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,12 @@ void	put_palyer_to_minimap(t_ptr *ptr, int y_map, int x_map)
 	double	x_max;
 	double	y_max;
 
-	y = (double)ptr->player.y / SCALE * MAP_SCALE - y_map - SCALE_P;
-	x_max = (double)ptr->player.x / SCALE * MAP_SCALE - x_map + SCALE_P;
-	y_max = (double)ptr->player.y / SCALE * MAP_SCALE - y_map + SCALE_P;
+	y = (double)ptr->player.y / SCALE * ptr->map_scale - y_map - SCALE_P;
+	x_max = (double)ptr->player.x / SCALE * ptr->map_scale - x_map + SCALE_P;
+	y_max = (double)ptr->player.y / SCALE * ptr->map_scale - y_map + SCALE_P;
 	while (y < y_max)
 	{
-		x = (double)ptr->player.x / SCALE * MAP_SCALE - x_map - SCALE_P;
+		x = (double)ptr->player.x / SCALE * ptr->map_scale - x_map - SCALE_P;
 		while (x < x_max)
 		{
 			my_mlx_pixel_put(&ptr->win.img, x, y, RED);
@@ -42,8 +42,8 @@ void	put_player_angle_to_minimap(t_ptr *ptr, int y_map, int x_map)
 	while (n < 20)
 	{
 		my_mlx_pixel_put(&ptr->win.img, ((double)ptr->player.x / SCALE
-				* MAP_SCALE - x_map) + (cos((double)ptr->player.angle) * n),
-			((double)(double)ptr->player.y / SCALE * MAP_SCALE - y_map)
+				* ptr->map_scale - x_map) + (cos((double)ptr->player.angle) * n),
+			((double)(double)ptr->player.y / SCALE * ptr->map_scale - y_map)
 			+ (sin((double)ptr->player.angle) * n), RED);
 		n++;
 	}
@@ -51,8 +51,8 @@ void	put_player_angle_to_minimap(t_ptr *ptr, int y_map, int x_map)
 
 int	return_color_to_minimap(t_ptr *ptr, int y, int x)
 {
-	if ((x) % MAP_SCALE != 0 && (y) % MAP_SCALE != 0)
-		return (color_unit_pixel(ptr->map2d[(y) / MAP_SCALE][(x) / MAP_SCALE]));
+	if ((x) % ptr->map_scale != 0 && (y) % ptr->map_scale != 0)
+		return (color_unit_pixel(ptr->map2d[(y) / ptr->map_scale][(x) / ptr->map_scale]));
 	else
 		return (GRAY);
 }
@@ -64,16 +64,16 @@ void	put_minimap(t_ptr *ptr)
 	int	x_map;
 	int	y_map;
 
-	x_map = ((double)ptr->player.x / SCALE) * MAP_SCALE - MAP_H / 2;
-	y_map = ((double)ptr->player.y / SCALE) * MAP_SCALE - MAP_W / 2;
+	x_map = ((double)ptr->player.x / SCALE) * ptr->map_scale - MAP_H / 2;
+	y_map = ((double)ptr->player.y / SCALE) * ptr->map_scale - MAP_W / 2;
 	y = 5;
 	while (y < MAP_W)
 	{
 		x = 5;
 		while (x < MAP_H)
 		{
-			if (x + x_map >= 0 && x + x_map < ptr->parse.x * MAP_SCALE && y
-				+ y_map >= 0 && y + y_map < ptr->parse.y * MAP_SCALE)
+			if (x + x_map >= 0 && x + x_map < ptr->parse.x * ptr->map_scale && y
+				+ y_map >= 0 && y + y_map < ptr->parse.y * ptr->map_scale)
 				my_mlx_pixel_put(&ptr->win.img, x, y,
 					return_color_to_minimap(ptr, y + y_map, x + x_map));
 			else

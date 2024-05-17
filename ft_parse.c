@@ -6,7 +6,7 @@
 /*   By: ybouchma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 12:19:44 by ybouchma          #+#    #+#             */
-/*   Updated: 2024/05/16 21:54:38 by ybouchma         ###   ########.fr       */
+/*   Updated: 2024/05/17 09:22:58 by ybouchma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,7 @@ void	check_valide_map_helper(t_ptr *ptr, int y, int x, int *n)
 		&& ptr->map2d[y][x] != '1' && ptr->map2d[y][x] != ' ')
 	{
 		printf("%c\n", ptr->map2d[y][x]);
-		exit(ft_error(ptr, "Invalid map: contain invalid character!",
-				check_valid_map(ptr, y, x)));
+		exit(ft_error(ptr, "Invalid map: contain invalid character!", 1));
 	}
 }
 

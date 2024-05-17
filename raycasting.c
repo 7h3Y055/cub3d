@@ -6,7 +6,7 @@
 /*   By: ybouchma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 16:24:23 by ybouchma          #+#    #+#             */
-/*   Updated: 2024/05/17 10:12:19 by ybouchma         ###   ########.fr       */
+/*   Updated: 2024/05/17 15:06:41 by ybouchma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,9 @@ t_point	ray(t_ptr *ptr, double angle, int c)
 	init_param_x(ptr, &nextx.next, &nextx.a, angle);
 	while (1)
 	{
+		next = distance_y_x(ptr, &nexty, &nextx, angle);
+		if (check_wall(ptr, next))
+			break ;
 		if (c == HEIGHT / 2 && ptr->map2d[(long long)next.y
 			/ SCALE][(long long)next.x / SCALE] == 'O' && ptr->keys[O]
 			&& distance(*ptr, next, 0) < SCALE * 3)
@@ -75,9 +78,6 @@ t_point	ray(t_ptr *ptr, double angle, int c)
 				ptr->map2d[(long long)(next.y / SCALE)][(long long)(next.x
 						/ SCALE)] = 'D';
 		}
-		next = distance_y_x(ptr, &nexty, &nextx, angle);
-		if (check_wall(ptr, next))
-			break ;
 	}
 	return (init_obunga(ptr, &next, angle, c));
 }

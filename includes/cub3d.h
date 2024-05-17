@@ -6,7 +6,7 @@
 /*   By: ybouchma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 16:11:53 by ybouchma          #+#    #+#             */
-/*   Updated: 2024/05/17 16:20:40 by ybouchma         ###   ########.fr       */
+/*   Updated: 2024/05/17 18:09:19 by ybouchma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -191,6 +191,7 @@ typedef struct s_flags
 	int			dst;
 	size_t		y;
 	int			consts;
+	int			img;
 	t_point		a;
 	t_point		next;
 }				t_flags;

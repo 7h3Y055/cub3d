@@ -6,7 +6,7 @@
 /*   By: ybouchma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 14:48:05 by ybouchma          #+#    #+#             */
-/*   Updated: 2024/05/16 16:41:03 by ybouchma         ###   ########.fr       */
+/*   Updated: 2024/05/17 18:12:45 by ybouchma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	obunga_move(t_ptr *ptr)
 		ptr->obunga.x += x;
 }
 
-void	put_obunga_to_img_helper(t_ptr *ptr, int y, int x, int dst)
+int	put_obunga_to_img_helper(t_ptr *ptr, int y, int x, int dst)
 {
 	int	color;
 	int	consts;
@@ -62,9 +62,12 @@ void	put_obunga_to_img_helper(t_ptr *ptr, int y, int x, int dst)
 		ptr->flgas.dst = dst;
 		ptr->flgas.consts = consts;
 		color = get_obunga_color(ptr, y - ptr->jumps.consts, x);
+		if (ptr->flgas.img)
+			return (-1);
 		if (color >= 0)
 			my_mlx_pixel_put(&ptr->win.img, x, y, color);
 	}
+	return (0);
 }
 
 void	put_obunga_to_img(t_ptr *ptr)
@@ -73,6 +76,7 @@ void	put_obunga_to_img(t_ptr *ptr)
 	int	x;
 	int	consts;
 	int	dst;
+	int	n = 0;
 
 	if (ptr->obunga.dst == 0)
 		return ;
@@ -81,16 +85,20 @@ void	put_obunga_to_img(t_ptr *ptr)
 	ptr->jumps.consts = scalebetween(ptr->jumps.jump_stats * dst, 200, 0, WIDTH
 			* HEIGHT) + +ptr->updown;
 	x = ptr->obunga.img_x - consts;
-	while (x < (int)ptr->obunga.img_x + consts)
+	ptr->flgas.img = 0;
+	while (x < (int)ptr->obunga.img_x + consts )
 	{
 		y = WIDTH / 2 + ptr->jumps.consts - dst / 2;
 		while (y < (WIDTH / 2 + ptr->jumps.consts) + (dst) / 2 && y < WIDTH)
 		{
-			put_obunga_to_img_helper(ptr, y, x, dst);
+			if (put_obunga_to_img_helper(ptr, y, x, dst) == -1)
+				return;
 			y++;
 		}
 		x++;
+		n++;
 	}
+	
 }
 
 int	get_obunga_color(t_ptr *ptr, size_t y, size_t x)
@@ -100,12 +108,20 @@ int	get_obunga_color(t_ptr *ptr, size_t y, size_t x)
 	int		img_y;
 	int		img_x;
 
+
+	// if (img_x == 0)
+	// 	printf("%d\n", x);
 	first_point_y = WIDTH / 2 - ptr->flgas.dst / 2;
 	first_point_x = ptr->obunga.img_x - ptr->flgas.consts;
 	img_y = scalebetween(y, ptr->obunga.img_w, first_point_y, (WIDTH / 2)
 			+ (ptr->flgas.dst) / 2);
-	img_x = scalebetween(x, ptr->obunga.img_h, first_point_x, ptr->obunga.img_x
+	img_x = scalebetween(x, ptr->obunga.img_h - 15, first_point_x, ptr->obunga.img_x
 			+ ptr->flgas.consts);
+	if (img_x > ptr->obunga.img_h)
+	{
+		ptr->flgas.img = 1;
+		return (INT_MIN);
+	}
 	return (*(int *)(ptr->obunga.img.addr + (img_y * ptr->obunga.img.line_length
 			+ img_x * (ptr->obunga.img.bits_per_pixel / 8))));
 }

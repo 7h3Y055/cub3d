@@ -40,7 +40,7 @@ void	obunga_move(t_ptr *ptr)
 	y = -sin(ptr->obunga.angle) * ENEMY_SPEED;
 	x = -cos(ptr->obunga.angle) * ENEMY_SPEED;
 	if (ptr->map2d[((int)ptr->obunga.y + (y * ENEMY_SPACE))
-		/ SCALE][((int)ptr->obunga.x) / SCALE] == '0'
+			/ SCALE][((int)ptr->obunga.x) / SCALE] == '0'
 		|| ptr->map2d[((int)ptr->obunga.y + (y * ENEMY_SPACE))
 		/ SCALE][((int)ptr->obunga.x) / SCALE] == 'O')
 		ptr->obunga.y += y;
@@ -107,5 +107,5 @@ int	get_obunga_color(t_ptr *ptr, size_t y, size_t x)
 	img_x = scalebetween(x, ptr->obunga.img_h, first_point_x, ptr->obunga.img_x
 			+ ptr->flgas.consts);
 	return (*(int *)(ptr->obunga.img.addr + (img_y * ptr->obunga.img.line_length
-				+ img_x * (ptr->obunga.img.bits_per_pixel / 8))));
+			+ img_x * (ptr->obunga.img.bits_per_pixel / 8))));
 }

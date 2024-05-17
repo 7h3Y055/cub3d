@@ -240,6 +240,8 @@ int    ft_open(t_ptr *ptr, char const *path);
 void    check_extention(t_ptr *ptr, char const **argv);
 char *get_texture_path(t_ptr *ptr, char *str);
 
+void	free_all(t_ptr *ptr);
+
 char	*get_image_color(t_ptr *ptr, t_point next, int img_x, int img_y);
 void	init_obunga_angle(t_ptr *ptr);
 

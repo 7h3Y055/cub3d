@@ -19,34 +19,7 @@ int	rgb2int(int r, int g, int b)
 
 int	ft_error(t_ptr *ptr, char *str, int n)
 {
-	free(ptr->parse.ea);
-	free(ptr->parse.no);
-	free(ptr->parse.so);
-	free(ptr->parse.we);
-	free(ptr->obunga.path);
-	free(ptr->rays);
-	free_alloc(ptr->map2d, ptr->parse.y + 2);
-	free(ptr->parse.ceiling);
-	free(ptr->parse.floor);
-	if (ptr->texture.d_img.img)
-		mlx_destroy_image(ptr->win.mlx, ptr->texture.d_img.img);
-	if (ptr->texture.we_img.img)
-		mlx_destroy_image(ptr->win.mlx, ptr->texture.we_img.img);
-	if (ptr->texture.no_img.img)
-		mlx_destroy_image(ptr->win.mlx, ptr->texture.no_img.img);
-	if (ptr->texture.so_img.img)
-		mlx_destroy_image(ptr->win.mlx, ptr->texture.so_img.img);
-	if (ptr->texture.ea_img.img)
-		mlx_destroy_image(ptr->win.mlx, ptr->texture.ea_img.img);
-	if (ptr->obunga.img.img)
-		mlx_destroy_image(ptr->win.mlx, ptr->obunga.img.img);
-	if (ptr->win.img.img)
-		mlx_destroy_image(ptr->win.mlx, ptr->win.img.img);
-	if (ptr->win.win)
-		mlx_destroy_window(ptr->win.mlx, ptr->win.win);
-	if (ptr->win.mlx)
-		mlx_destroy_display(ptr->win.mlx);
-	free(ptr->win.mlx);
+	free_all(ptr);
 	if (n)
 	{
 		ft_putstr_fd("Error\n[cub3d]: ", 2);

@@ -6,7 +6,7 @@
 /*   By: ybouchma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 12:30:36 by ybouchma          #+#    #+#             */
-/*   Updated: 2024/05/17 16:19:47 by ybouchma         ###   ########.fr       */
+/*   Updated: 2024/05/18 10:43:48 by ybouchma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,9 @@ void	put_player_angle_to_minimap(t_ptr *ptr, int y_map, int x_map)
 	while (n < 20)
 	{
 		my_mlx_pixel_put(&ptr->win.img, ((double)ptr->player.x / SCALE
-				* ptr->map_scale - x_map) + (cos((double)ptr->player.angle) * n),
-			((double)(double)ptr->player.y / SCALE * ptr->map_scale - y_map)
-			+ (sin((double)ptr->player.angle) * n), RED);
+				* ptr->map_scale - x_map) + (cos((double)ptr->player.angle)
+				* n), ((double)(double)ptr->player.y / SCALE * ptr->map_scale
+				- y_map) + (sin((double)ptr->player.angle) * n), RED);
 		n++;
 	}
 }
@@ -52,7 +52,8 @@ void	put_player_angle_to_minimap(t_ptr *ptr, int y_map, int x_map)
 int	return_color_to_minimap(t_ptr *ptr, int y, int x)
 {
 	if ((x) % ptr->map_scale != 0 && (y) % ptr->map_scale != 0)
-		return (color_unit_pixel(ptr->map2d[(y) / ptr->map_scale][(x) / ptr->map_scale]));
+		return (color_unit_pixel(ptr->map2d[(y) / ptr->map_scale][(x)
+				/ ptr->map_scale]));
 	else
 		return (GRAY);
 }

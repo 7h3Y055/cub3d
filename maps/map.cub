@@ -1,7 +1,7 @@
-NO ./textures/test/north.xpm
-SO ./textures/test/south.xpm
-EA ./textures/test/east.xpm
-WE ./textures/test/west.xpm
+NO ./textures/redbrick.xpm
+SO ./textures/redbrick.xpm
+EA ./textures/redbrick.xpm
+WE ./textures/redbrick.xpm
 
 
 
@@ -18,7 +18,7 @@ F 186, 128, 74
 
 
 11111111111111111
-1W000000000000X01
+1W000000000000001
 10000000000000001
 10000000000000001
 10000000000000001
@@ -27,6 +27,6 @@ F 186, 128, 74
 10000000000000001
 10000000000000001
 10000000000000001
-10000000000000001
+1000X000000000001
 10000000000000001
 11111111111111111

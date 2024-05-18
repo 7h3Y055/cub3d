@@ -6,7 +6,7 @@
 /*   By: ybouchma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 14:46:17 by ybouchma          #+#    #+#             */
-/*   Updated: 2024/05/18 09:56:14 by ybouchma         ###   ########.fr       */
+/*   Updated: 2024/05/18 10:44:41 by ybouchma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void	init_images(t_ptr *ptr)
 		|| !ptr->texture.so_img.img || !ptr->texture.ea_img.img
 		|| !ptr->obunga.img.img || !ptr->texture.d_img.img)
 		exit(ft_error(ptr, "images", 1));
-	if (!(ptr->obunga.img_w ==  ptr->obunga.img_h))
+	if (!(ptr->obunga.img_w == ptr->obunga.img_h))
 		exit(ft_error(ptr, "image is not square!", 1));
 	if (!(ptr->obunga.img_w >= 100))
 		exit(ft_error(ptr, "image size less than 100x100!", 1));

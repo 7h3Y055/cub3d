@@ -1,12 +1,12 @@
-NO ./textures/simonkraft/soul_sand.xpm
-SO ./textures/simonkraft/warped_nylium.xpm
-EA ./textures/simonkraft/respawn_anchor_side1.xpm
-WE ./textures/simonkraft/netherrack.xpm
+NO ./textures/test/north.xpm
+SO ./textures/test/south.xpm
+EA ./textures/test/east.xpm
+WE ./textures/test/west.xpm
 
 
 
 
-EN ./resources/nextbots/c.xpm
+EN ./resources/nextbots/coach.xpm
 
 
 
@@ -18,12 +18,12 @@ F 186, 128, 74
 
 
 11111111111111111
-1N000000000000X01
+1W000000000000X01
 10000000000000001
 10000000000000001
 10000000000000001
 10000000000000001
-10000001000000001
+10000000000000001
 10000000000000001
 10000000000000001
 10000000000000001

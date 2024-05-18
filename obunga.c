@@ -76,6 +76,7 @@ void	put_obunga_to_img(t_ptr *ptr)
 	int	x;
 	int	consts;
 	int	dst;
+	int	n = 0;
 
 	if (ptr->obunga.dst == 0)
 		return ;
@@ -85,17 +86,19 @@ void	put_obunga_to_img(t_ptr *ptr)
 			* HEIGHT) + +ptr->updown;
 	x = ptr->obunga.img_x - consts;
 	ptr->flgas.img = 0;
-	while (x < (int)ptr->obunga.img_x + consts)
+	while (x < (int)ptr->obunga.img_x + consts )
 	{
 		y = WIDTH / 2 + ptr->jumps.consts - dst / 2;
 		while (y < (WIDTH / 2 + ptr->jumps.consts) + (dst) / 2 && y < WIDTH)
 		{
 			if (put_obunga_to_img_helper(ptr, y, x, dst) == -1)
-				return ;
+				return;
 			y++;
 		}
 		x++;
+		n++;
 	}
+	
 }
 
 int	get_obunga_color(t_ptr *ptr, size_t y, size_t x)
@@ -105,12 +108,14 @@ int	get_obunga_color(t_ptr *ptr, size_t y, size_t x)
 	int		img_y;
 	int		img_x;
 
+
+	// if (img_x == 0)
+	// 	printf("%d\n", x);
 	first_point_y = WIDTH / 2 - ptr->flgas.dst / 2;
 	first_point_x = ptr->obunga.img_x - ptr->flgas.consts;
 	img_y = scalebetween(y, ptr->obunga.img_w, first_point_y, (WIDTH / 2)
 			+ (ptr->flgas.dst) / 2);
-	img_x = scalebetween(x, ptr->obunga.img_h
-			- 15, first_point_x, ptr->obunga.img_x
+	img_x = scalebetween(x, ptr->obunga.img_h - 15, first_point_x, ptr->obunga.img_x
 			+ ptr->flgas.consts);
 	if (img_x > ptr->obunga.img_h)
 	{

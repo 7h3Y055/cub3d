@@ -6,7 +6,7 @@
 /*   By: ybouchma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 14:46:17 by ybouchma          #+#    #+#             */
-/*   Updated: 2024/05/17 17:01:14 by ybouchma         ###   ########.fr       */
+/*   Updated: 2024/05/18 09:56:14 by ybouchma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,10 @@ void	init_images(t_ptr *ptr)
 		|| !ptr->texture.so_img.img || !ptr->texture.ea_img.img
 		|| !ptr->obunga.img.img || !ptr->texture.d_img.img)
 		exit(ft_error(ptr, "images", 1));
-	// if (!(ptr->obunga.img_w == 441 && ptr->obunga.img_h == 440))
-	// 	exit(ft_error(ptr, "image size (441x440)", 1));
+	if (!(ptr->obunga.img_w ==  ptr->obunga.img_h))
+		exit(ft_error(ptr, "image is not square!", 1));
+	if (!(ptr->obunga.img_w >= 100))
+		exit(ft_error(ptr, "image size less than 100x100!", 1));
 	init_data_image(ptr);
 }
 
@@ -76,6 +78,8 @@ void	init_mlx(t_ptr *ptr)
 		exit(ft_error(ptr, "mlx_init error", 1));
 	if (ptr->parse.x + ptr->parse.y < 20)
 		ptr->map_scale = 50;
+	if (ptr->parse.x + ptr->parse.y < 60)
+		ptr->map_scale = 25;
 	else
 		ptr->map_scale = 10;
 	init_images(ptr);

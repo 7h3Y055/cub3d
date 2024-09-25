@@ -34,28 +34,28 @@ To get started with Cub3D, follow these steps:
 1.  **Install MLX**:
     - Install dependencies:
     ```bash
-        sudo apt-get update
-        sudo apt-get install libx11-dev libxext-dev libbsd-dev
+    sudo apt-get update
+    sudo apt-get install libx11-dev libxext-dev libbsd-dev
     ```
     - Download MinilibX:
     ```bash
-        git clone https://github.com/42Paris/minilibx-linux.git
+    git clone https://github.com/42Paris/minilibx-linux.git
     ```
 
     - Navigate to the downloaded directory:
     ```bash
-        cd minilibx-linux
+    cd minilibx-linux
     ```
 
     - Compile the library:
     ```bash
-        make
+    make
     ```
 
     - Install the library:
     ```bash
-        sudo cp mlx.h /usr/include
-        sudo cp libmlx.a /usr/lib
+    sudo cp mlx.h /usr/include
+    sudo cp libmlx.a /usr/lib
     ```
 
 1. **Clone the Repository**:
@@ -70,8 +70,8 @@ To get started with Cub3D, follow these steps:
 2.  **Usage**
 
     ```bash
-        ./cub3D maps/big.map
-        ```
+    ./cub3D maps/big.map
+    ```
 
 3.  **Controls***
 

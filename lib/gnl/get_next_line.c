@@ -26,6 +26,8 @@ char	*get_next_line(int fd)
 		return (free(buffer), NULL);
 	next_line = get_nline(buffer);
 	buffer = clean(buffer);
+	free(buffer);
+	buffer = NULL;
 	return (next_line);
 }
 

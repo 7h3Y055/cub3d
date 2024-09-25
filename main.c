@@ -6,7 +6,7 @@
 /*   By: ybouchma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 18:04:15 by ybouchma          #+#    #+#             */
-/*   Updated: 2024/05/18 10:22:04 by ybouchma         ###   ########.fr       */
+/*   Updated: 2024/05/19 09:13:52 by ybouchma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,9 +45,9 @@ void	move_angle_with_mouse(t_ptr *ptr)
 
 	mlx_mouse_get_pos(ptr->win.mlx, ptr->win.win, &x, &y);
 	if (x < 0)
-		ptr->player.angle = fix_rad_overflow(ptr->player.angle - 0.03);
+		ptr->player.angle = fix_rad_overflow(ptr->player.angle - 0.05);
 	if (x > HEIGHT)
-		ptr->player.angle = fix_rad_overflow(ptr->player.angle + 0.03);
+		ptr->player.angle = fix_rad_overflow(ptr->player.angle + 0.05);
 	if (x > last_px && x >= 0 && x <= HEIGHT)
 		ptr->player.angle += PI * (abs(x - last_px) - 0) / (HEIGHT - 0) + 0;
 	else if (x >= 0 && x <= HEIGHT)
@@ -64,12 +64,12 @@ int	render_loop(t_ptr *ptr)
 {
 	handle_input(ptr);
 	raycasting(ptr);
+	check_player_death(ptr);
 	obunga_move(ptr);
 	put_rays(ptr);
 	move_angle_with_mouse(ptr);
 	put_minimap(ptr);
 	mlx_put_image_to_window(ptr->win.mlx, ptr->win.win, ptr->win.img.img, 0, 0);
-	check_player_death(ptr);
 	return (0);
 }
 

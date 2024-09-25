@@ -6,22 +6,22 @@
 /*   By: ybouchma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 18:05:11 by ybouchma          #+#    #+#             */
-/*   Updated: 2024/05/15 13:01:26 by ybouchma         ###   ########.fr       */
+/*   Updated: 2024/05/18 15:23:27 by ybouchma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-int	check_valide_color(t_ptr *ptr, char *str)
+int	check_valide_color(t_ptr *ptr, char *str, int *color)
 {
 	int	i;
 
 	i = 0;
-	i = skip_digit(ptr, str, i);
+	i = skip_digit(ptr, str, i, color);
 	i = skip_comma(str, i);
-	i = skip_digit(ptr, str, i);
+	i = skip_digit(ptr, str, i, color);
 	i = skip_comma(str, i);
-	i = skip_digit(ptr, str, i);
+	i = skip_digit(ptr, str, i, color);
 	if (str[i])
 		return (1);
 	return (0);
@@ -42,8 +42,8 @@ int	*get_color(t_ptr *ptr, char *str)
 	i += 1;
 	while (ft_isspace(str[i]))
 		i++;
-	if (check_valide_color(ptr, &str[i]))
-		exit(ft_error(ptr, "Invalide color", 1));
+	if (check_valide_color(ptr, &str[i], color))
+		(free(color), free(str), exit(ft_error(ptr, "Invalide color", 1)));
 	tmp = ft_strrchr(str, ',');
 	tmp[ft_strlen(tmp) - 1] = 0;
 	color[2] = ft_atoi(&tmp[1]);
@@ -91,7 +91,7 @@ int	ft_init_texture(t_ptr *ptr, char *str)
 	else if (ft_just_whitespaces(str, i))
 		return (0);
 	else if (str[i] && str[i] != '\n')
-		exit(ft_error(ptr, "Contain invalid character", 1));
+		(free(str), exit(ft_error(ptr, "Contain invalid character", 1)));
 	return (1);
 }
 

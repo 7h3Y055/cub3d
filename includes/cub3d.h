@@ -6,7 +6,7 @@
 /*   By: ybouchma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 16:11:53 by ybouchma          #+#    #+#             */
-/*   Updated: 2024/05/18 10:56:40 by ybouchma         ###   ########.fr       */
+/*   Updated: 2024/05/19 10:10:32 by ybouchma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -192,6 +192,7 @@ typedef struct s_ptr
 	t_player	player;
 	t_obunga	obunga;
 	int			keys[11];
+	char		*line;
 	t_jumps		jumps;
 	int			updown;
 	t_texture	texture;
@@ -219,22 +220,29 @@ int				ft_open(t_ptr *ptr, char const *path);
 void			check_extention(t_ptr *ptr, char const **argv);
 char			*get_texture_path(t_ptr *ptr, char *str);
 void			free_all(t_ptr *ptr);
-char			*get_image_color(t_ptr *ptr, t_point next, int img_x, int img_y);
+char			*get_image_color(t_ptr *ptr, t_point next, int img_x,
+					int img_y);
 void			init_obunga_angle(t_ptr *ptr);
 int				skip_comma(char *str, int i);
-int				skip_digit(t_ptr *ptr, char *str, int i);
+int				skip_digit(t_ptr *ptr, char *str, int i, int *color);
 int				ft_just_whitespaces(char *str, int i);
 int				ft_init_texture(t_ptr *ptr, char *str);
-void			init_param_y_up(t_ptr *ptr, t_point *next, t_point *a, double angle);
-void			init_param_y_down(t_ptr *ptr, t_point *next, t_point *a, double angle);
-void			init_param_x_right(t_ptr *ptr, t_point *next, t_point *a, double angle);
-void			init_param_x_left(t_ptr *ptr, t_point *next, t_point *a, double angle);
+void			init_param_y_up(t_ptr *ptr, t_point *next, t_point *a,
+					double angle);
+void			init_param_y_down(t_ptr *ptr, t_point *next, t_point *a,
+					double angle);
+void			init_param_x_right(t_ptr *ptr, t_point *next, t_point *a,
+					double angle);
+void			init_param_x_left(t_ptr *ptr, t_point *next, t_point *a,
+					double angle);
 int				btw_range(double a, double min, double max);
 double			d2rad(double d);
 t_point			init_obunga(t_ptr *ptr, t_point *next, double p_angle, int c);
 int				check_wall(t_ptr *ptr, t_point point);
-void			init_param_x(t_ptr *ptr, t_point *next, t_point *a, double angle);
-void			init_param_y(t_ptr *ptr, t_point *next, t_point *a, double angle);
+void			init_param_x(t_ptr *ptr, t_point *next, t_point *a,
+					double angle);
+void			init_param_y(t_ptr *ptr, t_point *next, t_point *a,
+					double angle);
 double			calculate_incrementation(void);
 void			valid_color(t_ptr *ptr, int *color);
 int				get_pixel_color(t_ptr *ptr, t_point next, size_t y);
@@ -246,12 +254,13 @@ void			render_map(t_ptr ptr);
 void			raycasting(t_ptr *ptr);
 void			put_minimap(t_ptr *ptr);
 void			my_mlx_pixel_put(t_img_data *img, int x, int y, int color);
-void			create_square(t_ptr *ptr, double ray_l, size_t x, t_point);
+void			create_square(t_ptr *ptr, double ray_l, size_t x, t_point next);
 void			midle_line(t_ptr *ptr);
 double			fix_rad_overflow(double a);
 int				key_pressed(int keycode, t_ptr *ptr);
 int				key_released(int keycode, t_ptr *ptr);
-size_t			scalebetween(size_t unscaledNum, size_t maxAllowed, size_t min, size_t max);
+size_t			scalebetween(size_t unscaledNum, size_t maxAllowed, size_t min,
+					size_t max);
 void			obunga_move(t_ptr *ptr);
 void			check_player_death(t_ptr *ptr);
 int				handle_input(t_ptr *ptr);

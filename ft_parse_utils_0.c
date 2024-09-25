@@ -36,49 +36,58 @@ int	ft_open(t_ptr *ptr, char const *path)
 char	*get_texture_path(t_ptr *ptr, char *str)
 {
 	int		i;
+	int		n;
 	int		tmp_i;
 	char	*path;
 
 	i = 0;
-	while (ft_isspace(str[i]))
+	while (str[i] && ft_isspace(str[i]))
 		i++;
 	i += 2;
-	while (ft_isspace(str[i]))
+	while (str[i] && ft_isspace(str[i]))
 		i++;
 	tmp_i = i;
-	while (!ft_isspace(str[i]))
+	while (str[i] && !ft_isspace(str[i]))
 		i++;
-	while (ft_isspace(str[i]))
+	n = i;
+	while (str[i] && ft_isspace(str[i]))
 		i++;
-	if (str[i])
+	if (i == tmp_i || str[i])
+	{
+		free(str);
 		exit(ft_error(ptr, "invalid texture path", 1));
-	path = ft_strndup(&str[tmp_i], i - tmp_i - 1);
+	}
+	path = ft_strndup(&str[tmp_i], n - tmp_i);
 	return (path);
 }
 
 int	skip_comma(char *str, int i)
 {
-	while (ft_isspace(str[i]))
+	while (str[i] && ft_isspace(str[i]))
 		i++;
 	if (str[i] == ',')
 		i++;
-	while (ft_isspace(str[i]))
+	while (str[i] && ft_isspace(str[i]))
 		i++;
 	return (i);
 }
 
-int	skip_digit(t_ptr *ptr, char *str, int i)
+int	skip_digit(t_ptr *ptr, char *str, int i, int *color)
 {
-	while (ft_isspace(str[i]))
+	while (str[i] && ft_isspace(str[i]))
 		i++;
 	if (ft_isdigit(str[i]))
 	{
-		while (ft_isdigit(str[i]))
+		while (str[i] && ft_isdigit(str[i]))
 			i++;
 	}
 	else
-		exit(ft_error(ptr, "Error3", 1));
-	while (ft_isspace(str[i]))
+	{
+		free(ptr->line);
+		free(color);
+		exit(ft_error(ptr, "Invalid color", 1));
+	}
+	while (str[i] && ft_isspace(str[i]))
 		i++;
 	return (i);
 }

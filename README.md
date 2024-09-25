@@ -70,6 +70,7 @@ To get started with Cub3D, follow these steps:
 2.  **Usage**
 
     ```bash
+    make
     ./cub3D maps/big.map
     ```
 

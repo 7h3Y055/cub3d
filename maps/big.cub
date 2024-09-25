@@ -2,11 +2,11 @@
 	WE ./textures/WE.xpm
 
 NO ./textures/NO.xpm
-EA ./textures/4k.xpm
+EA ./textures/EA.xpm
 
 
-EN ./resources/nextbots/coach.xpm
 
+EN ./resources/nextbots/Obunga.xpm
 
 SO ./textures/SO.xpm
 

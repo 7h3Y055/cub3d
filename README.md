@@ -71,7 +71,7 @@ To get started with Cub3D, follow these steps:
 
     bash```
         ./cub3D maps/big.map
-    ```
+        ```
 
 3.  **Controls***
 

@@ -1,4 +1,4 @@
-NAME      = cub3D_bonus
+NAME      = cub3D
 SRCS      = 2d23d_helpers.c  ft_parse.c          ft_parse_utils_1.c  init.c        main.c     mlx.c      moves.c   raycasting.c  utils_1.c  utils_3.c 3d.c\
             ft_parse_utils_0.c  ft_parse_utils_2.c  init_param.c  minimap.c  moves_0.c  obunga.c  utils_0.c     utils_2.c
 OBJS      = $(SRCS:.c=.o)

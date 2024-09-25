@@ -61,7 +61,7 @@ To get started with Cub3D, follow these steps:
 1. **Clone the Repository**:
 
    ```bash
-    git clone https://github.com/yourusername/cub3d.git
+    git clone https://github.com/7h3Y055/cub3d.git
     cd cub3d
     ```
 

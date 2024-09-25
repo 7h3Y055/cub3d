@@ -84,7 +84,6 @@ To get started with Cub3D, follow these steps:
 
 4.  **Screenshots**
 
-    Here are some screenshots of the Cub3D in action:
     ![img](imgs/cub3d.png)
 
 

@@ -68,19 +68,19 @@ To get started with Cub3D, follow these steps:
 
 
 2.  **Usage**
-    To run the program, execute the following command:
 
     bash```
         ./cub3D maps/big.map
     ```
 
 3.  **Controls***
-    W: Move Forward
-    S: Move Backward
-    A: Strafe Left
-    D: Strafe Right
-    Arrow Keys OR Mouse: Look Around
-    ESC: Exit
+
+    - W: Move Forward
+    - S: Move Backward
+    - A: Strafe Left
+    - D: Strafe Right
+    - Arrow Keys OR Mouse: Look Around
+    - ESC: Exit
 
 4.  **Screenshots**
 
@@ -88,6 +88,6 @@ To get started with Cub3D, follow these steps:
 
 
 5.  **License**
-Feel free to modify and expand this template to suit your project's specific features and requirements!
+    - Feel free to modify and expand this template to suit your project's specific features and requirements!
 
 

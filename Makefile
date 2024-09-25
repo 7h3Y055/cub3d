@@ -13,7 +13,7 @@ CC        = cc
 all:$(NAME)
 
 $(NAME):$(GNL) $(LIBFT) $(OBJS)
-	@echo "cub3d_bonus ..."
+	@echo "cub3d ..."
 	@$(CC) $(OBJS) $(MLX_FLAGS) $(CFLAGS) $(LIBFT) $(GNL) -I$(INC) -o $(NAME)
 
 %.o:%.c

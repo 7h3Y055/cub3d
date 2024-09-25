@@ -1,0 +1,18 @@
+Install dependencies:
+Copysudo apt-get update
+sudo apt-get install libx11-dev libxext-dev libbsd-dev
+
+Download MinilibX:
+You can either clone the repository or download it from the official website.
+Using git:
+Copygit clone https://github.com/42Paris/minilibx-linux.git
+
+Navigate to the downloaded directory:
+Copycd minilibx-linux
+
+Compile the library:
+Copymake
+
+Install the library:
+Copysudo cp mlx.h /usr/include
+sudo cp libmlx.a /usr/lib
